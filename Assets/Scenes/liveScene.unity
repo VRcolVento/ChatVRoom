@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38074008, b: 0.35872707, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -629,6 +629,7 @@ GameObject:
   - component: {fileID: 772249256}
   - component: {fileID: 772249261}
   - component: {fileID: 772249260}
+  - component: {fileID: 772249262}
   m_Layer: 0
   m_Name: SignorTelecomando
   m_TagString: Untagged
@@ -663,7 +664,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 545788ab1db3ce04891d60efb9a53a10, type: 2}
+  - {fileID: 2100000, guid: 5ab7d25a5d90f8f45a049442700e6462, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -714,7 +715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929e3da8a795b954096b982d2492becb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dist: 2
 --- !u!120 &772249261
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -807,6 +807,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &772249262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 772249255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a3f0a10405c3544b384ac33e859e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dist: 2
 --- !u!1 &946802098
 GameObject:
   m_ObjectHideFlags: 0

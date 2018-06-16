@@ -60,3 +60,5 @@ sysinfo.txt
 /Assets/TextMesh\ Pro/
 /Assets/Scripts/LiveMode/Tv/Tmp
 **/TwitterKeys.cs
+Assets/Scripts/LiveMode/ThirdParty/TwitterKeys.cs.meta
+Assets/Scripts/LiveMode/Tv/Tmp.meta
