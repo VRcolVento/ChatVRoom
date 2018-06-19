@@ -21,7 +21,6 @@ public class TextMenu : Menu {
         this.textBox = textBox;
 
         // Init infos.
-        MeshFilter fatherMesh = father.GetComponent<MeshFilter>();
         menuInfo.itemsPerTab = itemsPerTab;
         menuInfo.width = 1;
         menuInfo.height = 1.0f / itemsPerTab;

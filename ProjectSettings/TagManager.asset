@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Wall
-  - Room
-  - Ceiling
-  - Floor
-  - Obj_Floor
-  - Obj_Wall
-  - Obj_Ceiling
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -20,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - RoomLayer
   - 
-  - MenuLayer
   - 
-  - FurnitureLayer
+  - 
+  - 
+  - 
   - 
   - 
   - 

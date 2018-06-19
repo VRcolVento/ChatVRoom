@@ -57,7 +57,6 @@ public class SocialMenu : Menu {
         int rowIndex = i % panelInfo.itemsPerCol;
 		Transform tab = GetTab(tabIndex).transform;
 
-        float height = 1.0f / (panelInfo.itemsPerCol * 3);
         Vector3 pos = new Vector3(0, - rowIndex * (1.0f / panelInfo.itemsPerCol), 0);
         pos += panelInfo.start;
         
