@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114706920479557112}
   - component: {fileID: 114477045844386320}
   - component: {fileID: 114009285955688858}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Lampadario
   m_TagString: Obj_Ceiling
   m_Icon: {fileID: 0}

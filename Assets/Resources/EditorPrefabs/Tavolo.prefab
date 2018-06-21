@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114488415578600160}
   - component: {fileID: 114908077264470470}
   - component: {fileID: 114148790027959500}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Tavolo
   m_TagString: Obj_Floor
   m_Icon: {fileID: 0}

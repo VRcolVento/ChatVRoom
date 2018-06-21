@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114182348593481504}
   - component: {fileID: 114385636685511380}
   - component: {fileID: 114840278162423424}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Lampada
   m_TagString: Obj_Wall
   m_Icon: {fileID: 0}

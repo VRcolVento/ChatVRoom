@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114806135854865012}
   - component: {fileID: 114650871273678734}
   - component: {fileID: 114948650615817444}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Comodino
   m_TagString: Obj_Floor
   m_Icon: {fileID: 0}

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114394412391687818}
   - component: {fileID: 114633315471315946}
   - component: {fileID: 54657144858232774}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Quadro
   m_TagString: Obj_Wall
   m_Icon: {fileID: 0}
