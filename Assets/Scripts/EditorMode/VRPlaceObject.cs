@@ -42,8 +42,6 @@ namespace DemoAV.Editor.User{
 			bool hitSomething = Physics.Raycast(ray, out hit, 1000f, roomMask);
 
 			if (hitSomething) {
-
-				Debug.Log("dasgdgdgdgdgd");
 				// If I am hitting the room (filtered by the layer mask)
 
 				objToPlace.transform.position = hit.point;
@@ -86,6 +84,8 @@ namespace DemoAV.Editor.User{
 					switchMode();
 				} 
 			}
+
+			// TODO add code to remove object
 		}
 
 		public void setObject(GameObject obj, string name) {

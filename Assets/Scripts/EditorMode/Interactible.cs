@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.User;
 
 public class Interactible : MonoBehaviour {
 
@@ -56,13 +57,13 @@ public class Interactible : MonoBehaviour {
 
 	// Subscribe / Unsubscribe delegates
 	public void AddSelectionEvent(){
-		UserChooseObject.select += selectColor;
-		UserChooseObject.deselect += defaultColor;
+		VRChooseObject.select += selectColor;
+		VRChooseObject.deselect += defaultColor;
 	}
 
 	public void RemoveSelectionEvent() {
-		UserChooseObject.select -= selectColor;
-		UserChooseObject.deselect -= defaultColor;
+		VRChooseObject.select -= selectColor;
+		VRChooseObject.deselect -= defaultColor;
 	}
 
 	public void OnDestroy() {
