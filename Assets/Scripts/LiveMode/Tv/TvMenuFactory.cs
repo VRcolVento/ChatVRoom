@@ -39,7 +39,7 @@ public class TvMenuFactory : MonoBehaviour {
 				activeMenu.Active(hit.transform.gameObject.name);
 			}
 				
-		});
+		}); 
 	}
 	
 	// Update is called once per frame
