@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DemoAV.SmartMenu;
+using DemoAV.Common;
 
 public class TvMenuFactory : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class TvMenuFactory : MonoBehaviour {
 	Menu activeMenu;														// The menu currently active.
 	Stack<string> menuStack = new Stack<string>();							// The stack of menus.
 	public GameObject remoteController;
-	LineRenderer liner;
+	LineRenderer liner = null;
 
 	/************************** PANEL MENU ******************************/
 	public GameObject panel;
@@ -25,24 +26,38 @@ public class TvMenuFactory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		liner = GameObject.Find("SignorTelecomando").GetComponent<LineRenderer>();
-		menuMask = LayerMask.GetMask(new string[]{"MenuLayer"});
+		// liner = GameObject.Find("SignorTelecomando").GetComponent<LineRenderer>();
+		// menuMask = LayerMask.GetMask(new string[]{"MenuLayer"});
+		GameObject rightController = null;
+		foreach(Transform tr in GameObject.Find("[CameraRig]").transform)
+			if(tr.gameObject.name == "RightController")
+				rightController = tr.gameObject;
+				
+		rightController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
+			if(hit.transform.gameObject.layer == 11) {
+				activeMenu.SetSelected(hit.transform.gameObject.name);
+				activeMenu.Active(hit.transform.gameObject.name);
+			}
+				
+		});
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Ray ray = new Ray(remoteController.transform.position, Vector3.forward);
-		RaycastHit hit;
+		if(liner) {
+			Ray ray = new Ray(remoteController.transform.position, Vector3.forward);
+			RaycastHit hit;
 
-		if(Physics.Raycast(ray, out hit)){
-			liner.SetPosition(1, hit.point);
+			if(Physics.Raycast(ray, out hit)){
+				liner.SetPosition(1, hit.point);
 
-			GameObject hitted = hit.transform.gameObject;
-			if(hitted.layer == 10){
-				activeMenu.SetSelected(hitted.name);
+				GameObject hitted = hit.transform.gameObject;
+				if(hitted.layer == 10){
+					activeMenu.SetSelected(hitted.name);
 
-				if(Input.GetMouseButtonDown(1))
-					activeMenu.Active(hitted.name);
+					if(Input.GetMouseButtonDown(1))
+						activeMenu.Active(hitted.name);
+				}
 			}
 		}
 	}
