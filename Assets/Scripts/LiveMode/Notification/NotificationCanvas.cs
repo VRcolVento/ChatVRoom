@@ -6,6 +6,9 @@ using UnityEngine.Events;
 using TMPro;
 
 namespace DemoAV.Live.Notification{
+/// <summary>
+/// 	The canvas for the on screen notification.
+/// </summary>
 public class NotificationCanvas : MonoBehaviour {
 	public GameObject notificationObj;
 	NotificationManager manager;

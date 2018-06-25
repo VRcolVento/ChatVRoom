@@ -14,12 +14,19 @@ public class NotificationManager : MonoBehaviour {
 	/// 	Struct for notification.
 	/// </summary>
 	public struct notification {
+		static uint totalNotification;
+		uint _id;
 		string _title, _text;
 		Color _titleColor, _textColor;
 
 		public notification(string title, Color titleColor, string text, Color textColor){
+			_id = totalNotification++;
 			_title = title;	_titleColor = titleColor;
 			_text = text; _textColor = textColor;
+		}
+
+		public uint id{
+			get{ return _id; }
 		}
 
 		public string title{
@@ -43,6 +50,7 @@ public class NotificationManager : MonoBehaviour {
 	public class NotificationEvent : UnityEvent<notification>{}
 
 	List<notification> notifications = new List<notification>();
+	// The events list for the add and remove events.
 	public NotificationEvent onAdd = new NotificationEvent();
 	public NotificationEvent onRemove = new NotificationEvent();
 
@@ -82,6 +90,25 @@ public class NotificationManager : MonoBehaviour {
 	/// <returns> An array with all the notifications. </returns>
 	public notification[] GetNotifications(){
 		return notifications.ToArray();
+	}
+
+	void OnDestroy(){
+		onAdd.RemoveAllListeners();
+		onRemove.RemoveAllListeners();
+	}
+
+
+
+	void Start(){
+		StartCoroutine(AddNotifications());
+	}
+
+	IEnumerator AddNotifications(){
+		yield return new WaitForSeconds(2);
+		for(int i = 0; i < 5; ++i){
+			AddNotification(new notification("Notification " + i, Color.black, "Some random text", Color.black));
+			yield return new WaitForSeconds(2);
+		}
 	}
 }
 }
