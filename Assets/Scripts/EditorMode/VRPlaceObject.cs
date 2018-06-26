@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.ObjectUtil;
 
 namespace DemoAV.Editor.User{
 	public class VRPlaceObject : MonoBehaviour {
@@ -28,8 +29,25 @@ namespace DemoAV.Editor.User{
 		}
 
 
-		
+		Vector2 initSwipePos = Vector2.zero;
 		void Update () {
+
+			// Check swipe for rotation
+			Vector2 padPos = Controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0);
+			if(padPos != Vector2.zero && initSwipePos == Vector2.zero){
+				// User presses first
+				initSwipePos = padPos;
+			}
+			else if(padPos == Vector2.zero && initSwipePos != Vector2.zero) {
+				// User swipes
+				if(padPos.x > initSwipePos.x)
+					modifyObjScript.RotateObject(-1);
+				else
+					modifyObjScript.RotateObject(1);
+				
+				initSwipePos = Vector2.zero;
+			}
+				
 
 			// If I have chosen an obj and I need to place it
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.ObjectUtil;
 
 namespace DemoAV.Editor.User{
 
@@ -10,9 +11,6 @@ namespace DemoAV.Editor.User{
 		public delegate void DeselectAction();
 		public static event SelectAction select;
 		public static event DeselectAction deselect;
-		public static event SelectAction menuSelect;
-		public static event DeselectAction menuDeselect;
-		public static event SelectAction menuPress;
 
 		private SteamVR_TrackedObject trackedObj;
 		private SteamVR_Controller.Device Controller {
@@ -36,7 +34,6 @@ namespace DemoAV.Editor.User{
 		void Start () {
 			furnitureMask = LayerMask.GetMask("FurnitureLayer");
 			lineRenderer = GetComponent<UpdateLineRenderer>();
-//			lineRenderer.enabled = false;
 		}
 		
 		// Update is called once per frame

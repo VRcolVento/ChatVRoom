@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using DemoAV.Editor.ObjectUtil;
 
 [CreateAssetMenu] 
 public class PrefabDictonary : ScriptableObject {

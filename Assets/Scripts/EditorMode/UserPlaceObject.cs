@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.ObjectUtil;
 
 public class UserPlaceObject : MonoBehaviour {
 

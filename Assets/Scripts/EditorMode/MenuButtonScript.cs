@@ -15,14 +15,15 @@ public class MenuButtonScript : MonoBehaviour {
 	
 	void Start () {
 		defaultColor = GetComponent<Image>().color;
-		UserChooseObject.menuSelect += OnPointerEnter;
-		UserChooseObject.menuDeselect += OnPointerExit;
-		UserChooseObject.menuPress += Press;
+		SelectMenuItem.menuSelect += OnPointerEnter;
+		SelectMenuItem.menuDeselect += OnPointerExit;
+		SelectMenuItem.menuPress += Press;
 	}
 
 	public void Press(GameObject obj) {
 		if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
-			buttonAction(this.name);
+			GetComponent<Image>().color = new Color32(224, 0, 0, 77); // EUis	
+//			buttonAction(this.name);
 	}
 
 	public void OnPointerEnter(GameObject obj) {
@@ -38,17 +39,17 @@ public class MenuButtonScript : MonoBehaviour {
 
 		switch (name)
 		{
-			case "SaveBg":
+			case "3DBtn1":
 				SceneController.Dictionary.Save();
 				Debug.Log("ROOM SAVED");
 				// TODO: Add Confirmation yes/no
 				break;
-			case "LoadBg":
+			case "3DBtn2":
 				SceneController.Dictionary.Load();
 				Debug.Log("ROOM LOADED");
 				// TODO: Reload scene
 				break;
-			case "ExitBg":
+			case "3DBtn3":
 				// TODO exit
 				Debug.Log("TODO: EXIT");
 				break;
