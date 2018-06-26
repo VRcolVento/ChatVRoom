@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class InteractionLaser : MonoBehaviour {
 
-	static LayerMask layerMask = 1 << 12;
+	static LayerMask layerMask;
 	// The color of the ray.
 	public Color color = Color.red;
 	// The thickness of the ray.
     public float thickness = 0.002f;
 	// The laser and its father.
 	GameObject laser, holder;
+	Material laserMaterial;
 
 	// Use this for initialization
 	void Start () {
@@ -26,10 +27,13 @@ public class InteractionLaser : MonoBehaviour {
         laser.transform.localPosition = new Vector3(0f, 0f, 50f);
 		laser.transform.localRotation = Quaternion.identity;
 
-		Material newMaterial = new Material(Shader.Find("Unlit/Color"));
-        newMaterial.SetColor("_Color", color);
-        laser.GetComponent<MeshRenderer>().material = newMaterial;
+		laserMaterial = new Material(Shader.Find("Unlit/Color"));
+        laserMaterial.SetColor("_Color", color);
+        laser.GetComponent<MeshRenderer>().material = laserMaterial;
 		laser.SetActive(false); // Hide the laser.
+
+		// Set the hitable layers.
+		layerMask = LayerMask.GetMask("Menu Layer", "Interactable Layer");
 	}
 	
 	// Update is called once per frame
@@ -40,9 +44,16 @@ public class InteractionLaser : MonoBehaviour {
 
 		// Show the laser if it is colliding with interactable object.
 		if(bHit) {
+			Debug.Log("OK");
 			laser.SetActive(true);
             laser.transform.localScale = new Vector3(thickness, thickness, hit.distance);
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);
+
+			// Chnage color based on hit object.
+			if(hit.transform.gameObject.layer == 11)
+        		laserMaterial.SetColor("_Color", Color.blue);
+			else
+       			laserMaterial.SetColor("_Color", color);
         }
 		else
 			laser.SetActive(false);

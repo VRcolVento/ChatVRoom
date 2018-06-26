@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
+
+using DemoAV.Common;
 
 public class NotificationMenuMiniCanvas : MonoBehaviour {
 	static Vector3 bigSize = new Vector3(0.004f, 0.001f, 1), smallSize;
@@ -16,6 +17,11 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 		body = GetComponent<Rigidbody>();
 		GetComponent<BoxCollider>().size = GetComponent<RectTransform>().sizeDelta;
 		smallSize = transform.localScale;
+	}
+
+	void Start() {
+		GameObject.Find("RightController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, GrabCanvas);
+		GameObject.Find("RightController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.TRIGGER, ReleaseCanvas);
 	}
 
 	/// <summary>
@@ -69,14 +75,22 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 	}
 
 	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetMouseButtonDown(1)){
-			if(isGrabbed)
-				Release();
-			else if(toucher)
-				Grab(toucher);
-		}
+	/// <summary>
+	/// 	The wrapper to grab function for key handler.
+	/// </summary>
+	/// <param name="hit"></param>
+	void GrabCanvas (RaycastHit hit) {
+		if(toucher)
+			Grab(toucher);
+	}
+
+	/// <summary>
+	/// 	The wrapper to release function for key handler.
+	/// </summary>
+	/// <param name="hit"></param>
+	void ReleaseCanvas (RaycastHit hit) {
+		if(isGrabbed)
+			Release();
 	}
 
 	void OnTriggerEnter(Collider collider){
@@ -85,5 +99,10 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 
 	void OnTriggerExit(){
 		toucher = null;
+	}
+
+	void OnDisable() {
+		GameObject.Find("RightController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, GrabCanvas);
+		GameObject.Find("RightController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.TRIGGER, ReleaseCanvas);
 	}
 }

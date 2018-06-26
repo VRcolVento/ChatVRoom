@@ -26,7 +26,6 @@ public class NotificationMenu : MonoBehaviour {
 		menuObj.transform.SetParent(transform);	
 		menuObj.transform.localPosition = new Vector3(0, 0, 0);
 		menuObj.transform.localRotation = Quaternion.identity;
-		menuObj.transform.localScale = new Vector3(0.002f, 0.005f, 0);
 
 		// Register events.
 		manager = GameObject.Find("CVRREventSystem").GetComponent<NotificationManager>();
@@ -51,7 +50,10 @@ public class NotificationMenu : MonoBehaviour {
 		collider.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 0.01f);
 
 		newNot.transform.SetParent(menuObj.transform.Find("Scroll View/Viewport/Content"));
+		newNot.transform.localPosition = Vector3.zero;
 		newNot.transform.localScale = new Vector3(1, 1, 1);
+		newNot.transform.localRotation = Quaternion.identity;
+		newNot.layer = 11;
 
 		not.descriptionText = notification.text;
 		not.descriptionColor = notification.textColor;
