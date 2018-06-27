@@ -44,9 +44,6 @@ public class NotificationCanvas : MonoBehaviour {
 		TextMeshProUGUI tmp = newNot.transform.Find("Text").GetComponent<TextMeshProUGUI>();
 		tmp.text = notification.title;
 		tmp.color = notification.titleColor;
-
-		// Send haptic feedback.
-		GameObject.Find("LeftController").GetComponent<ControllerFunctions>().Vibrate(3999);
 	}
 
 	void OnDisable(){

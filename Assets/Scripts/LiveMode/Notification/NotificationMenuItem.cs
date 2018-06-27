@@ -56,22 +56,13 @@ public class NotificationMenuItem : MonoBehaviour {
 	/// <param name="hit"></param>
 	void TriggerEvent(RaycastHit hit){
 		// If the object has been touched and the mouse has been pressed, delete it from menu.
-		if(enabled && toucher){
+		if(hit.transform.gameObject == gameObject){
 			if(transform.parent.gameObject.name != "Layout")
 				RemoveFromMenu();
 
 			canvas.GetComponent<NotificationMenuMiniCanvas>().Grab(toucher);
 			enabled = false;
 		}
-	}
-
-	void OnTriggerEnter(Collider collider){
-		if(collider.gameObject.GetComponent<FixedJoint>() == null)
-			toucher = collider.gameObject;
-	}
-
-	void OnTriggerExit(){
-		toucher = null;
 	}
 
 	private void OnDisable() {

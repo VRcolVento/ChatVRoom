@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
 /// <summary>
 /// 	The class that manages the little notification menu of the controller.
 /// </summary>
 public class NotificationMenu : MonoBehaviour {
-	// The menu prefab.
 	public GameObject menuPrefab;
 	// The canvas in which put item once removed from menu.
 	public GameObject miniCanvas;
+	// The notification popup object.
+	Transform notificationPopup;
+	bool hideNotification, isHidingNotification; 
 	// The menu instance.
 	GameObject menuObj;
 	// The notification manager.
@@ -30,6 +33,10 @@ public class NotificationMenu : MonoBehaviour {
 		// Register events.
 		manager = GameObject.Find("CVRREventSystem").GetComponent<NotificationManager>();
 		manager.onAdd.AddListener(AddNotification);
+		manager.onAdd.AddListener(PopupNotification);
+
+		// Get notification popup instance.
+		notificationPopup = transform.Find("Popup");
 	}
 	
 	/// <summary>
@@ -68,8 +75,43 @@ public class NotificationMenu : MonoBehaviour {
 		text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
 	}
 
-	void OnDestroy(){
+	/// <summary>
+	/// 	Shows a little notification on the controller.
+	/// </summary>
+	/// <param name="notification"> The notification to show. </param>
+	void PopupNotification(NotificationManager.notification notification){
+		// Edit the popup notification and show it.
+		TextMeshProUGUI text = notificationPopup.Find("Text").GetComponent<TextMeshProUGUI>();
+		text.text = notification.title;
+		text.color = notification.titleColor;
+
+		notificationPopup.gameObject.SetActive(true);
+
+		hideNotification = false;
+		if(!isHidingNotification)
+			StartCoroutine(HidePopupNotification());
+
+		// Send haptic feedback.
+		GameObject.Find("LeftController").GetComponent<ControllerFunctions>().Vibrate(90, 4000);
+	}
+
+	/// <summary>
+	/// 	Hides the popup notification.
+	/// </summary>
+	/// <returns></returns>
+	IEnumerator HidePopupNotification(){
+		isHidingNotification = true;
+		while(!hideNotification){
+			hideNotification = true;
+			yield return new WaitForSeconds(2);
+		}
+		isHidingNotification = false;
+		notificationPopup.gameObject.SetActive(false);
+	}
+
+	void OnDisable(){
 		manager.onAdd.RemoveListener(AddNotification);
+		manager.onAdd.RemoveListener(PopupNotification);
 	}
 }
 }
