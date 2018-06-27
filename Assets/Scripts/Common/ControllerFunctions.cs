@@ -22,7 +22,7 @@ public class ControllerFunctions : MonoBehaviour {
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 	}
 
-	void Udpate(){
+	void Update(){
 		// Vibrate the controller.
 		if(vibration.duration > 0){
 			controller.TriggerHapticPulse(vibration.intensity);

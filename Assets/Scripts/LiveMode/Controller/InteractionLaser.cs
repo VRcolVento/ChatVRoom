@@ -44,7 +44,6 @@ public class InteractionLaser : MonoBehaviour {
 
 		// Show the laser if it is colliding with interactable object.
 		if(bHit) {
-			Debug.Log("OK");
 			laser.SetActive(true);
             laser.transform.localScale = new Vector3(thickness, thickness, hit.distance);
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);

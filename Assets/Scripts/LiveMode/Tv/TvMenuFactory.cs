@@ -34,7 +34,7 @@ public class TvMenuFactory : MonoBehaviour {
 				rightController = tr.gameObject;
 				
 		rightController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
-			if(hit.transform.gameObject.layer == 11) {
+			if(hit.transform.gameObject.layer == 12) {
 				activeMenu.SetSelected(hit.transform.gameObject.name);
 				activeMenu.Active(hit.transform.gameObject.name);
 			}

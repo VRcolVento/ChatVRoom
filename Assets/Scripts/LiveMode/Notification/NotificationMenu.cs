@@ -36,7 +36,7 @@ public class NotificationMenu : MonoBehaviour {
 		manager.onAdd.AddListener(PopupNotification);
 
 		// Get notification popup instance.
-		notificationPopup = transform.Find("Popup");
+		notificationPopup = transform.Find("Notification Popup");
 	}
 	
 	/// <summary>
