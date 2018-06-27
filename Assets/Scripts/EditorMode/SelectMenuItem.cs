@@ -12,6 +12,7 @@ public class SelectMenuItem : MonoBehaviour {
 
 	private SteamVR_TrackedObject trackedObj;
 
+
 	private SteamVR_Controller.Device Controller {
 		get { return SteamVR_Controller.Input((int)trackedObj.index); }
 	}
@@ -20,7 +21,7 @@ public class SelectMenuItem : MonoBehaviour {
 	private int menuMask;
 
 	void Start () {
-		menuMask = LayerMask.GetMask("EditorMenuLayer");
+		menuMask = LayerMask.GetMask("Menu Layer");
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 		lineRenderer = GetComponent<UpdateLineRenderer>();
 	}

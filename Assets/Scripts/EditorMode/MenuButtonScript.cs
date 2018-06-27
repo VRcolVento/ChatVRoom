@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DemoAV.Editor.User;
 
 /* 
 	Script to handle the callbacks for the user menu: 
@@ -58,8 +59,8 @@ public class MenuButtonScript : MonoBehaviour {
 
 	public void OnDestroy() {
 
-		UserChooseObject.menuSelect -= OnPointerEnter;
-		UserChooseObject.menuDeselect -= OnPointerExit;
-		UserChooseObject.menuPress -= Press;
+		SelectMenuItem.menuSelect -= OnPointerEnter;
+		SelectMenuItem.menuDeselect -= OnPointerExit;
+		SelectMenuItem.menuPress -= Press;
 	}
 }
