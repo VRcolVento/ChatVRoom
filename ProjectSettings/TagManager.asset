@@ -24,7 +24,7 @@ TagManager:
   - 
   - RoomLayer
   - FurnitureLayer
-  - 
+  - EditorMenuLayer
   - Menu Layer
   - Interactable Layer
   - 
