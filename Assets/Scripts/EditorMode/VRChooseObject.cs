@@ -110,7 +110,7 @@ namespace DemoAV.Editor.User{
 
 
 			placingScript.setObject(objToPlace, btnText.text);
-			Debug.Log("shgfdsahgfdsagfdsahgf");
+
 			objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
 
 			// Update status: switch working scripts
