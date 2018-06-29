@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DemoAV.Editor.User;
 
-/* 
-	Script to handle the callbacks for the user menu: 
-		Save
-		Load
-		Exit
-*/
+/// <summary>
+/// Class to handle the the callbacks for the user menu.
+/// </summary>
 public class MenuButtonScript : MonoBehaviour {
 
 	private Color32 defaultColor;
@@ -21,23 +18,35 @@ public class MenuButtonScript : MonoBehaviour {
 		SelectMenuItem.menuPress += Press;
 	}
 
-	public void Press(GameObject obj) {
-		if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
+	
+	/// <summary>
+	/// Button pressed
+	/// <para name="btn">The pressed button</para>
+	/// </summary>
+	public void Press(GameObject btn) {
+		if(btn != null && GameObject.ReferenceEquals(btn, this.gameObject))
 			GetComponent<Image>().color = new Color32(224, 0, 0, 77); // EUis	
 //			buttonAction(this.name);
 	}
 
+	/// <summary>
+	/// Button enter
+	/// <para name="btn">The entered button</para>
+	/// </summary>
 	public void OnPointerEnter(GameObject obj) {
 		if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
 			GetComponent<Image>().color = new Color32(224, 243, 74, 77); // giallino		
 	}
 
+	/// <summary>
+	/// Button exit
+	/// </summary>
 	public void OnPointerExit() {
 		GetComponent<Image>().color = defaultColor;
 	}
 
 	private void buttonAction(string name) {
-
+			// TODO later
 		switch (name)
 		{
 			case "3DBtn1":

@@ -4,78 +4,74 @@ using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 using UnityEngine.UI;
 
+
 namespace DemoAV.Editor.User{
 
+	/// <summary>
+	/// Class to handle the object selection by the user.
+	/// This class is intended to use in VR environment.
+	/// </summary>
 	public class VRChooseObject : MonoBehaviour {
 
-		public delegate void SelectAction(GameObject obj);
-		public delegate void DeselectAction();
-		public static event SelectAction select;
-		public static event DeselectAction deselect;
-		public static event SelectAction menuSelect;
-		public static event DeselectAction menuDeselect;
-		public static event SelectAction menuPress;
-
+		// The steam VR controller
 		private SteamVR_TrackedObject trackedObj;
 		private SteamVR_Controller.Device Controller {
 			get { return SteamVR_Controller.Input((int)trackedObj.index); }
 		}
 
-		UpdateLineRenderer lineRenderer;
-		string prefabName = "";
-//		GameObject objToPlace = null;
+		// Delegates
+
+		/// <summary>
+		/// Select an object
+		/// <para name="obj">The object to selct</para>
+		/// </summary>
+		public delegate void SelectAction(GameObject obj);
+
+		/// <summary>
+		/// Deselect
+		/// </summary>
+		public delegate void DeselectAction();
+
+		// Events
+		public static event SelectAction select;
+		public static event DeselectAction deselect;
+
+		// Reference to the placing script, to activate after the user has chosen the object
 		VRPlaceObject placingScript;
 
-		// Mask
+		// Masks
 		int furnitureMask;
 		private int menuMask;
+
+		UpdateLineRenderer lineRenderer;
 
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
 		}
 
-		// Use this for initialization
 		void Start () {
 			furnitureMask = LayerMask.GetMask("FurnitureLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
 			lineRenderer = GetComponent<UpdateLineRenderer>();
 		}
 		
-		// Update is called once per frame
 		void Update () {
 
-			/*			
-			if (chooseFurniture(out objToPlace)) {
-
-				placingScript.setObject(objToPlace, prefabName);
-				objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
-
-				// Update status: switch working scripts
-				this.enabled = false;
-				placingScript.enabled = true;
-			}
-			*/
-
-			// Check if the user wants to modify an already placed furniture
 			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit, 1000f, furnitureMask)) {
+				// Check if the user is aiming an already placed object
 
 				GameObject obj = hit.transform.gameObject;
 
-				if(deselect != null) deselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
+				if(deselect != null) deselect(); // Call Deselect event: otherwise if objects overlap and they all stay blue
 				if(select != null) select(obj); // Call Select event
 
 				if(Controller.GetHairTriggerDown()) {
-
-					placingScript.setObject(obj, obj.name);
-
-					// Update status: switch working scripts
-					this.enabled = false;
-					placingScript.enabled = true;
+					// Activate the modification phase for the object
+					switchMode(obj, obj.name);
 				}
 			}
 			else {
@@ -88,105 +84,54 @@ namespace DemoAV.Editor.User{
 
 		}
 
-
-
-
 		void OnEnable() {
-//			objToPlace = null;
+			// When active, add listener for menu buttons
 			SelectMenuItem.menuPress += chooseObjectFromEvent;
 		}		
 
 		void OnDisable() {
+			// When not active, remove listener for menu buttons
 			SelectMenuItem.menuPress -= chooseObjectFromEvent;
 		}
 
 
+		/// <summary>
+		/// Listener for menu button pressed: load the selected prefab and switch to placing phase
+		/// <para name="menuBtn">The pressed menu button</para>
+		/// </summary>
+		void chooseObjectFromEvent(GameObject menuBtn) {
 
-		void chooseObjectFromEvent(GameObject obj) {
-
-			Text btnText = GameObject.Find(obj.name + "/Text").GetComponent<Text>();
-
+			Text btnText = GameObject.Find(menuBtn.name + "/Text").GetComponent<Text>();
 			GameObject objToPlace = loadResource(btnText.text);
 
+			switchMode(objToPlace, btnText.text);
+		}
 
-			placingScript.setObject(objToPlace, btnText.text);
+		/// <summary>
+		/// Helper to load a prefab from Resources folder
+		/// <para name="res">The name of the prefab</para>
+		/// </summary>
+		private GameObject loadResource(string res) {
 
-			objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
+			return Instantiate(Resources.Load("EditorPrefabs/Furnitures/" + res, typeof(GameObject)),
+					new Vector3(0, 5, 0), Quaternion.identity) as GameObject;
+		}
+
+		/// <summary>
+		/// Helper to pass data to placing script
+		/// <para name="obj">The object to place</para>
+		/// <para name="name">The name of object to place</para>
+		/// </summary>
+		private void switchMode(GameObject obj, string name) {
+
+			// Tell to the placing script the object to modify
+			placingScript.setObject(obj, name); // TODO cambiare btnText.text con objToPlace.name??
+			// Remove selection events for the object during the placing phase
+			obj.GetComponent<Interactible>().RemoveSelectionEvent();
 
 			// Update status: switch working scripts
 			this.enabled = false;
-			placingScript.enabled = true;			
+			placingScript.enabled = true;	
 		}
-
-
-		bool chooseFurniture(out GameObject newObject){
-
-			/* 
-			if(Input.GetKeyDown ("1")){
-				newObject = loadResource("Tavolo");
-				return true;
-			}
-
-			newObject = null;
-			return false;
-			*/
-			/* 
-			RaycastHit hit;
-			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-
-			if(Physics.Raycast(ray, out hit, 1000f, menuMask)) {
-
-				GameObject obj = hit.transform.gameObject;
-				lineRenderer.UpdateEnd(hit.point);
-
-				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
-				if(menuSelect != null) menuSelect(obj); // Call Select event
-
-
-				if(Controller.GetHairTriggerDown()) {
-
-					if(menuPress != null) menuPress(obj);
-
-					
-
-					Text btnText = GameObject.Find(hit.transform.gameObject.name + "/Text").GetComponent<Text>();
-
-
-
-
-
-					
-					if(btnText.text == "Tavolo"){
-						newObject = loadResource("Tavolo");
-						return true;
-					}
-					if(btnText.text == "Quadro"){
-						newObject = loadResource("Quadro");
-						return true;
-					}
-
-
-				}
-				
-			}
-			else {
-				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
-				lineRenderer.ResetEnd();
-			}
-			*/
-
-			newObject = null;
-			return false;
-		}
-
-
-		private GameObject loadResource(string res) {
-
-			prefabName = res;
-			return Instantiate(Resources.Load("EditorPrefabs/" + res, typeof(GameObject)),
-					new Vector3(0, 5, 0), Quaternion.identity) as GameObject;
-		}	
 	}
-
-
 }

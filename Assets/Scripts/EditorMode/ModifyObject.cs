@@ -11,21 +11,27 @@ using UnityEngine;
 */
 
 namespace DemoAV.Editor.ObjectUtil {
+
+	/// <summary>
+	/// Class to handle the object modification by the user.
+	/// This class checks if the object is colliding with other objects.
+	/// </summary>
 	public class ModifyObject : MonoBehaviour {
-		
+
+		// Object materials during placement		
 		public Material feasibleMat;
 		public Material unfeasibleMat;
 
-		/* Handle Collision with other Interactible Objects */
+		// Handle Collision with other Interactible Objects
 		private bool isColliding = false;
 		private HashSet<GameObject> interactibleCollisionList = new HashSet<GameObject>();
 
-		/* User modifications */
+		// User modifications
 		private float rotY;
 		private Quaternion final;
 
 
-		/* Getters & Setters */
+		// Getters & Setters
 		public bool IsColliding{
 
 			get { return isColliding; }
@@ -87,6 +93,10 @@ namespace DemoAV.Editor.ObjectUtil {
 			}
 		}
 
+		/// <summary>
+		/// Rotate the oject.
+		/// <para name="clockwise">1 if clockwise, -1 otherwise</para>
+		/// </summary>
 		public void RotateObject(int clockwise) {
 
 			rotY = (rotY + 90*clockwise) % 360;

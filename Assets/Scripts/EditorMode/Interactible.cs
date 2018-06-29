@@ -4,10 +4,17 @@ using UnityEngine;
 using DemoAV.Editor.User;
 
 namespace DemoAV.Editor.ObjectUtil {
+
+	/// <summary>
+	/// Class to handle the interaction with an object.
+	/// This class pushes the object out the walls after placement
+	/// </summary>
 	public class Interactible : MonoBehaviour {
 
 		// Store the walls I am colliding with
 		private HashSet<GameObject> wallCollisionList = new HashSet<GameObject>();
+
+		// Materials
 		public Material selectedMaterial;
 		public Material defaultMaterial;
 		public Material DefaultMaterial {

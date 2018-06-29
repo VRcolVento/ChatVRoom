@@ -4,33 +4,48 @@ using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 
 namespace DemoAV.Editor.User{
+
+	/// <summary>
+	/// Class to handle the placement of an object by the user.
+	/// This class is intended to use in VR environment.
+	/// </summary>
 	public class VRPlaceObject : MonoBehaviour {
 
+		// The steam VR controller
 		private SteamVR_TrackedObject trackedObj;
 		private SteamVR_Controller.Device Controller {
 			get { return SteamVR_Controller.Input((int)trackedObj.index); }
 		}
 
+		// Reference to the choosing script, to activate after the user has placed the object
 		VRChooseObject chooseScript;
 
+		// Information about the object to place
 		GameObject objToPlace;
 		string objName;
+		
+		// Refernce to the modification script internal to the object
 		ModifyObject modifyObjScript;
 		UpdateLineRenderer lineRenderer;
 
+		// Masks
 		int roomMask;
+
+		// Handle swipe for rotation
+		Vector2 initSwipePos = Vector2.zero;	
 
 		void Awake() {
 			roomMask = LayerMask.GetMask("RoomLayer");
-			Debug.Log("Room layer " + roomMask);
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
 			lineRenderer = GetComponent<UpdateLineRenderer>();
 		}
 
 
-		Vector2 initSwipePos = Vector2.zero;
+
 		void Update () {
+
+			// Rotate if the user swipes
 
 			// Check swipe for rotation
 			Vector2 padPos = Controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0);
@@ -49,36 +64,37 @@ namespace DemoAV.Editor.User{
 			}
 				
 
-			// If I have chosen an obj and I need to place it
+			// Update object position
 
 			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
-			size = Vector3.Scale (size, new Vector3(0.5f, 0.5f, 0.5f));
+			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
 
 			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-
 			RaycastHit hit;
-			bool hitSomething = Physics.Raycast(ray, out hit, 1000f, roomMask);
 
-			if (hitSomething) {
+			if (Physics.Raycast(ray, out hit, 1000f, roomMask)) {
 				// If I am hitting the room (filtered by the layer mask)
 
 				objToPlace.transform.position = hit.point;
 
 				// Vector3.Scale() == element wise product
-				objToPlace.transform.position += Vector3.Scale (size, hit.normal);
+				objToPlace.transform.position += Vector3.Scale(size, hit.normal);
 
 				if(objToPlace.tag == "Obj_Floor"){
-
+					// Constrain a floor object to stay on the floor
 					objToPlace.transform.position = new Vector3(objToPlace.transform.position.x,
 																size.y,
 																objToPlace.transform.position.z);
 				}
 			}
 
+
+			// Place the object
+
 			if(Controller.GetHairTriggerDown()) {
-				// Left mouse button, place the object
 
 				if(!modifyObjScript.IsColliding){
+					// Place only if is not colliding with any other objects
 
 					// Freeze the position and rotation of the placed object (altrimenti quando si cozzano si spostano)
 					Rigidbody objRb = objToPlace.GetComponent<Rigidbody>();
@@ -106,8 +122,13 @@ namespace DemoAV.Editor.User{
 			// TODO add code to remove object
 		}
 
+		/// <summary>
+		///	Set the information about the object to place
+		/// <para name="obj">The object to place</para>
+		/// <para name="name">The name of object to place</para>
+		/// </summary>
 		public void setObject(GameObject obj, string name) {
-			// Called by the UserController script to pass the data and activate this script
+			// Called by the VRChooseObject script to pass the data and activate this script
 
 			objToPlace = obj;
 			objName = name;
@@ -116,7 +137,9 @@ namespace DemoAV.Editor.User{
 		}
 
 
-		// Helpers
+		/// <summary>
+		///	Trigger the choosing phase and stop this one 
+		/// </summary>
 		private void switchMode(){
 			// Go back to choose mode
 

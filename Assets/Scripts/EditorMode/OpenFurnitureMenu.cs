@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace DemoAV.Editor.MenuUtil {
+
+	/// <summary>
+	/// Open the user's menu 
+	/// </summary>
 	public class OpenFurnitureMenu : MonoBehaviour {
 
 		public Canvas canvas;
 		public Transform lookTarget;
-		private Transform hand;
+		private Transform hand; // The left controller
 		
 		private List<Vector3> buttons;
-		private bool start = false;
 
-
-		public float height = 0.3f;
+		public float height = 0.2f;
 
 		void Start () {
 			
@@ -35,6 +37,9 @@ namespace DemoAV.Editor.MenuUtil {
 			transform.position = hand.position + Vector3.up*height;
 		}
 
+		/// <summary>
+		/// Menu animation
+		/// </summary>
 		IEnumerator SfogliaCoroutine() {
 
 			Transform child = transform.GetChild(0);
@@ -50,12 +55,18 @@ namespace DemoAV.Editor.MenuUtil {
 			yield return null;
 		}
 
+		/// <summary>
+		/// Open the menu
+		/// </summary>
 		public void OpenMenu() {
 
 			canvas.gameObject.SetActive(true);
 			StartCoroutine("SfogliaCoroutine");
 		}
 
+		/// <summary>
+		/// Close the menu
+		/// </summary>
 		public void CloseMenu() {
 
 			canvas.gameObject.SetActive(false);
