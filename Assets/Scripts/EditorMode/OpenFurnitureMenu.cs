@@ -33,8 +33,8 @@ namespace DemoAV.Editor.MenuUtil {
 		
 		void Update () {
 			
-			transform.LookAt(lookTarget);
-			transform.position = hand.position + Vector3.up*height;
+			canvas.gameObject.transform.LookAt(lookTarget);
+			canvas.gameObject.transform.position = hand.position + Vector3.up*height;
 		}
 
 		/// <summary>
