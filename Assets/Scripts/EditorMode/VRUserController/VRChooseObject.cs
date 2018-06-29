@@ -43,7 +43,7 @@ namespace DemoAV.Editor.User{
 		int furnitureMask;
 		private int menuMask;
 
-		UpdateLineRenderer lineRenderer;
+//		UpdateLineRenderer lineRenderer;
 
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -53,12 +53,13 @@ namespace DemoAV.Editor.User{
 		void Start () {
 			furnitureMask = LayerMask.GetMask("FurnitureLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
-			lineRenderer = GetComponent<UpdateLineRenderer>();
+//			lineRenderer = GetComponent<UpdateLineRenderer>();
 		}
 		
 		void Update () {
 
-			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
+//			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
+			Ray ray = new Ray(transform.position, transform.position);
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit, 1000f, furnitureMask)) {

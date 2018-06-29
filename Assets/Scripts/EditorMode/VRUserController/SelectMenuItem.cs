@@ -17,19 +17,20 @@ public class SelectMenuItem : MonoBehaviour {
 		get { return SteamVR_Controller.Input((int)trackedObj.index); }
 	}
 
-	private UpdateLineRenderer lineRenderer;
+//	private UpdateLineRenderer lineRenderer;
 	private int menuMask;
 
 	void Start () {
 		menuMask = LayerMask.GetMask("Menu Layer");
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
-		lineRenderer = GetComponent<UpdateLineRenderer>();
+//		lineRenderer = GetComponent<UpdateLineRenderer>();
 	}
 	
 
 	void Update () {
 
-		Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
+//		Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
+		Ray ray = new Ray(transform.position, transform.position);
 
 		RaycastHit hit;
 

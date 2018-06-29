@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.StorageUtility;
 
-public class SceneController : MonoBehaviour {
+namespace DemoAV.Editor.SceneControl {
 
-	private static PrefabDictonary dictionaryInstance;
+	public class SceneController : MonoBehaviour {
+
+		private static PrefabDictonary dictionaryInstance;
 
 
-	public static PrefabDictonary Dictionary {
-		get { return dictionaryInstance; }
+		public static PrefabDictonary Dictionary {
+			get { return dictionaryInstance; }
+		}
+		
+		void Start () {
+			dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictonary>();
+		}
 	}
-	
-	void Start () {
-		dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictonary>();
-	}
+
 }

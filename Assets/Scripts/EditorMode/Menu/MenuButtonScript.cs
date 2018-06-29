@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DemoAV.Editor.User;
+using DemoAV.Editor.SceneControl;
 
 /// <summary>
 /// Class to handle the the callbacks for the user menu.
