@@ -59,7 +59,7 @@ namespace DemoAV.Editor.User{
 		void Update () {
 
 //			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-			Ray ray = new Ray(transform.position, transform.position);
+			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit, 1000f, furnitureMask)) {
@@ -73,6 +73,7 @@ namespace DemoAV.Editor.User{
 				if(Controller.GetHairTriggerDown()) {
 					// Activate the modification phase for the object
 					switchMode(obj, obj.name);
+					Debug.Log("swithcin");
 				}
 			}
 			else {
