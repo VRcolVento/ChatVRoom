@@ -16,7 +16,6 @@ namespace DemoAV.Editor.MenuUtil {
 		void Start () {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 		}
-		
 
 		void Update () {
 			

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SelectMenuItem : MonoBehaviour {
 
@@ -30,11 +31,11 @@ public class SelectMenuItem : MonoBehaviour {
 	void Update () {
 
 //		Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-		Ray ray = new Ray(transform.position, transform.position);
+		Ray ray = new Ray(transform.position, transform.forward);
 
 		RaycastHit hit;
 
-		if(Physics.Raycast(ray, out hit, 1000f, menuMask)) {
+		if(Physics.Raycast(ray, out hit, Mathf.Infinity, menuMask)) {
 
 			GameObject obj = hit.transform.gameObject;
 

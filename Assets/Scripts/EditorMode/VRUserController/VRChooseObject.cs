@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 using UnityEngine.UI;
-
+using TMPro;
 
 namespace DemoAV.Editor.User{
 
@@ -102,10 +102,10 @@ namespace DemoAV.Editor.User{
 		/// </summary>
 		void chooseObjectFromEvent(GameObject menuBtn) {
 
-			Text btnText = GameObject.Find(menuBtn.name + "/Text").GetComponent<Text>();
-			GameObject objToPlace = loadResource(btnText.text);
-
-			switchMode(objToPlace, btnText.text);
+			Debug.Log(menuBtn.name);
+			string text = menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text;
+			GameObject objToPlace = loadResource(text);
+			switchMode(objToPlace, text);
 		}
 
 		/// <summary>

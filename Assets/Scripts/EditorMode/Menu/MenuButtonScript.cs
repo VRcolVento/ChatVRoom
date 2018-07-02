@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DemoAV.Editor.User;
 using DemoAV.Editor.SceneControl;
+using TMPro;
 
 /// <summary>
 /// Class to handle the the callbacks for the user menu.
@@ -36,7 +37,7 @@ public class MenuButtonScript : MonoBehaviour {
 	/// </summary>
 	public void OnPointerEnter(GameObject obj) {
 		if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
-			GetComponent<Image>().color = new Color32(224, 243, 74, 77); // giallino		
+			GetComponent<Image>().color = new Color32(224, 243, 74, 77); // giallino	
 	}
 
 	/// <summary>
