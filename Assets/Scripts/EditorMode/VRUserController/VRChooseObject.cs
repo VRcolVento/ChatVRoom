@@ -4,6 +4,7 @@ using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 using UnityEngine.UI;
 using TMPro;
+using DemoAV.Editor.MenuUtil;
 
 namespace DemoAV.Editor.User{
 
@@ -103,9 +104,9 @@ namespace DemoAV.Editor.User{
 		/// </summary>
 		void chooseObjectFromEvent(GameObject menuBtn) {
 
-			Debug.Log(menuBtn.name);
 			string text = menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text;
-			GameObject objToPlace = loadResource(text);
+			GameObject objToPlace = loadResource(menuBtn.GetComponent<ButtonPathInfo>().MyPath + "/" + text);
+
 			switchMode(objToPlace, text);
 		}
 
