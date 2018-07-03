@@ -19,15 +19,17 @@ namespace DemoAV.Editor.MenuUtil {
 		private List<Vector3> buttons;
 		private List<string> names;
 
-		
+		// Helpers
 		public float height = 0.2f;
 		private int size = 30;
 		private int offset = 5;
+		private int childOffset = 2;
 		private Vector3 initPosition;
 
 		void Start () {
 			
-			Transform saveBtn = transform.GetChild(0);
+			Transform saveBtn = transform.GetChild(0).GetChild(0);
+			Transform exitBtn = transform.GetChild(0).GetChild(1);
 			RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 			string[] files = Directory.GetFiles("./Assets/Resources/EditorPrefabs/Furnitures/");
 
@@ -50,7 +52,9 @@ namespace DemoAV.Editor.MenuUtil {
 			// Get reference to hand and setup position
 			hand = GameObject.Find("Controller (left)").transform;
 			transform.position = hand.position + hand.forward*7;
-			
+
+							
+			// Create the furniture buttons			
 			for(int i=0; i<names.Count; i++){
 
 				GameObject btn = Instantiate(Resources.Load("EditorPrefabs/3DBtn", typeof(GameObject)),
@@ -62,7 +66,12 @@ namespace DemoAV.Editor.MenuUtil {
 				buttons.Add(initPosition);
 			}		
 			
-			saveBtn.localPosition = new Vector3(canvasRect.sizeDelta.x / 2, saveBtn.localPosition.y, saveBtn.localPosition.z);
+			// Set save/exit buttons position on the thirds of the canvas
+			float btnOffset = (canvasRect.sizeDelta.x / 2) - ((1.0f / 3.0f) * canvasRect.sizeDelta.x);
+//			saveBtn.localPosition = new Vector3((1.0f / 3.0f) * canvasRect.sizeDelta.x, saveBtn.localPosition.y, 0);
+//			saveBtn.localPosition = new Vector3(canvasRect.sizeDelta.x / 2, saveBtn.localPosition.y, saveBtn.localPosition.z);
+			saveBtn.localPosition = new Vector3(-btnOffset, saveBtn.localPosition.y, saveBtn.localPosition.z);
+			exitBtn.localPosition = new Vector3(btnOffset, saveBtn.localPosition.y, saveBtn.localPosition.z);
 		}
 		
 		void Update () {
@@ -77,16 +86,16 @@ namespace DemoAV.Editor.MenuUtil {
 		IEnumerator SfogliaCoroutine() {
 
 			Transform child = transform.GetChild(0);
-			// BRutta condizione di uscita
-			while(child.GetChild(buttons.Count-1).position != buttons[buttons.Count-1] + new Vector3(size*buttons.Count-1, 0, 0)) {
+			// BRutta condizione di uscita TODO
+			while(true) {
 
 				for(int i=0; i<buttons.Count; i++)
-					child.GetChild(i+1).localPosition = Vector3.Lerp(child.GetChild(i+1).localPosition, buttons[i] + new Vector3((size + offset)*i, 0, 0), Time.deltaTime);
+					child.GetChild(i+childOffset).localPosition = Vector3.Lerp(child.GetChild(i+childOffset).localPosition, buttons[i] + new Vector3((size + offset)*i, 0, 0), Time.deltaTime);
 
 				yield return new WaitForEndOfFrame();
 			}
 
-			yield return null;
+//			yield return null;
 		}
 
 		/// <summary>
@@ -106,7 +115,7 @@ namespace DemoAV.Editor.MenuUtil {
 			canvas.gameObject.SetActive(false);
 			Transform child = transform.GetChild(0);				
 			for(int i=0; i<buttons.Count; i++)
-				child.GetChild(i+1).localPosition = initPosition;
+				child.GetChild(i+childOffset).localPosition = initPosition;
 			StopCoroutine("SfogliaCoroutine");	
 		}
 
