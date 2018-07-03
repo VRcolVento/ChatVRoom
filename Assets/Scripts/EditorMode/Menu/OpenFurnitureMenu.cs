@@ -81,7 +81,7 @@ namespace DemoAV.Editor.MenuUtil {
 					btn.transform.localPosition = initColumnPosition;
 
 					// Add to the buttons the folders contaings the models (e.g. Floor, Wall..)					
-					btn.AddComponent(Type.GetType("ButtonPathInfo"));
+					btn.AddComponent(Type.GetType("DemoAV.Editor.MenuUtil.ButtonPathInfo"));
 					btn.GetComponent<ButtonPathInfo>().MyPath = ExtractName(directories[i]);
 
 					buttonObjects[i].Add(btn);

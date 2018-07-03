@@ -39,6 +39,7 @@ namespace DemoAV.Editor.User{
 
 		// Reference to the placing script, to activate after the user has chosen the object
 		VRPlaceObject placingScript;
+		SelectMenuItem selectingScript;
 
 		// Masks
 		int furnitureMask;
@@ -49,6 +50,7 @@ namespace DemoAV.Editor.User{
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
+			selectingScript = GetComponent<SelectMenuItem>();
 		}
 
 		void Start () {
@@ -90,11 +92,13 @@ namespace DemoAV.Editor.User{
 		void OnEnable() {
 			// When active, add listener for menu buttons
 			SelectMenuItem.menuPress += chooseObjectFromEvent;
+			selectingScript.enabled = true;
 		}		
 
 		void OnDisable() {
 			// When not active, remove listener for menu buttons
 			SelectMenuItem.menuPress -= chooseObjectFromEvent;
+			selectingScript.enabled = false;
 		}
 
 
@@ -134,7 +138,7 @@ namespace DemoAV.Editor.User{
 
 			// Update status: switch working scripts
 			this.enabled = false;
-			placingScript.enabled = true;	
+			placingScript.enabled = true;
 		}
 	}
 }
