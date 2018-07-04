@@ -3,51 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SelectMenuItem : MonoBehaviour {
-
-	public delegate void SelectAction(GameObject obj);
-	public delegate void DeselectAction();
-	public static event SelectAction menuSelect;
-	public static event DeselectAction menuDeselect;
-	public static event SelectAction menuPress;
-
-	private SteamVR_TrackedObject trackedObj;
+namespace DemoAV.Editor.MenuUtil {
 
 
-	private SteamVR_Controller.Device Controller {
-		get { return SteamVR_Controller.Input((int)trackedObj.index); }
-	}
+	/// <summary>
+	/// Class to handle user interaction with the menu.
+	/// This class is intended to use in VR environment.
+	/// </summary>
+	public class SelectMenuItem : MonoBehaviour {
 
-//	private UpdateLineRenderer lineRenderer;
-	private int menuMask;
+		public delegate void SelectAction(GameObject obj);
+		public delegate void DeselectAction();
+		public static event SelectAction menuSelect;
+		public static event DeselectAction menuDeselect;
+		public static event SelectAction menuPress;
 
-	void Start () {
-		menuMask = LayerMask.GetMask("Menu Layer");
-		trackedObj = GetComponent<SteamVR_TrackedObject>();
-//		lineRenderer = GetComponent<UpdateLineRenderer>();
-	}
-	
+		private SteamVR_TrackedObject trackedObj;
 
-	void Update () {
 
-//		Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
-		Ray ray = new Ray(transform.position, transform.forward);
-
-		RaycastHit hit;
-
-		if(Physics.Raycast(ray, out hit, Mathf.Infinity, menuMask)) {
-
-			GameObject obj = hit.transform.gameObject;
-
-			if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
-			if(menuSelect != null) menuSelect(obj); // Call Select event
-
-			if(Controller.GetHairTriggerDown()) {
-				if(menuPress != null) menuPress(obj);
-			}
+		private SteamVR_Controller.Device Controller {
+			get { return SteamVR_Controller.Input((int)trackedObj.index); }
 		}
-		else {
-			if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
+
+		private int menuMask;
+
+		void Start () {
+			menuMask = LayerMask.GetMask("Menu Layer");
+			trackedObj = GetComponent<SteamVR_TrackedObject>();
+		}
+
+		void Update () {
+
+			Ray ray = new Ray(transform.position, transform.forward);
+
+			RaycastHit hit;
+
+			if(Physics.Raycast(ray, out hit, Mathf.Infinity, menuMask)) {
+
+				GameObject obj = hit.transform.gameObject;
+
+				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
+				if(menuSelect != null) menuSelect(obj); // Call Select event
+
+				if(Controller.GetHairTriggerDown()) {
+					if(menuPress != null) menuPress(obj);
+				}
+			}
+			else {
+				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
+			}
 		}
 	}
 }

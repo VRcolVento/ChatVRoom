@@ -44,8 +44,6 @@ namespace DemoAV.Editor.User{
 
 		void Update () {
 
-			// Rotate if the user swipes
-
 			// Check swipe for rotation
 			Vector2 padPos = Controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0);
 			if(padPos != Vector2.zero && initSwipePos == Vector2.zero){
@@ -64,7 +62,6 @@ namespace DemoAV.Editor.User{
 				
 
 			// Update object position
-
 			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
 			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
 
@@ -89,7 +86,6 @@ namespace DemoAV.Editor.User{
 
 
 			// Place the object
-
 			if(Controller.GetHairTriggerDown()) {
 
 				if(!modifyObjScript.IsColliding){
@@ -105,26 +101,39 @@ namespace DemoAV.Editor.User{
 										RigidbodyConstraints.FreezeRotationZ;
 					
 					// Save the object.
-					DictonaryEntity objEntity = objToPlace.GetComponent<DictonaryEntity>();
+					DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
 					if(objEntity.ID == -1){
 						// Not already stored
-						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objPath, objName, objToPlace.transform.position, objToPlace.transform.rotation);
+						objToPlace.GetComponent<DictionaryEntity>().AddEntity(objPath, objName, objToPlace.transform.position, objToPlace.transform.rotation);
 					} else {
 						// Already stored
-						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objEntity.ID, objToPlace.transform.position, objToPlace.transform.rotation);
+						objToPlace.GetComponent<DictionaryEntity>().AddEntity(objEntity.ID, objToPlace.transform.position, objToPlace.transform.rotation);
 					}
 					
 					switchMode();
 				} 
 			}
 
-			// TODO add code to remove object
+			// Remove object
+			if(false) { // TODO Find way to delete
+
+				DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
+				if(objEntity.ID != -1) {
+					// The object was previously stored: delete the entry in the dictionary
+					objEntity.RemoveEntity(objEntity.ID);
+				}
+
+				objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
+				Destroy(objToPlace);
+				switchMode();
+			}
 		}
 
 		/// <summary>
 		///	Set the information about the object to place
 		/// <para name="obj">The object to place</para>
 		/// <para name="name">The name of object to place</para>
+		/// <para name="path">The path of object to place</para>
 		/// </summary>
 		public void setObject(GameObject obj, string name, string path) {
 			// Called by the VRChooseObject script to pass the data and activate this script

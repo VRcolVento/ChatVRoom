@@ -6,20 +6,31 @@ using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 
 namespace DemoAV.Editor.StorageUtility {
-    
-    [CreateAssetMenu] 
-    public class PrefabDictonary : ScriptableObject {
 
+	/// <summary>
+	/// Class to store/load the room.
+	/// </summary>    
+    [CreateAssetMenu] 
+    public class PrefabDictionary : ScriptableObject {
+
+        /// <summary>
+        /// Class describing an object entity. It stores position and rotation of the object
+        /// </summary>
         [System.Serializable]
         private class Entity{
-            
+
+            // Name of the object            
             public string prefabName;
             [SerializeField]
+            // (sub)-Path of the object            
             private string path;
             [SerializeField]
+            // Position of the object            
             private float[] _position = new float[3];
             [SerializeField]
+            // Rotation of the object            
             private float[] _rotation = new float[4];
+            [SerializeField]
 
             public Entity(string path, string name, Vector3 position, Quaternion rotation){
                 this.path = path;
@@ -56,52 +67,76 @@ namespace DemoAV.Editor.StorageUtility {
                 set {this.path = value;}
             }
         }
-
-
+        ///
 
         private string _Name = "SignoraStanza";
-        
+        // Incremental ID
         private int currId;
         private Dictionary<int, Entity> dictionary;
         
-        private PrefabDictonary(){
+        private PrefabDictionary(){
             currId = 0;
             dictionary = new Dictionary<int, Entity>();
         }
 
         public string Name{
-            get{
-                return _Name;
-            }
-            set{
-                if(_Name == null)
-                    this._Name = value;
-            }
+            get{ return _Name; }
+            set{ if(_Name == null) this._Name = value; }
         }
 
-        // Modify an already existing element
+		/// <summary>
+		/// Add an entity to the dictionary. Overload in case that entity already exists
+		/// <para name="id">The object's id</para>
+		/// <para name="path">The object's (sub)path</para>
+		/// <para name="name">The object's name</para>
+		/// <para name="position">The object's position</para>
+		/// <para name="rotation">The object's rotation</para>
+		/// </summary>
         public void AddEntity(int id, string path, string name, Vector3 position, Quaternion rotation) {
             dictionary[id] = new Entity(path, name, position, rotation);
         }
 
-        // Add a new element to the dictionary
+		/// <summary>
+		/// Add an entity to the dictionary.
+		/// <para name="path">The object's (sub)path</para>
+		/// <para name="name">The object's name</para>
+		/// <para name="position">The object's position</para>
+		/// <para name="rotation">The object's rotation</para>
+		/// </summary>
         public int AddEntity(string path, string name, Vector3 position, Quaternion rotation){
             dictionary.Add(currId, new Entity(path, name, position, rotation));
             return currId++;
         }
 
+		/// <summary>
+		/// Remove an object from the dictionary
+		/// <para name="id">The object's id</para>
+		/// </summary>
         public void RemoveEntity(int id) {
             dictionary.Remove(id);
         }
 
+		/// <summary>
+		/// Update object position
+		/// <para name="id">The object's id</para>
+		/// <para name="position">The new object's position</para>
+		/// </summary>
         public void UpdatePosition(int id, Vector3 position){
             dictionary[id].position = position;
         }
 
+		/// <summary>
+		/// Update object rotation
+		/// <para name="id">The object's id</para>
+		/// <para name="rotation">The new object's rotation</para>
+		/// </summary>
         public void UpdateRotation (int id, Quaternion rotation) {
             dictionary[id].rotation = rotation;
         }
 
+		/// <summary>
+		/// Save the scene in the dictionary
+		/// </summary>
         public void Save(){
             BinaryFormatter binary  = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/Room_" + _Name + ".dat");
@@ -118,6 +153,9 @@ namespace DemoAV.Editor.StorageUtility {
             Debug.Log("Saved!!");
         }
 
+		/// <summary>
+		/// Load the scene from the dictionary
+		/// </summary>
         public void Load(){
             if(File.Exists(Application.persistentDataPath + "/Room_" + _Name + ".dat")){
                 BinaryFormatter binary = new BinaryFormatter();
@@ -128,7 +166,7 @@ namespace DemoAV.Editor.StorageUtility {
 
                 foreach(Entity en in entities){
                     GameObject currObj = Object.Instantiate(Resources.Load("EditorPrefabs/Furnitures/" + en.Path + "/" + en.prefabName), en.position, en.rotation) as GameObject;
-                    currObj.GetComponent<DictonaryEntity>().AddEntity(en.Path, en.prefabName, en.position, en.rotation);
+                    currObj.GetComponent<DictionaryEntity>().AddEntity(en.Path, en.prefabName, en.position, en.rotation);
                     freezeObject(currObj);
                     currObj.GetComponent<MeshRenderer>().material = currObj.GetComponent<Interactible>().DefaultMaterial;
                 }

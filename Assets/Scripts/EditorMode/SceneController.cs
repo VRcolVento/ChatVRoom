@@ -5,19 +5,19 @@ using DemoAV.Editor.StorageUtility;
 
 namespace DemoAV.Editor.SceneControl {
 
+	/// <summary>
+	/// Hook for the Dictionary to handle storage/load of the scene
+	/// </summary>
 	public class SceneController : MonoBehaviour {
 
-		private static PrefabDictonary dictionaryInstance;
+		private static PrefabDictionary dictionaryInstance;
 
-
-		public static PrefabDictonary Dictionary {
+		public static PrefabDictionary Dictionary {
 			get { return dictionaryInstance; }
 		}
 		
 		void Start () {
-			dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictonary>();
-			Debug.Log(dictionaryInstance);
+			dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictionary>();
 		}
 	}
-
 }

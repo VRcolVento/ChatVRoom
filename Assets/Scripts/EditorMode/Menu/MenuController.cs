@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DemoAV.Editor.MenuUtil {
+
+	/// <summary>
+	/// Class to detect menu open/close actions.
+	/// This class is intended to use in VR environment.
+	/// </summary>
 	public class MenuController : MonoBehaviour {
 
 		private SteamVR_TrackedObject trackedObj;

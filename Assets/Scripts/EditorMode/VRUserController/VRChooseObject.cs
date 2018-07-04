@@ -46,8 +46,6 @@ namespace DemoAV.Editor.User{
 		int furnitureMask;
 		private int menuMask;
 
-//		UpdateLineRenderer lineRenderer;
-
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
@@ -57,12 +55,10 @@ namespace DemoAV.Editor.User{
 		void Start () {
 			furnitureMask = LayerMask.GetMask("FurnitureLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
-//			lineRenderer = GetComponent<UpdateLineRenderer>();
 		}
 		
 		void Update () {
 
-//			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
 			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 			
@@ -116,7 +112,8 @@ namespace DemoAV.Editor.User{
 					SceneController.Dictionary.Save();
 					break;
 				case "Exit":
-					SceneController.Dictionary.Load();
+//					SceneController.Dictionary.Load();
+					Debug.Log("Esco");
 					break;
 				default:
 					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
