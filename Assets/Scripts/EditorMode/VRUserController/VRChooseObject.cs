@@ -5,6 +5,7 @@ using DemoAV.Editor.ObjectUtil;
 using UnityEngine.UI;
 using TMPro;
 using DemoAV.Editor.MenuUtil;
+using DemoAV.Editor.SceneControl;
 
 namespace DemoAV.Editor.User{
 
@@ -75,8 +76,7 @@ namespace DemoAV.Editor.User{
 
 				if(Controller.GetHairTriggerDown()) {
 					// Activate the modification phase for the object
-					switchMode(obj, obj.name);
-					Debug.Log("swithcin");
+					switchMode(obj, obj.name, "FIXME");
 				}
 			}
 			else {
@@ -91,27 +91,39 @@ namespace DemoAV.Editor.User{
 
 		void OnEnable() {
 			// When active, add listener for menu buttons
-			SelectMenuItem.menuPress += chooseObjectFromEvent;
+			SelectMenuItem.menuPress += buttonPressed;
 			selectingScript.enabled = true;
 		}		
 
 		void OnDisable() {
 			// When not active, remove listener for menu buttons
-			SelectMenuItem.menuPress -= chooseObjectFromEvent;
+			SelectMenuItem.menuPress -= buttonPressed;
 			selectingScript.enabled = false;
 		}
 
 
 		/// <summary>
-		/// Listener for menu button pressed: load the selected prefab and switch to placing phase
+		/// Listener for menu button pressed: load the selected prefab and switch to placing phase, save or exit
 		/// <para name="menuBtn">The pressed menu button</para>
 		/// </summary>
-		void chooseObjectFromEvent(GameObject menuBtn) {
+		void buttonPressed(GameObject menuBtn) {
 
 			string text = menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text;
-			GameObject objToPlace = loadResource(menuBtn.GetComponent<ButtonPathInfo>().MyPath + "/" + text);
 
-			switchMode(objToPlace, text);
+			switch (text)
+			{
+				case "Save":
+					SceneController.Dictionary.Save();
+					break;
+				case "Exit":
+					SceneController.Dictionary.Load();
+					break;
+				default:
+					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
+					GameObject objToPlace = loadResource(objectPath + "/" + text);
+					switchMode(objToPlace, text, objectPath);
+					break;
+			}
 		}
 
 		/// <summary>
@@ -129,10 +141,10 @@ namespace DemoAV.Editor.User{
 		/// <para name="obj">The object to place</para>
 		/// <para name="name">The name of object to place</para>
 		/// </summary>
-		private void switchMode(GameObject obj, string name) {
+		private void switchMode(GameObject obj, string name, string path) {
 
 			// Tell to the placing script the object to modify
-			placingScript.setObject(obj, name); // TODO cambiare btnText.text con objToPlace.name??
+			placingScript.setObject(obj, name, path);
 			// Remove selection events for the object during the placing phase
 			obj.GetComponent<Interactible>().RemoveSelectionEvent();
 

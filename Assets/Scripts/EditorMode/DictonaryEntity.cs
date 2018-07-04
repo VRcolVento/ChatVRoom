@@ -11,7 +11,7 @@ public class DictonaryEntity : MonoBehaviour {
 
 		// Use these for initialization
 			// Modify the element
-		public void AddEntity(int id, string prefabName, Vector3 position, Quaternion rotation) {
+		public void AddEntity(int id, Vector3 position, Quaternion rotation) {
 
 	//		SceneController.Dictionary.AddEntity(id, prefabName, position, rotation);
 			UpdatePosition(position);
@@ -20,8 +20,8 @@ public class DictonaryEntity : MonoBehaviour {
 			Debug.Log("updated id: " + id);
 		}
 			// Add a new element
-		public void AddEntity (string prefabName, Vector3 position, Quaternion rotation) {
-			id = SceneController.Dictionary.AddEntity(prefabName, position, rotation);
+		public void AddEntity (string path, string prefabName, Vector3 position, Quaternion rotation) {
+			id = SceneController.Dictionary.AddEntity(path, prefabName, position, rotation);
 			Debug.Log("new id: " + id);
 		}
 

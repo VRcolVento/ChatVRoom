@@ -16,6 +16,7 @@ namespace DemoAV.Editor.SceneControl {
 		
 		void Start () {
 			dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictonary>();
+			Debug.Log(dictionaryInstance);
 		}
 	}
 

@@ -12,13 +12,17 @@ namespace DemoAV.Editor.StorageUtility {
 
         [System.Serializable]
         private class Entity{
+            
             public string prefabName;
+            [SerializeField]
+            private string path;
             [SerializeField]
             private float[] _position = new float[3];
             [SerializeField]
             private float[] _rotation = new float[4];
 
-            public Entity(string name, Vector3 position, Quaternion rotation){
+            public Entity(string path, string name, Vector3 position, Quaternion rotation){
+                this.path = path;
                 this.prefabName = name;
                 this.position = position;
                 this.rotation = rotation;
@@ -46,6 +50,11 @@ namespace DemoAV.Editor.StorageUtility {
                     this._rotation[3] = value.z;
                 }
             }
+
+            public string Path {
+                get {return path;}
+                set {this.path = value;}
+            }
         }
 
 
@@ -71,13 +80,13 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
         // Modify an already existing element
-        public void AddEntity(int id, string name, Vector3 position, Quaternion rotation) {
-            dictionary[id] = new Entity(name, position, rotation);
+        public void AddEntity(int id, string path, string name, Vector3 position, Quaternion rotation) {
+            dictionary[id] = new Entity(path, name, position, rotation);
         }
 
         // Add a new element to the dictionary
-        public int AddEntity(string name, Vector3 position, Quaternion rotation){
-            dictionary.Add(currId, new Entity(name, position, rotation));
+        public int AddEntity(string path, string name, Vector3 position, Quaternion rotation){
+            dictionary.Add(currId, new Entity(path, name, position, rotation));
             return currId++;
         }
 
@@ -118,8 +127,8 @@ namespace DemoAV.Editor.StorageUtility {
                 file.Close();
 
                 foreach(Entity en in entities){
-                    GameObject currObj = Object.Instantiate(Resources.Load("EditorPrefabs/" + en.prefabName), en.position, en.rotation) as GameObject;
-                    currObj.GetComponent<DictonaryEntity>().AddEntity(en.prefabName, en.position, en.rotation);
+                    GameObject currObj = Object.Instantiate(Resources.Load("EditorPrefabs/Furnitures/" + en.Path + "/" + en.prefabName), en.position, en.rotation) as GameObject;
+                    currObj.GetComponent<DictonaryEntity>().AddEntity(en.Path, en.prefabName, en.position, en.rotation);
                     freezeObject(currObj);
                     currObj.GetComponent<MeshRenderer>().material = currObj.GetComponent<Interactible>().DefaultMaterial;
                 }

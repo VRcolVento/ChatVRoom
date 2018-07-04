@@ -23,11 +23,10 @@ namespace DemoAV.Editor.User{
 
 		// Information about the object to place
 		GameObject objToPlace;
-		string objName;
+		string objName, objPath;
 		
 		// Refernce to the modification script internal to the object
 		ModifyObject modifyObjScript;
-		UpdateLineRenderer lineRenderer;
 
 		// Masks
 		int roomMask;
@@ -39,7 +38,6 @@ namespace DemoAV.Editor.User{
 			roomMask = LayerMask.GetMask("RoomLayer");
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
-			lineRenderer = GetComponent<UpdateLineRenderer>();
 		}
 
 
@@ -70,7 +68,7 @@ namespace DemoAV.Editor.User{
 			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
 			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
 
-			Ray ray = new Ray(lineRenderer.GetPosition(), lineRenderer.GetForward());
+			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 
 			if (Physics.Raycast(ray, out hit, 1000f, roomMask)) {
@@ -110,10 +108,10 @@ namespace DemoAV.Editor.User{
 					DictonaryEntity objEntity = objToPlace.GetComponent<DictonaryEntity>();
 					if(objEntity.ID == -1){
 						// Not already stored
-						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objName, objToPlace.transform.position, objToPlace.transform.rotation);
+						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objPath, objName, objToPlace.transform.position, objToPlace.transform.rotation);
 					} else {
 						// Already stored
-						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objEntity.ID, objName, objToPlace.transform.position, objToPlace.transform.rotation);
+						objToPlace.GetComponent<DictonaryEntity>().AddEntity(objEntity.ID, objToPlace.transform.position, objToPlace.transform.rotation);
 					}
 					
 					switchMode();
@@ -128,11 +126,12 @@ namespace DemoAV.Editor.User{
 		/// <para name="obj">The object to place</para>
 		/// <para name="name">The name of object to place</para>
 		/// </summary>
-		public void setObject(GameObject obj, string name) {
+		public void setObject(GameObject obj, string name, string path) {
 			// Called by the VRChooseObject script to pass the data and activate this script
 
 			objToPlace = obj;
 			objName = name;
+			objPath = path;
 			modifyObjScript = objToPlace.GetComponent<ModifyObject>();
 			modifyObjScript.enabled = true;
 		}
