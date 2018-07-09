@@ -12,6 +12,6 @@ public class SceneController : MonoBehaviour {
 	}
 	
 	void Start () {
-		dictionaryInstance = ScriptableObject.CreateInstance<PrefabDictonary>();
+		dictionaryInstance = GameObject.Find("Dictonary").GetComponent<PrefabDictonary>();
 	}
 }

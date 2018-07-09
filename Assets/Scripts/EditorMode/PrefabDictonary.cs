@@ -5,9 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 
-[CreateAssetMenu] 
-public class PrefabDictonary : ScriptableObject {
+public class PrefabDictonary : MonoBehaviour {
 
+    /// <summary>
+    ///     The class that represent a scene object.
+    /// </summary>
     [System.Serializable]
     private class Entity{
         public string prefabName;
@@ -46,19 +48,22 @@ public class PrefabDictonary : ScriptableObject {
         }
     }
 
-
-
     private string _Name = "SignoraStanza";
     
     private int currId;
     private Dictionary<int, Entity> dictionary;
     
-	private PrefabDictonary(){
+	void Awake(){
+        DontDestroyOnLoad(this);
         currId = 0;
         dictionary = new Dictionary<int, Entity>();
     }
 
-    public string Name{
+    /// <summary>
+    ///     The name of the room.
+    /// </summary>
+    /// <value> The name of the room. </value>
+    internal string Name{
         get{
             return _Name;
         }
@@ -68,29 +73,52 @@ public class PrefabDictonary : ScriptableObject {
         }
     }
 
-    // Modify an already existing element
+    // Modifies an already existing element
     public void AddEntity(int id, string name, Vector3 position, Quaternion rotation) {
         dictionary[id] = new Entity(name, position, rotation);
     }
 
-    // Add a new element to the dictionary
+    /// <summary>
+    ///     Adds a new element to the dictonary.
+    /// </summary>
+    /// <param name="name"> The name of the prefab. </param>
+    /// <param name="position"> Its position. </param>
+    /// <param name="rotation"> Its rotation. </param>
+    /// <returns> The id of the object. </returns>
     public int AddEntity(string name, Vector3 position, Quaternion rotation){
         dictionary.Add(currId, new Entity(name, position, rotation));
         return currId++;
     }
 
+    /// <summary>
+    ///     Removes an element.
+    /// </summary>
+    /// <param name="id"> The id of the element to remove. </param>
     public void RemoveEntity(int id) {
         dictionary.Remove(id);
     }
 
+    /// <summary>
+    ///     Updates the position of an object.
+    /// </summary>
+    /// <param name="id"> The id of the object. </param>
+    /// <param name="position"> The new position. </param>
     public void UpdatePosition(int id, Vector3 position){
         dictionary[id].position = position;
     }
 
+    /// <summary>
+    ///     Updates the position of an object.
+    /// </summary>
+    /// <param name="id"> The id of the object. </param>
+    /// <param name="rotation"> The new rotation. </param>
 	public void UpdateRotation (int id, Quaternion rotation) {
 		dictionary[id].rotation = rotation;
 	}
 
+    /// <summary>
+    ///     Saves the current room to a file.
+    /// </summary>
     public void Save(){
         BinaryFormatter binary  = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/Room_" + _Name + ".dat");
@@ -107,6 +135,9 @@ public class PrefabDictonary : ScriptableObject {
         Debug.Log("Saved!!");
     }
 
+    /// <summary>
+    ///     Loads the room from the last saving file.
+    /// </summary>
     public void Load(){
         if(File.Exists(Application.persistentDataPath + "/Room_" + _Name + ".dat")){
             BinaryFormatter binary = new BinaryFormatter();
