@@ -24,20 +24,27 @@ namespace DemoAV.Editor.User{
 		// Information about the object to place
 		GameObject objToPlace;
 		string objName, objPath;
+		private Vector3 initScale;
 		
 		// Refernce to the modification script internal to the object
 		ModifyObject modifyObjScript;
 
 		// Masks
-		int roomMask;
+		int roomMask, menuMask;
 
 		// Handle swipe for rotation
-		Vector2 initSwipePos = Vector2.zero;	
+		Vector2 initSwipePos = Vector2.zero;
+
+		// Bin
+		GameObject bin;
 
 		void Awake() {
 			roomMask = LayerMask.GetMask("RoomLayer");
+			menuMask = LayerMask.GetMask("Menu Layer");
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
+			bin = GameObject.Find("CanvasBinHook");
+			bin.SetActive(false);
 		}
 
 
@@ -59,14 +66,47 @@ namespace DemoAV.Editor.User{
 				
 				initSwipePos = Vector2.zero;
 			}
-				
+
+			// Raycast objects
+			Ray ray = new Ray(transform.position, transform.forward);
+			RaycastHit hit;
+
+
+			// Remove object
+			if(Physics.Raycast(ray, out hit, 1000f, menuMask) && hit.transform.gameObject.tag == "Bin") { // TODO Find way to delete
+
+				objToPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+				objToPlace.transform.position = hit.point;
+				// TODO Add message "press trigger to delete"
+
+				if(Controller.GetHairTriggerDown()) {
+
+					Debug.Log("ahiahi");
+					GameObject explosion =  Instantiate(Resources.Load("EditorPrefabs/explosion", typeof(GameObject)),
+							hit.point, Quaternion.identity) as GameObject;
+
+					DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
+					if(objEntity.ID != -1) {
+						// The object was previously stored: delete the entry in the dictionary
+						objEntity.RemoveEntity(objEntity.ID);
+					}
+
+					// TODO Add little coroutine to delete object
+					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
+					Destroy(objToPlace);
+					switchMode();
+					return;
+				}
+			}
+			else {
+				objToPlace.transform.localScale = initScale;
+			}
+
 
 			// Update object position
 			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
 			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
-
-			Ray ray = new Ray(transform.position, transform.forward);
-			RaycastHit hit;
 
 			if (Physics.Raycast(ray, out hit, 1000f, roomMask)) {
 				// If I am hitting the room (filtered by the layer mask)
@@ -82,51 +122,42 @@ namespace DemoAV.Editor.User{
 																size.y,
 																objToPlace.transform.position.z);
 				}
-			}
+
+				// Place the object
+				if(Controller.GetHairTriggerDown()) {
 
 
-			// Place the object
-			if(Controller.GetHairTriggerDown()) {
+					if(!modifyObjScript.IsColliding){
+						// Place only if is not colliding with any other objects
 
-				if(!modifyObjScript.IsColliding){
-					// Place only if is not colliding with any other objects
+						// Freeze the position and rotation of the placed object (altrimenti quando si cozzano si spostano)
+						Rigidbody objRb = objToPlace.GetComponent<Rigidbody>();
+						objRb.constraints = RigidbodyConstraints.FreezePositionX | 
+											RigidbodyConstraints.FreezePositionY |
+											RigidbodyConstraints.FreezePositionZ |
+											RigidbodyConstraints.FreezeRotationX | 
+											RigidbodyConstraints.FreezeRotationY |
+											RigidbodyConstraints.FreezeRotationZ;
+						
+						// Save the object.
+						DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
+						if(objEntity.ID == -1){
+							// Not already stored
+							objToPlace.GetComponent<DictionaryEntity>().AddEntity(objPath, objName, objToPlace.transform.position, objToPlace.transform.rotation);
+						} else {
+							// Already stored
+							objToPlace.GetComponent<DictionaryEntity>().AddEntity(objEntity.ID, objToPlace.transform.position, objToPlace.transform.rotation);
+						}
+						
+						switchMode();
+						return;
+					} 
+				
 
-					// Freeze the position and rotation of the placed object (altrimenti quando si cozzano si spostano)
-					Rigidbody objRb = objToPlace.GetComponent<Rigidbody>();
-					objRb.constraints = RigidbodyConstraints.FreezePositionX | 
-										RigidbodyConstraints.FreezePositionY |
-										RigidbodyConstraints.FreezePositionZ |
-										RigidbodyConstraints.FreezeRotationX | 
-										RigidbodyConstraints.FreezeRotationY |
-										RigidbodyConstraints.FreezeRotationZ;
-					
-					// Save the object.
-					DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
-					if(objEntity.ID == -1){
-						// Not already stored
-						objToPlace.GetComponent<DictionaryEntity>().AddEntity(objPath, objName, objToPlace.transform.position, objToPlace.transform.rotation);
-					} else {
-						// Already stored
-						objToPlace.GetComponent<DictionaryEntity>().AddEntity(objEntity.ID, objToPlace.transform.position, objToPlace.transform.rotation);
-					}
-					
-					switchMode();
-				} 
-			}
-
-			// Remove object
-			if(false) { // TODO Find way to delete
-
-				DictionaryEntity objEntity = objToPlace.GetComponent<DictionaryEntity>();
-				if(objEntity.ID != -1) {
-					// The object was previously stored: delete the entry in the dictionary
-					objEntity.RemoveEntity(objEntity.ID);
 				}
-
-				objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
-				Destroy(objToPlace);
-				switchMode();
 			}
+
+
 		}
 
 		/// <summary>
@@ -143,6 +174,8 @@ namespace DemoAV.Editor.User{
 			objPath = path;
 			modifyObjScript = objToPlace.GetComponent<ModifyObject>();
 			modifyObjScript.enabled = true;
+			initScale = objToPlace.transform.localScale;
+			bin.SetActive(true);
 		}
 
 
@@ -156,6 +189,7 @@ namespace DemoAV.Editor.User{
 			chooseScript.enabled = true;
 			modifyObjScript.enabled = false;
 			this.enabled = false;
+			bin.SetActive(false);
 		}
 	}
 }

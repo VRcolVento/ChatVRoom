@@ -30,7 +30,7 @@ public class LaserPointer : MonoBehaviour {
 		laserMaterial = new Material(Shader.Find("Unlit/Color"));
         laserMaterial.SetColor("_Color", color);
         laser.GetComponent<MeshRenderer>().material = laserMaterial;
-		laser.SetActive(false); // Hide the laser.
+//		laser.SetActive(false); // Hide the laser.
 
 		// Set the hitable layers.
 		layerMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer", "Interactable Layer");
@@ -40,11 +40,11 @@ public class LaserPointer : MonoBehaviour {
 	void Update () {
 		Ray raycast = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity, layerMask);
+		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity);
 
 		// Show the laser if it is colliding with interactable object.
 		if(bHit) {
-			laser.SetActive(true);
+//			laser.SetActive(true);
             laser.transform.localScale = new Vector3(thickness, thickness, hit.distance);
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);
 
@@ -54,7 +54,7 @@ public class LaserPointer : MonoBehaviour {
 			else
        			laserMaterial.SetColor("_Color", color);
         }
-		else
-			laser.SetActive(false);
+//		else
+//			laser.SetActive(false);
 	}
 }

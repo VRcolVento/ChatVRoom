@@ -14,7 +14,7 @@ namespace DemoAV.Editor.MenuUtil {
 	public class OpenFurnitureMenu : MonoBehaviour {
 
 		public Canvas canvas;
-		public Transform lookTarget;
+//		public Transform lookTarget;
 		private Transform hand; // The left controller
 		
 		private List<Vector3> initPositions;	// vertical init positions
@@ -97,7 +97,7 @@ namespace DemoAV.Editor.MenuUtil {
 		void Update () {
 			
 			// Update menu position / rotation
-			canvas.gameObject.transform.LookAt(lookTarget);
+//			canvas.gameObject.transform.LookAt(lookTarget);
 			canvas.gameObject.transform.position = hand.position + Vector3.up*height;
 		}
 
