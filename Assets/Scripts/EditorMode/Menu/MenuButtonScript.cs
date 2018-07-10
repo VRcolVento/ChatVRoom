@@ -49,27 +49,6 @@ namespace DemoAV.Editor.MenuUtil {
 			GetComponent<Image>().color = defaultColor;
 		}
 
-		private void buttonAction(string name) {
-				// TODO later
-			switch (name)
-			{
-				case "3DBtn1":
-					SceneController.Dictionary.Save();
-					Debug.Log("ROOM SAVED");
-					// TODO: Add Confirmation yes/no
-					break;
-				case "3DBtn2":
-					SceneController.Dictionary.Load();
-					Debug.Log("ROOM LOADED");
-					// TODO: Reload scene
-					break;
-				case "3DBtn3":
-					// TODO exit
-					Debug.Log("TODO: EXIT");
-					break;
-			}
-		}
-
 		public void OnDestroy() {
 
 			SelectMenuItem.menuSelect -= OnPointerEnter;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LaserPointer : MonoBehaviour {
 
@@ -12,6 +13,9 @@ public class LaserPointer : MonoBehaviour {
 	// The laser and its father.
 	GameObject laser, holder;
 	Material laserMaterial;
+
+	// Info
+	public Canvas infoCanvas;
 
 	// Use this for initialization
 	void Start () {
@@ -33,14 +37,16 @@ public class LaserPointer : MonoBehaviour {
 //		laser.SetActive(false); // Hide the laser.
 
 		// Set the hitable layers.
-		layerMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer", "Interactable Layer");
+		layerMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer", "Interactable Layer", "RoomLayer");
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		Ray raycast = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity);
+		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity, layerMask);
 
 		// Show the laser if it is colliding with interactable object.
 		if(bHit) {
@@ -48,11 +54,23 @@ public class LaserPointer : MonoBehaviour {
             laser.transform.localScale = new Vector3(thickness, thickness, hit.distance);
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);
 
-			// Chnage color based on hit object.
+			// Change color based on hit object.
 			if(hit.transform.gameObject.layer == 11)
         		laserMaterial.SetColor("_Color", Color.blue);
 			else
        			laserMaterial.SetColor("_Color", color);
+
+			// Display Info
+			if(hit.transform.gameObject.tag == "Bin"){
+				string txt = "Press right trigger to delete this object";
+				infoCanvas.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshPro>().text = txt;
+				infoCanvas.transform.position = (transform.position + hit.point) / 2;
+				infoCanvas.transform.position += new Vector3(0, 1, 0);
+				infoCanvas.transform.gameObject.SetActive(true);
+			}
+			else  {
+				infoCanvas.transform.gameObject.SetActive(false);
+			}
         }
 //		else
 //			laser.SetActive(false);
