@@ -105,7 +105,6 @@ namespace DemoAV.Editor.User{
 
 					// TODO Add little coroutine to delete object
 					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
-					binPanel.SetActive(false);
 					Destroy(objToPlace);
 					switchMode();
 					return;
@@ -113,6 +112,7 @@ namespace DemoAV.Editor.User{
 			}
 			else {
 				objToPlace.transform.localScale = initScale;
+				binPanel.SetActive(false);
 			}
 
 
