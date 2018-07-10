@@ -27,7 +27,6 @@ namespace DemoAV.Editor.ObjectUtil {
 		private HashSet<GameObject> interactibleCollisionList = new HashSet<GameObject>();
 
 		// User modifications
-		private float rotY;
 		private Quaternion final;
 
 
@@ -37,10 +36,9 @@ namespace DemoAV.Editor.ObjectUtil {
 			get { return isColliding; }
 		}
 
-		void Awake () {
+		void Start () {
 
-			GetComponent<Renderer>().material = feasibleMat;
-			rotY = transform.rotation.y;
+//			GetComponent<Renderer>().material = feasibleMat;
 			final = transform.rotation;
 		}
 		
@@ -51,7 +49,6 @@ namespace DemoAV.Editor.ObjectUtil {
 
 		void OnEnable() {
 			GetComponent<Renderer>().material = feasibleMat;
-			Debug.Log(rotY);
 		}
 
 		/* 
@@ -99,8 +96,8 @@ namespace DemoAV.Editor.ObjectUtil {
 		/// </summary>
 		public void RotateObject(int clockwise) {
 
-			rotY = (rotY + 90*clockwise) % 360;
-			final = Quaternion.Euler(0, rotY, 0);
+			Vector3 rot = transform.rotation.eulerAngles;
+			final = Quaternion.Euler(new Vector3(rot.x, rot.y, (rot.z + 90*clockwise) % 360)); // Because the downloaded models are z-up
 		}
 	}
 }

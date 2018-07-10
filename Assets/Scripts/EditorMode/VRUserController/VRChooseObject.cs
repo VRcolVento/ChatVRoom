@@ -109,7 +109,6 @@ namespace DemoAV.Editor.User{
 			// When active, add listener for menu buttons
 			SelectMenuItem.menuPress += buttonPressed;
 			selectingScript.enabled = true;
-			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Left trigger: Open menu to choose an object\n";
 		}		
 
 		void OnDisable() {
@@ -125,20 +124,23 @@ namespace DemoAV.Editor.User{
 		/// </summary>
 		void buttonPressed(GameObject menuBtn) {
 
+			string tag = menuBtn.tag;
 			string text = menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text;
 
-			switch (text)
+			switch (tag)
 			{
 				case "Save":
 					SceneController.Dictionary.Save();
 					break;
 				case "Exit":
-//					SceneController.Dictionary.Load();
 					Debug.Log("Esco");
 					break;
-				default:
+				case "MenuObject":
 					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
 					GameObject objToPlace = loadResource(objectPath + "/" + text);
+					Debug.Log("--" + objToPlace.transform.rotation);
+					objToPlace.transform.rotation = Quaternion.Euler(-90, 0, 0);
+					Debug.Log("---->" + objToPlace.transform.rotation);
 					switchMode(objToPlace, text, objectPath);
 					break;
 			}

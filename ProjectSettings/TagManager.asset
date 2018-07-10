@@ -15,6 +15,9 @@ TagManager:
   - Obj_Ceiling
   - Bin
   - Dismiss
+  - Save
+  - Exit
+  - MenuObject
   layers:
   - Default
   - TransparentFX

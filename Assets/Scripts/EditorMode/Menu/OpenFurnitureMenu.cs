@@ -14,7 +14,6 @@ namespace DemoAV.Editor.MenuUtil {
 	public class OpenFurnitureMenu : MonoBehaviour {
 
 		public Canvas canvas;
-//		public Transform lookTarget;
 		private Transform hand; // The left controller
 		
 		private List<Vector3> initPositions;	// vertical init positions
@@ -76,6 +75,7 @@ namespace DemoAV.Editor.MenuUtil {
 					GameObject btn = Instantiate(Resources.Load("EditorPrefabs/3DBtn", typeof(GameObject)),
 										this.transform.GetChild(0)) as GameObject;
 
+					btn.tag = "MenuObject";
 					btn.name = names[i][j] + "Btn";
 					btn.transform.GetChild(0).GetComponent<TextMeshPro>().text = names[i][j];
 					btn.transform.localPosition = initColumnPosition;
@@ -97,7 +97,6 @@ namespace DemoAV.Editor.MenuUtil {
 		void Update () {
 			
 			// Update menu position / rotation
-//			canvas.gameObject.transform.LookAt(lookTarget);
 			canvas.gameObject.transform.position = hand.position + Vector3.up*height;
 		}
 

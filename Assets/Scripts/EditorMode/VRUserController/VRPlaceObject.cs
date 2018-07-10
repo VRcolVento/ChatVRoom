@@ -83,11 +83,9 @@ namespace DemoAV.Editor.User{
 				objToPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
 				objToPlace.transform.position = hit.point;
-				// TODO Add message "press trigger to delete"
 
 				if(Controller.GetHairTriggerDown()) {
 
-					Debug.Log("ahiahi");
 					GameObject explosion =  Instantiate(Resources.Load("EditorPrefabs/explosion", typeof(GameObject)),
 							hit.point, Quaternion.identity) as GameObject;
 
@@ -191,6 +189,7 @@ namespace DemoAV.Editor.User{
 			chooseScript.enabled = true;
 			modifyObjScript.enabled = false;
 			this.enabled = false;
+			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Left trigger: Open menu to choose an object\n";
 			bin.SetActive(false);
 		}
 	}

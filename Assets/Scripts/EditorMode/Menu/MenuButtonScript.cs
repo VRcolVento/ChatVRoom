@@ -29,8 +29,7 @@ namespace DemoAV.Editor.MenuUtil {
 		/// </summary>
 		public void Press(GameObject btn) {
 			if(btn != null && GameObject.ReferenceEquals(btn, this.gameObject))
-				GetComponent<Image>().color = new Color32(224, 0, 0, 77); // EUis	
-	//			buttonAction(this.name);
+				GetComponent<Image>().color = new Color32(224, 0, 0, 77);
 		}
 
 		/// <summary>
