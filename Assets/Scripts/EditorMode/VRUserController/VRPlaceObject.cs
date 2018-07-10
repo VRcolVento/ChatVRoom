@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 using DemoAV.Editor.StorageUtility;
+using TMPro;
 
 namespace DemoAV.Editor.User{
 
@@ -38,13 +39,23 @@ namespace DemoAV.Editor.User{
 		// Bin
 		GameObject bin;
 
+		// Help
+		GameObject helpPanel;
+		GameObject binPanel;
+
+		void Start() {
+		}
+
 		void Awake() {
-			roomMask = LayerMask.GetMask("RoomLayer");
-			menuMask = LayerMask.GetMask("Menu Layer");
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
 			bin = GameObject.Find("CanvasBinHook");
 			bin.SetActive(false);
+			binPanel = GameObject.Find("BinCanvas");
+			binPanel.SetActive(false);
+			helpPanel = GameObject.Find("HelpPanel");
+			roomMask = LayerMask.GetMask("RoomLayer");
+			menuMask = LayerMask.GetMask("Menu Layer");
 		}
 
 
@@ -73,11 +84,13 @@ namespace DemoAV.Editor.User{
 
 
 			// Remove object
-			if(Physics.Raycast(ray, out hit, 1000f, menuMask) && hit.transform.gameObject.tag == "Bin") { // TODO Find way to delete
+			if(Physics.Raycast(ray, out hit, 1000f, menuMask) && hit.transform.gameObject.tag == "Bin") {
 
 				objToPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
 				objToPlace.transform.position = hit.point;
+
+				binPanel.SetActive(true);
+				binPanel.transform.position = (bin.transform.position + transform.position) / 2;
 
 				if(Controller.GetHairTriggerDown()) {
 
@@ -92,6 +105,7 @@ namespace DemoAV.Editor.User{
 
 					// TODO Add little coroutine to delete object
 					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
+					binPanel.SetActive(false);
 					Destroy(objToPlace);
 					switchMode();
 					return;
@@ -150,12 +164,8 @@ namespace DemoAV.Editor.User{
 						switchMode();
 						return;
 					} 
-				
-
 				}
 			}
-
-
 		}
 
 		/// <summary>
@@ -173,6 +183,7 @@ namespace DemoAV.Editor.User{
 			modifyObjScript = objToPlace.GetComponent<ModifyObject>();
 			modifyObjScript.enabled = true;
 			initScale = objToPlace.transform.localScale;
+			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Right trigger: Place the object\nSwipe to rotate right or left";
 			bin.SetActive(true);
 		}
 

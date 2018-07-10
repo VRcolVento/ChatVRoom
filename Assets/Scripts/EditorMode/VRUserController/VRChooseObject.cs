@@ -78,11 +78,6 @@ namespace DemoAV.Editor.User{
 			else {
 				if(deselect != null) deselect(); // Call Deselect event
 			}
-
-
-			// TODO Add action to fire UI
-			// TODO UI to left controller
-
 		}
 
 		void OnEnable() {
@@ -118,9 +113,7 @@ namespace DemoAV.Editor.User{
 				case "MenuObject":
 					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
 					GameObject objToPlace = loadResource(objectPath + "/" + text);
-					Debug.Log("--" + objToPlace.transform.rotation);
 					objToPlace.transform.rotation = Quaternion.Euler(-90, 0, 0);
-					Debug.Log("---->" + objToPlace.transform.rotation);
 					switchMode(objToPlace, text, objectPath);
 					break;
 			}

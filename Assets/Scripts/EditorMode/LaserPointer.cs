@@ -33,14 +33,14 @@ public class LaserPointer : MonoBehaviour {
 //		laser.SetActive(false); // Hide the laser.
 
 		// Set the hitable layers.
-		layerMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer", "Interactable Layer");
+		layerMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer", "Interactable Layer", "RoomLayer");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Ray raycast = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity);
+		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity, layerMask);
 
 		// Show the laser if it is colliding with interactable object.
 		if(bHit) {
