@@ -46,10 +46,6 @@ namespace DemoAV.Editor.User{
 		int furnitureMask;
 		private int menuMask;
 
-		// Help Text
-		GameObject dismissButton;
-		GameObject helpPanel;
-
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
@@ -59,8 +55,6 @@ namespace DemoAV.Editor.User{
 		void Start () {
 			furnitureMask = LayerMask.GetMask("FurnitureLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
-			dismissButton = GameObject.Find("HelpButton");
-			helpPanel = GameObject.Find("HelpPanel");
 		}
 		
 		void Update () {
@@ -68,25 +62,6 @@ namespace DemoAV.Editor.User{
 			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;
 			
-			if(Physics.Raycast(ray, out hit, 1000f, menuMask)) {
-
-				// Check if the user is pointing the help button
-				if(hit.transform.gameObject.tag == "Dismiss") {
-					if(Controller.GetHairTriggerDown()) {
-						
-						if(helpPanel.activeInHierarchy) {
-
-							helpPanel.SetActive(false);
-							dismissButton.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Show help";
-						}
-						else {
-							helpPanel.SetActive(true);
-							dismissButton.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Dismiss";
-						}
-					}
-
-				}
-			}
 			if(Physics.Raycast(ray, out hit, 1000f, furnitureMask)) {
 				// Check if the user is aiming an already placed object
 
@@ -103,6 +78,11 @@ namespace DemoAV.Editor.User{
 			else {
 				if(deselect != null) deselect(); // Call Deselect event
 			}
+
+
+			// TODO Add action to fire UI
+			// TODO UI to left controller
+
 		}
 
 		void OnEnable() {

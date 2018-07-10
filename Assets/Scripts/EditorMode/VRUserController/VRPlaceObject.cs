@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DemoAV.Editor.ObjectUtil;
 using DemoAV.Editor.StorageUtility;
-using TMPro;
 
 namespace DemoAV.Editor.User{
 
@@ -39,16 +38,12 @@ namespace DemoAV.Editor.User{
 		// Bin
 		GameObject bin;
 
-		// Help
-		GameObject helpPanel;
-
 		void Awake() {
 			roomMask = LayerMask.GetMask("RoomLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
 			bin = GameObject.Find("CanvasBinHook");
-			helpPanel = GameObject.Find("HelpPanel");
 			bin.SetActive(false);
 		}
 
@@ -154,9 +149,13 @@ namespace DemoAV.Editor.User{
 						
 						switchMode();
 						return;
-					}
+					} 
+				
+
 				}
 			}
+
+
 		}
 
 		/// <summary>
@@ -175,7 +174,6 @@ namespace DemoAV.Editor.User{
 			modifyObjScript.enabled = true;
 			initScale = objToPlace.transform.localScale;
 			bin.SetActive(true);
-			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Right trigger: Place the object\nRight swipe to rotate left or right\n";
 		}
 
 
