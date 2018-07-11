@@ -1,6 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+using DemoAV.Common;
+
+namespace DemoAV.Live.Controller{
 
 public class InteractionLaser : MonoBehaviour {
 
@@ -11,6 +15,8 @@ public class InteractionLaser : MonoBehaviour {
     public float thickness = 0.002f;
 	// The laser and its father.
 	GameObject laser, holder;
+	// The last hit object.
+	GameObject lastHit;
 	Material laserMaterial;
 
 	// Use this for initialization
@@ -33,7 +39,10 @@ public class InteractionLaser : MonoBehaviour {
 		laser.SetActive(false); // Hide the laser.
 
 		// Set the hitable layers.
-		layerMask = LayerMask.GetMask("Menu Layer", "Interactable Layer");
+		layerMask = LayerMask.GetMask("Menu Layer", "Interactable Layer", "Selectable Button Menu Layer");
+
+		// Set VR click.
+		GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, PressButton);
 	}
 	
 	// Update is called once per frame
@@ -48,13 +57,48 @@ public class InteractionLaser : MonoBehaviour {
             laser.transform.localScale = new Vector3(thickness, thickness, hit.distance);
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);
 
-			// Chnage color based on hit object.
-			if(hit.transform.gameObject.layer == 11)
-        		laserMaterial.SetColor("_Color", Color.blue);
-			else
-       			laserMaterial.SetColor("_Color", color);
+			HandleInteraction(hit);
         }
-		else
+		else{
 			laser.SetActive(false);
+			EventSystem.current.SetSelectedGameObject(null);
+			lastHit = null;
+		}
 	}
+
+	void HandleInteraction(RaycastHit hit){
+		GameObject hitObject = hit.transform.gameObject;
+
+		// Selectable UI element.
+		if(hitObject.layer == 13){
+			if(hitObject != lastHit){
+				// Deselect old and select new one.
+				EventSystem.current.SetSelectedGameObject(null);
+				hitObject.GetComponent<Button>().Select();
+			}
+		}
+		else if(lastHit != null && lastHit.layer == 13){
+			EventSystem.current.SetSelectedGameObject(null);
+		}
+
+		// Change color based on hit object.
+		if(hitObject.layer == 11 || hitObject.layer == 13)
+			laserMaterial.SetColor("_Color", Color.blue);
+		else
+			laserMaterial.SetColor("_Color", color);
+
+		// Update lasthit.
+		if (lastHit != hitObject)	lastHit = hitObject;
+	}
+
+	void PressButton(RaycastHit hit){
+		if(hit.transform.gameObject.layer == 13 && EventSystem.current.currentSelectedGameObject)
+			EventSystem.current.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+	}
+
+	void OnDisable(){
+		GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, PressButton);
+	}
+}
+
 }

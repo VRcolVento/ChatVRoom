@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 namespace DemoAV.StartMenu.Keyboard{
 public class AlphaNumericSymbol : MonoBehaviour {
 	Button button;
+	Color normalColor, highlightedColor;
+	ColorBlock colors;
+	InputName input;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +18,11 @@ public class AlphaNumericSymbol : MonoBehaviour {
 		// Delay the collider re-dimensioning to allow the layout script to set the correct size of button
 		// after a frame.
 		Invoke("SetCollider", 0.2f);
+
+		input = GameObject.Find("Canvas/Create Room Tab/Panel/Room Name").GetComponent<InputName>();
+		colors = button.colors;
+		normalColor = button.colors.normalColor;
+		highlightedColor = button.colors.highlightedColor;
 	}
 	
 	/// <summary>
@@ -35,12 +43,15 @@ public class AlphaNumericSymbol : MonoBehaviour {
 
 	// Called on entering collision with pad.
 	void OnTriggerEnter(Collider collider) {
-		button.Select();
+		colors.normalColor = highlightedColor;
+		button.colors = colors;
+		input.AddCharacter(GetSymbol());
 	}
 
 	// Called on exiting collision with pad.
 	void OnTriggerExit(Collider collider) {
-		EventSystem.current.SetSelectedGameObject(null);
+		colors.normalColor = normalColor;
+		button.colors = colors;
 	}
 }
 }

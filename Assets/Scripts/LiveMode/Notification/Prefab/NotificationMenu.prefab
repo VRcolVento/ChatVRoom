@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 223542850120360998}
   - component: {fileID: 114451440684764090}
   - component: {fileID: 114589826319840520}
+  - component: {fileID: 65426697913832386}
   m_Layer: 11
   m_Name: NotificationMenu
   m_TagString: Untagged
@@ -181,6 +182,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &65426697913832386
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173894422097570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1223, y: 500, z: 0.0002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114070496963827450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,8 +329,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114862379246881020}
   m_HandleRect: {fileID: 224961292137028188}
   m_Direction: 0
-  m_Value: 0.5
-  m_Size: 0.9999999
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -379,7 +392,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224993731548605608}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 0.99999934
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -608,7 +621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00005802512, y: 0.0001010335}
+  m_AnchoredPosition: {x: -0.00005802512, y: 0.00048382362}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224153413388703356

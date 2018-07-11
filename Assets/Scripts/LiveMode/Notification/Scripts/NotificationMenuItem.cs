@@ -17,7 +17,6 @@ public class NotificationMenuItem : MonoBehaviour {
 	GameObject toucher = null;
 
 	public void Start(){
-		GameObject.Find("RightController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, TriggerEvent);
 	}
 
 	/// <summary>
@@ -48,25 +47,22 @@ public class NotificationMenuItem : MonoBehaviour {
 		text.fontSize = 26;
 		text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
 		descriptionObj.SetActive(false);
+
+		// Automatically grab it.
+		canvas.GetComponent<NotificationMenuMiniCanvas>().Grab(GameObject.Find("RightController"));
 	}
 
 	/// <summary>
 	/// 	The callback to call when right controller is trying to grab notification.
 	/// </summary>
 	/// <param name="hit"></param>
-	void TriggerEvent(RaycastHit hit){
-		// If the object has been touched and the mouse has been pressed, delete it from menu.
-		if(hit.transform.gameObject == gameObject){
-			if(transform.parent.gameObject.name != "Layout")
-				RemoveFromMenu();
+	public void TriggerEvent(){
+		// If the trigger has been pressed, delete it from menu.
+		if(transform.parent.gameObject.name != "Layout")
+			RemoveFromMenu();
 
-			canvas.GetComponent<NotificationMenuMiniCanvas>().Grab(toucher);
-			enabled = false;
-		}
-	}
-
-	private void OnDisable() {
-		GameObject.Find("RightController").GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, TriggerEvent);
+		canvas.GetComponent<NotificationMenuMiniCanvas>().Grab(toucher);
+		enabled = false;
 	}
 }
 }

@@ -12,6 +12,7 @@ namespace DemoAV.Live.Notification{
 /// </summary>
 public class NotificationMenu : MonoBehaviour {
 	public GameObject menuPrefab;
+	public GameObject menuItem;
 	// The canvas in which put item once removed from menu.
 	public GameObject miniCanvas;
 	// The notification popup object.
@@ -24,11 +25,11 @@ public class NotificationMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// Create menu.
+		// Create menu and hide it.
 		menuObj = Instantiate(menuPrefab);
 		menuObj.transform.SetParent(transform);	
-		menuObj.transform.localPosition = new Vector3(0, 0, 0);
-		menuObj.transform.localRotation = Quaternion.identity;
+		menuObj.transform.localPosition = new Vector3(-0.0628f, -0.0306f, 0.0045f);
+		menuObj.transform.localRotation = Quaternion.Euler(-2.701f, 92.84f, 174.068f);
 
 		// Register events.
 		manager = GameObject.Find("CVRREventSystem").GetComponent<NotificationManager>();
@@ -38,6 +39,10 @@ public class NotificationMenu : MonoBehaviour {
 		// Get notification popup instance.
 		notificationPopup = transform.Find("Notification Popup");
 	}
+
+	// private void Update() {
+
+	// }
 	
 	/// <summary>
 	/// 	Add a new notification in the menu as text.
@@ -45,29 +50,23 @@ public class NotificationMenu : MonoBehaviour {
 	/// <param name="notification"> The notification to add. </param>
 	void AddNotification(NotificationManager.notification notification){
 		// Add a new text component with the notification title.
-		GameObject newNot = new GameObject("Notification" + notification.id);
-		RectTransform rect = newNot.AddComponent<RectTransform>();
-		BoxCollider collider = newNot.AddComponent<BoxCollider>();
-		Rigidbody body = newNot.AddComponent<Rigidbody>();
-		NotificationMenuItem not = newNot.AddComponent<NotificationMenuItem>();
-		Text text = newNot.AddComponent<Text>();
+		GameObject newNot = Instantiate(menuItem);
+		RectTransform rect = newNot.GetComponent<RectTransform>();
+		NotificationMenuItem not = newNot.GetComponent<NotificationMenuItem>();
+		Text text = newNot.transform.Find("Text").GetComponent<Text>();
 
 		rect.sizeDelta = new Vector2(menuObj.GetComponent<RectTransform>().sizeDelta.x, 40);
 
-		collider.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 0.01f);
+		newNot.GetComponent<BoxCollider>().size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 0.0003f);
 
 		newNot.transform.SetParent(menuObj.transform.Find("Scroll View/Viewport/Content"));
 		newNot.transform.localPosition = Vector3.zero;
 		newNot.transform.localScale = new Vector3(1, 1, 1);
 		newNot.transform.localRotation = Quaternion.identity;
-		newNot.layer = 11;
 
 		not.descriptionText = notification.text;
 		not.descriptionColor = notification.textColor;
 		not.canvasPrefab = miniCanvas;
-
-		body.isKinematic = true;
-		body.useGravity = false;
 
 		text.text = notification.title;
 		text.color = Color.black;

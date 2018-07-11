@@ -31,16 +31,13 @@ public class InputName : MonoBehaviour {
 			roomNameText.text = roomName;
 			currFrame = 0;
 		}
-
-		if(Input.GetKeyDown(KeyCode.Return))
-			PressKey();
 	}
 
 	/// <summary>
 	/// 	Add a character to the room name.
 	/// </summary>
 	/// <param name="ch"> The caracter to add. </param>
-	void AddCharacter(char ch){
+	public void AddCharacter(char ch){
 		char lastChar = roomName.Length > 0 ? roomName[roomName.Length - 1] : '\0';
 		bool hasUnderscore = lastChar == '_';
 
@@ -54,7 +51,7 @@ public class InputName : MonoBehaviour {
 	/// <summary>
 	/// 	Remove last character from the room name.
 	/// </summary>
-	void RemoveLastCharacter(){
+	public void RemoveLastCharacter(){
 		char lastChar = roomName.Length > 0 ? roomName[roomName.Length - 1] : '\0';
 		bool hasUnderscore = lastChar == '_';
 
