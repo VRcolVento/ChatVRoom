@@ -15,21 +15,22 @@ namespace DemoAV.Editor.ObjectUtil {
 		private HashSet<GameObject> wallCollisionList = new HashSet<GameObject>();
 
 		// Materials
-		public Material selectedMaterial;
-		public Material defaultMaterial;
-		public Material DefaultMaterial {
-			get { return defaultMaterial; }
-		}
+//		public Material selectedMaterial;
+//		public Material defaultMaterial;
+//		public Material DefaultMaterial {
+//			get { return defaultMaterial; }
+//		}
 		
 		void Update () {
 			
 			if(wallCollisionList.Count > 0){
 				// Push me outside the wall
 				
+				Debug.Log(wallCollisionList.Count);
 				foreach(GameObject obj in wallCollisionList){
 
-					if(obj.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
-							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime * 5, obj.transform.up);
+//					if(obj.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
+							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime, obj.transform.up);
 				}
 			}	
 		}
@@ -39,8 +40,8 @@ namespace DemoAV.Editor.ObjectUtil {
 
 			if(collision.gameObject.layer == LayerMask.NameToLayer("RoomLayer")){
 				
-				if(collision.gameObject.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
-					wallCollisionList.Add(collision.gameObject);
+				wallCollisionList.Add(collision.gameObject);
+//				if(collision.gameObject.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
 			}		
 		}
 
@@ -56,12 +57,12 @@ namespace DemoAV.Editor.ObjectUtil {
 		// Event's delegates
 		void selectColor(GameObject obj){
 			// Am I the selected object?
-			if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
-				GetComponent<MeshRenderer>().material = selectedMaterial;
+//			if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
+//				GetComponent<MeshRenderer>().material = selectedMaterial;
 		}
 
 		void defaultColor() {
-			GetComponent<MeshRenderer>().material = defaultMaterial;
+//			GetComponent<MeshRenderer>().material = defaultMaterial;
 		}
 
 		// Subscribe / Unsubscribe delegates

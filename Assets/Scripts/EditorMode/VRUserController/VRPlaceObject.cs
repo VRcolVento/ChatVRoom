@@ -38,13 +38,10 @@ namespace DemoAV.Editor.User{
 
 		// Bin
 		GameObject bin;
-
-		// Help
-		GameObject helpPanel;
 		GameObject binPanel;
 
-		void Start() {
-		}
+		// Help
+		GameObject helpPanel, helpText;
 
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -54,10 +51,10 @@ namespace DemoAV.Editor.User{
 			binPanel = GameObject.Find("BinCanvas");
 			binPanel.SetActive(false);
 			helpPanel = GameObject.Find("HelpPanel");
+			helpText = GameObject.Find("HelpPanel/Text");
 			roomMask = LayerMask.GetMask("RoomLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
 		}
-
 
 
 		void Update () {
@@ -103,9 +100,9 @@ namespace DemoAV.Editor.User{
 						objEntity.RemoveEntity(objEntity.ID);
 					}
 
-					// TODO Add little coroutine to delete object
 					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
 					Destroy(objToPlace);
+					binPanel.SetActive(false);
 					switchMode();
 					return;
 				}
@@ -126,7 +123,8 @@ namespace DemoAV.Editor.User{
 				objToPlace.transform.position = hit.point;
 
 				// Vector3.Scale() == element wise product
-				objToPlace.transform.position += Vector3.Scale(size, hit.normal);
+//				objToPlace.transform.position += Vector3.Scale(size, hit.normal);
+
 
 				if(objToPlace.tag == "Obj_Floor"){
 					// Constrain a floor object to stay on the floor
@@ -134,6 +132,7 @@ namespace DemoAV.Editor.User{
 																size.y,
 																objToPlace.transform.position.z);
 				}
+
 
 				// Place the object
 				if(Controller.GetHairTriggerDown()) {
@@ -183,7 +182,7 @@ namespace DemoAV.Editor.User{
 			modifyObjScript = objToPlace.GetComponent<ModifyObject>();
 			modifyObjScript.enabled = true;
 			initScale = objToPlace.transform.localScale;
-			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Right trigger: Place the object\nSwipe to rotate right or left";
+			helpText.GetComponent<TextMeshPro>().text = "Right trigger: Place the object\nSwipe to rotate right or left";
 			bin.SetActive(true);
 		}
 
@@ -198,7 +197,7 @@ namespace DemoAV.Editor.User{
 			chooseScript.enabled = true;
 			modifyObjScript.enabled = false;
 			this.enabled = false;
-			helpPanel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Left trigger: Open menu to choose an object\n";
+			helpText.GetComponent<TextMeshPro>().text = "Left trigger: Open menu to choose an object\n";
 			bin.SetActive(false);
 		}
 	}

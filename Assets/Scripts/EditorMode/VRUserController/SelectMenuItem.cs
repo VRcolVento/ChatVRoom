@@ -42,20 +42,7 @@ namespace DemoAV.Editor.MenuUtil {
 			RaycastHit hit;
 
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, menuMask)) {
-
-				if(hit.transform.gameObject.tag == "Dismiss") {
-					if(Controller.GetHairTriggerDown()) {
-
-						if(helpCanvas.activeInHierarchy){
-							hit.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Show Help";
-							helpCanvas.SetActive(false);
-						}
-						else {
-							hit.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Dismiss";
-							helpCanvas.SetActive(true);
-						}
-					}
-				}
+				
 				GameObject obj = hit.transform.gameObject;
 
 				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue

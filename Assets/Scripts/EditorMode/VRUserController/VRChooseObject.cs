@@ -46,10 +46,14 @@ namespace DemoAV.Editor.User{
 		int furnitureMask;
 		private int menuMask;
 
+		// Help
+		GameObject helpPanel;
+
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
 			selectingScript = GetComponent<SelectMenuItem>();
+			helpPanel = GameObject.Find("HelpCanvas");
 		}
 
 		void Start () {
@@ -115,6 +119,16 @@ namespace DemoAV.Editor.User{
 					GameObject objToPlace = loadResource(objectPath + "/" + text);
 					objToPlace.transform.rotation = Quaternion.Euler(-90, 0, 0);
 					switchMode(objToPlace, text, objectPath);
+					break;
+				case "Dismiss":
+					if(helpPanel.activeInHierarchy){
+						menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Show Help";
+						helpPanel.SetActive(false);
+					}
+					else {
+						menuBtn.transform.GetChild(0).GetComponent<TextMeshPro>().text = "Dismiss";
+						helpPanel.SetActive(true);
+					}
 					break;
 			}
 		}

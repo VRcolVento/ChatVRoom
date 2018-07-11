@@ -19,8 +19,8 @@ namespace DemoAV.Editor.ObjectUtil {
 	public class ModifyObject : MonoBehaviour {
 
 		// Object materials during placement		
-		public Material feasibleMat;
-		public Material unfeasibleMat;
+//		public Material feasibleMat;
+//		public Material unfeasibleMat;
 
 		// Handle Collision with other Interactible Objects
 		private bool isColliding = false;
@@ -48,7 +48,7 @@ namespace DemoAV.Editor.ObjectUtil {
 		}
 
 		void OnEnable() {
-			GetComponent<Renderer>().material = feasibleMat;
+//			GetComponent<Renderer>().material = feasibleMat;
 		}
 
 		/* 
@@ -69,7 +69,7 @@ namespace DemoAV.Editor.ObjectUtil {
 					interactibleCollisionList.Add(collision.gameObject);
 
 					isColliding = true;
-					this.GetComponent<Renderer>().material = unfeasibleMat;
+//					this.GetComponent<Renderer>().material = unfeasibleMat;
 				}
 			}
 		}
@@ -84,7 +84,7 @@ namespace DemoAV.Editor.ObjectUtil {
 					if(interactibleCollisionList.Count == 0) {
 						// Check if I am not colliding with anyone anymore
 						isColliding = false;
-						this.GetComponent<Renderer>().material = feasibleMat;
+//						this.GetComponent<Renderer>().material = feasibleMat;
 					}
 				}
 			}

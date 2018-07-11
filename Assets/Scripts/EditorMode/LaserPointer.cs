@@ -49,8 +49,10 @@ public class LaserPointer : MonoBehaviour {
         	laser.transform.localPosition = new Vector3(0f, 0f, hit.distance / 2f);
 
 			// Chnage color based on hit object.
-			if(hit.transform.gameObject.layer == 11)
+			if(hit.transform.gameObject.layer == 11) // Menu
         		laserMaterial.SetColor("_Color", Color.blue);
+			else if(hit.transform.gameObject.layer == 9) // Furniture
+				laserMaterial.SetColor("_Color", Color.green);
 			else
        			laserMaterial.SetColor("_Color", color);
         }
