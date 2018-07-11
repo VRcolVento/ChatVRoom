@@ -26,11 +26,10 @@ namespace DemoAV.Editor.ObjectUtil {
 			if(wallCollisionList.Count > 0){
 				// Push me outside the wall
 				
-				Debug.Log(wallCollisionList.Count);
 				foreach(GameObject obj in wallCollisionList){
 
 //					if(obj.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
-							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime, obj.transform.up);
+							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime * 2, obj.transform.up);
 				}
 			}	
 		}

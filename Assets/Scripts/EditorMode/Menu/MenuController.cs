@@ -16,7 +16,7 @@ namespace DemoAV.Editor.MenuUtil {
 		}
 
 		public Canvas menuCanvas;
-		public OpenFurnitureMenu menuScript;
+		public OpenFurnitureMenuList menuScript;
 
 		void Start () {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();

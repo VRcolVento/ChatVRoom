@@ -49,6 +49,9 @@ namespace DemoAV.Editor.User{
 		// Help
 		GameObject helpPanel;
 
+		// For menu
+		public OpenFurnitureMenuList menu;
+
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
@@ -115,10 +118,17 @@ namespace DemoAV.Editor.User{
 					Debug.Log("Esco");
 					break;
 				case "MenuObject":
+					menu.OpenSubMenu(menuBtn.name);
+					break;
+				case "MenuFurniture":
 					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
+					Debug.Log(objectPath + "/" + text);
 					GameObject objToPlace = loadResource(objectPath + "/" + text);
 					objToPlace.transform.rotation = Quaternion.Euler(-90, 0, 0);
 					switchMode(objToPlace, text, objectPath);
+					break;
+				case "MenuBack":
+					menu.OpenMenu();
 					break;
 				case "Dismiss":
 					if(helpPanel.activeInHierarchy){

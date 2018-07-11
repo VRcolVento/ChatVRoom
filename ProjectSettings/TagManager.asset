@@ -18,6 +18,8 @@ TagManager:
   - Save
   - Exit
   - MenuObject
+  - MenuFurniture
+  - MenuBack
   layers:
   - Default
   - TransparentFX

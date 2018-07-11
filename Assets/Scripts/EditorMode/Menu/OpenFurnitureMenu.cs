@@ -22,7 +22,7 @@ namespace DemoAV.Editor.MenuUtil {
 
 		// Helpers
 		public float height = 0.2f;
-		private int size = 30;
+		private int size = 15;
 		private int offset = 5;
 		private Vector3 initPosition;		// First hook position
 
@@ -98,6 +98,8 @@ namespace DemoAV.Editor.MenuUtil {
 			
 			// Update menu position / rotation
 			canvas.gameObject.transform.position = hand.position + Vector3.up*height;
+
+			
 		}
 
 		/// <summary>
@@ -127,7 +129,7 @@ namespace DemoAV.Editor.MenuUtil {
 		public void OpenMenu() {
 
 			canvas.gameObject.SetActive(true);
-			StartCoroutine("SfogliaCoroutine");
+//			StartCoroutine("SfogliaCoroutine");
 		}
 
 		/// <summary>
