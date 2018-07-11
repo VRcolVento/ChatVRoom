@@ -29,7 +29,7 @@ namespace DemoAV.Editor.ObjectUtil {
 				foreach(GameObject obj in wallCollisionList){
 
 //					if(obj.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
-							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime * 2, obj.transform.up);
+							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime, obj.transform.up);
 				}
 			}	
 		}
@@ -64,6 +64,7 @@ namespace DemoAV.Editor.ObjectUtil {
 //			GetComponent<MeshRenderer>().material = defaultMaterial;
 		}
 
+/* 
 		// Subscribe / Unsubscribe delegates
 		public void AddSelectionEvent(){
 			VRChooseObject.select += selectColor;
@@ -79,5 +80,6 @@ namespace DemoAV.Editor.ObjectUtil {
 
 			RemoveSelectionEvent();
 		}
+*/
 	}
 }

@@ -100,7 +100,7 @@ namespace DemoAV.Editor.User{
 						objEntity.RemoveEntity(objEntity.ID);
 					}
 
-					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
+//					objToPlace.GetComponent<Interactible>().RemoveSelectionEvent();
 					Destroy(objToPlace);
 					binPanel.SetActive(false);
 					switchMode();
@@ -129,7 +129,7 @@ namespace DemoAV.Editor.User{
 				if(objToPlace.tag == "Obj_Floor"){
 					// Constrain a floor object to stay on the floor
 					objToPlace.transform.position = new Vector3(objToPlace.transform.position.x,
-																size.y,
+																0,
 																objToPlace.transform.position.z);
 				}
 
@@ -193,7 +193,7 @@ namespace DemoAV.Editor.User{
 		private void switchMode(){
 			// Go back to choose mode
 
-			objToPlace.GetComponent<Interactible>().AddSelectionEvent();
+//			objToPlace.GetComponent<Interactible>().AddSelectionEvent();
 			chooseScript.enabled = true;
 			modifyObjScript.enabled = false;
 			this.enabled = false;

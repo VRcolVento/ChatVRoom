@@ -35,8 +35,8 @@ namespace DemoAV.Editor.User{
 		public delegate void DeselectAction();
 
 		// Events
-		public static event SelectAction select;
-		public static event DeselectAction deselect;
+//		public static event SelectAction select;
+//		public static event DeselectAction deselect;
 
 		// Reference to the placing script, to activate after the user has chosen the object
 		VRPlaceObject placingScript;
@@ -48,6 +48,7 @@ namespace DemoAV.Editor.User{
 
 		// Help
 		GameObject helpPanel;
+		GameObject confirmationPanel;
 
 		// For menu
 		public OpenFurnitureMenuList menu;
@@ -57,6 +58,8 @@ namespace DemoAV.Editor.User{
 			placingScript = GetComponent<VRPlaceObject>();		
 			selectingScript = GetComponent<SelectMenuItem>();
 			helpPanel = GameObject.Find("HelpCanvas");
+			confirmationPanel = GameObject.Find("SaveConfirmationCanvas");
+			confirmationPanel.SetActive(false);
 		}
 
 		void Start () {
@@ -74,17 +77,17 @@ namespace DemoAV.Editor.User{
 
 				GameObject obj = hit.transform.gameObject;
 
-				if(deselect != null) deselect(); // Call Deselect event: otherwise if objects overlap and they all stay blue
-				if(select != null) select(obj); // Call Select event
+//				if(deselect != null) deselect(); // Call Deselect event: otherwise if objects overlap and they all stay blue
+//				if(select != null) select(obj); // Call Select event
 
 				if(Controller.GetHairTriggerDown()) {
 					// Activate the modification phase for the object
 					switchMode(obj, obj.name, "FIXME");
 				}
 			}
-			else {
-				if(deselect != null) deselect(); // Call Deselect event
-			}
+//			else {
+//				if(deselect != null) deselect(); // Call Deselect event
+//			}
 		}
 
 		void OnEnable() {
@@ -113,6 +116,8 @@ namespace DemoAV.Editor.User{
 			{
 				case "Save":
 					SceneController.Dictionary.Save();
+					confirmationPanel.transform.position = menu.transform.position;
+					StartCoroutine("showSaveNotification");
 					break;
 				case "Exit":
 					Debug.Log("Esco");
@@ -122,7 +127,6 @@ namespace DemoAV.Editor.User{
 					break;
 				case "MenuFurniture":
 					string objectPath = menuBtn.GetComponent<ButtonPathInfo>().MyPath;
-					Debug.Log(objectPath + "/" + text);
 					GameObject objToPlace = loadResource(objectPath + "/" + text);
 					objToPlace.transform.rotation = Quaternion.Euler(-90, 0, 0);
 					switchMode(objToPlace, text, objectPath);
@@ -163,11 +167,20 @@ namespace DemoAV.Editor.User{
 			// Tell to the placing script the object to modify
 			placingScript.setObject(obj, name, path);
 			// Remove selection events for the object during the placing phase
-			obj.GetComponent<Interactible>().RemoveSelectionEvent();
+//			obj.GetComponent<Interactible>().RemoveSelectionEvent();
 
 			// Update status: switch working scripts
 			this.enabled = false;
 			placingScript.enabled = true;
+		}
+
+		private IEnumerator showSaveNotification() {
+
+			confirmationPanel.SetActive(true);
+			yield return new WaitForSeconds(2);
+			confirmationPanel.SetActive(false);
+
+			yield return null;
 		}
 	}
 }
