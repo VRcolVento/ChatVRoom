@@ -17,9 +17,9 @@ namespace DemoAV.Editor.MenuUtil {
 		
 		void Start () {
 			defaultColor = GetComponent<Image>().color;
-			SelectMenuItem.menuSelect += OnPointerEnter;
-			SelectMenuItem.menuDeselect += OnPointerExit;
-			SelectMenuItem.menuPress += Press;
+			VRChooseObject.menuSelect += OnPointerEnter;
+			VRChooseObject.menuDeselect += OnPointerExit;
+			VRChooseObject.menuPress += Press;
 		}
 
 		
@@ -36,9 +36,12 @@ namespace DemoAV.Editor.MenuUtil {
 		/// Button enter
 		/// <para name="btn">The entered button</para>
 		/// </summary>
-		public void OnPointerEnter(GameObject obj) {
-			if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject))
+		public void OnPointerEnter(GameObject obj) {			
+			if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject)) {
+				Debug.Log(GetComponent<Image>().color);
 				GetComponent<Image>().color = new Color32(224, 243, 74, 77); // giallino	
+				Debug.Log(GetComponent<Image>().color);
+			}
 		}
 
 		/// <summary>
@@ -48,32 +51,11 @@ namespace DemoAV.Editor.MenuUtil {
 			GetComponent<Image>().color = defaultColor;
 		}
 
-		private void buttonAction(string name) {
-				// TODO later
-			switch (name)
-			{
-				case "3DBtn1":
-					SceneController.Dictionary.Save();
-					Debug.Log("ROOM SAVED");
-					// TODO: Add Confirmation yes/no
-					break;
-				case "3DBtn2":
-					SceneController.Dictionary.Load();
-					Debug.Log("ROOM LOADED");
-					// TODO: Reload scene
-					break;
-				case "3DBtn3":
-					// TODO exit
-					Debug.Log("TODO: EXIT");
-					break;
-			}
-		}
-
 		public void OnDestroy() {
 
-			SelectMenuItem.menuSelect -= OnPointerEnter;
-			SelectMenuItem.menuDeselect -= OnPointerExit;
-			SelectMenuItem.menuPress -= Press;
+			VRChooseObject.menuSelect -= OnPointerEnter;
+			VRChooseObject.menuDeselect -= OnPointerExit;
+			VRChooseObject.menuPress -= Press;
 		}
 	}
 }

@@ -81,6 +81,7 @@ namespace DemoAV.Editor.User{
 
 
 			// Remove object
+			// TODO Unify raycasts?
 			if(Physics.Raycast(ray, out hit, 1000f, menuMask) && hit.transform.gameObject.tag == "Bin") {
 
 				objToPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -114,8 +115,8 @@ namespace DemoAV.Editor.User{
 
 
 			// Update object position
-			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
-			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
+//			Vector3 size = objToPlace.GetComponent<Renderer>().bounds.size;
+//			size = Vector3.Scale(size, new Vector3(0.5f, 0.5f, 0.5f));
 
 			if (Physics.Raycast(ray, out hit, 1000f, roomMask)) {
 				// If I am hitting the room (filtered by the layer mask)

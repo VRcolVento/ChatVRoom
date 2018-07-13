@@ -12,12 +12,13 @@ namespace DemoAV.Editor.MenuUtil {
 	/// </summary>
 	public class SelectMenuItem : MonoBehaviour {
 
+/* 
 		public delegate void SelectAction(GameObject obj);
 		public delegate void DeselectAction();
 		public static event SelectAction menuSelect;
 		public static event DeselectAction menuDeselect;
 		public static event SelectAction menuPress;
-
+*/
 		private SteamVR_TrackedObject trackedObj;
 
 		GameObject helpCanvas;
@@ -41,7 +42,8 @@ namespace DemoAV.Editor.MenuUtil {
 
 			RaycastHit hit;
 
-			if(Physics.Raycast(ray, out hit, Mathf.Infinity, menuMask)) {
+/* 
+			if(Physics.Raycast(ray, out hit, 1000f, menuMask)) {
 				
 				GameObject obj = hit.transform.gameObject;
 
@@ -55,6 +57,7 @@ namespace DemoAV.Editor.MenuUtil {
 			else {
 				if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
 			}
+*/
 		}
 	}
 }
