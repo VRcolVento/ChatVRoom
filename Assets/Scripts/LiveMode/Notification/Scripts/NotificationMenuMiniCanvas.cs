@@ -48,7 +48,7 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 		body.isKinematic = true;
 		isGrabbed = false;
 
-		Destroy(fx);
+		if(fx)	Destroy(fx);
 		StartCoroutine(PopUpEffect(transform.localScale, bigSize));
 	}
 

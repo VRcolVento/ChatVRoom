@@ -49,7 +49,7 @@ public class NotificationMenuItem : MonoBehaviour {
 		descriptionObj.SetActive(false);
 
 		// Automatically grab it.
-		canvas.GetComponent<NotificationMenuMiniCanvas>().Grab(GameObject.Find("RightController"));
+		canvas.GetComponent<NotificationMenuMiniCanvas>().Release();
 	}
 
 	/// <summary>

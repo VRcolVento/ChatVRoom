@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using TMPro;
 using DemoAV.Common;
@@ -22,9 +23,11 @@ public class NotificationMenu : MonoBehaviour {
 	GameObject menuObj;
 	// The notification manager.
 	NotificationManager manager;
+	// Current selected notification.
+	int currentNotification;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		// Create menu and hide it.
 		menuObj = Instantiate(menuPrefab);
 		menuObj.transform.SetParent(transform);	
@@ -38,6 +41,12 @@ public class NotificationMenu : MonoBehaviour {
 
 		// Get notification popup instance.
 		notificationPopup = transform.Find("Notification Popup");
+	}
+
+	void Start(){
+		// Set first notification highlighted.
+		currentNotification = 0;
+		transform.GetChild(0).GetComponent<Button>().Select();
 	}
 
 	// private void Update() {
@@ -108,7 +117,43 @@ public class NotificationMenu : MonoBehaviour {
 		notificationPopup.gameObject.SetActive(false);
 	}
 
+	/// <summary>
+	/// 	Highlights the next notification.
+	/// </summary>
+	void NextNotification(){
+		currentNotification = currentNotification + 1 >= transform.childCount ? 0 : currentNotification + 1;
+
+		EventSystem.current.SetSelectedGameObject(null);
+		transform.GetChild(currentNotification).GetComponent<Button>().Select();
+	}
+
+	/// <summary>
+	/// 	Highlights the previous notification.
+	/// </summary>
+	void PreviousNotification(){
+		currentNotification = currentNotification - 1 < 0 ? transform.childCount - 1 : currentNotification - 1;
+
+		EventSystem.current.SetSelectedGameObject(null);
+		transform.GetChild(currentNotification).GetComponent<Button>().Select();
+	}
+
+	/// <summary>
+	/// 	Selects current notification.
+	/// </summary>
+	void SelectNotification(){
+		transform.GetChild(currentNotification).GetComponent<Button>().onClick.Invoke();
+
+		// Make another notification to be highlighted.
+		if(currentNotification != 0)	--currentNotification;
+		transform.GetChild(currentNotification).GetComponent<Button>().Select();
+	}
+
 	void OnDisable(){
+		// Deactivate previous button and activate first.
+		EventSystem.current.SetSelectedGameObject(null);
+	}
+
+	void OnDestroy(){
 		manager.onAdd.RemoveListener(AddNotification);
 		manager.onAdd.RemoveListener(PopupNotification);
 	}
