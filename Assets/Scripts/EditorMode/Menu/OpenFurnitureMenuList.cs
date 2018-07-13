@@ -18,7 +18,7 @@ namespace DemoAV.Editor.MenuUtil {
 		public GameObject btnPrefab;
 
 		public Canvas canvas;
-		private Transform menuTransform;
+		public Transform menuTransform;
 		private RectTransform canvasRect;
 
 		private Transform hand; // The left controller
@@ -30,17 +30,18 @@ namespace DemoAV.Editor.MenuUtil {
 		public float height = 0.2f;
 		private int size = 30;
 
+		void Awake() {
+			hand = GameObject.Find("Controller (left)").transform;
+			canvasRect = canvas.GetComponent<RectTransform>();
+			directories = Directory.GetDirectories(".\\Assets\\Resources\\EditorPrefabs\\Furnitures\\");
+
+		}
+
 		void Start () {
 
 			// Get reference to hand and setup position
-			hand = GameObject.Find("Controller (left)").transform;
 			transform.position = hand.position + hand.forward*7;
 			dirMap = new Dictionary<string, string>();
-
-			menuTransform = GameObject.Find("MenuCanvas").transform;
-			canvasRect = canvas.GetComponent<RectTransform>();
-
-			directories = Directory.GetDirectories(".\\Assets\\Resources\\EditorPrefabs\\Furnitures\\");
 
 			foreach(string dir in directories) {
 				dirMap.Add(ExtractName(dir), dir);
