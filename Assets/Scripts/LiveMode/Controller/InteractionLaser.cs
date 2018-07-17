@@ -61,8 +61,10 @@ public class InteractionLaser : MonoBehaviour {
         }
 		else{
 			laser.SetActive(false);
-			EventSystem.current.SetSelectedGameObject(null);
-			lastHit = null;
+			if(lastHit != null){
+				EventSystem.current.SetSelectedGameObject(null);
+				lastHit = null;
+			}
 		}
 	}
 

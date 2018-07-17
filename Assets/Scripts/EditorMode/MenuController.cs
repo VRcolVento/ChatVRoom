@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DemoAV.Editor.MenuUtil {
+namespace DemoAV.Editor.MenuUtil{
 	public class MenuController : MonoBehaviour {
 
 		private SteamVR_TrackedObject trackedObj;

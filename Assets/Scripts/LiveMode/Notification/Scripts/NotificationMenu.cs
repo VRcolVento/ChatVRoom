@@ -16,6 +16,7 @@ public class NotificationMenu : MonoBehaviour {
 	public GameObject menuItem;
 	// The canvas in which put item once removed from menu.
 	public GameObject miniCanvas;
+	Canvas menuCanvas;
 	// The notification popup object.
 	Transform notificationPopup;
 	bool hideNotification, isHidingNotification; 
@@ -25,14 +26,20 @@ public class NotificationMenu : MonoBehaviour {
 	NotificationManager manager;
 	// Current selected notification.
 	int currentNotification;
+	// Shortcut to son.
+	Transform content;
+	ScrollRect rect;
 
 	// Use this for initialization
 	void Awake () {
 		// Create menu and hide it.
 		menuObj = Instantiate(menuPrefab);
 		menuObj.transform.SetParent(transform);	
-		menuObj.transform.localPosition = new Vector3(-0.0628f, -0.0306f, 0.0045f);
+		menuObj.transform.localPosition = new Vector3(-0.077f, -0.03061f, 0.05f);
 		menuObj.transform.localRotation = Quaternion.Euler(-2.701f, 92.84f, 174.068f);
+		content = menuObj.transform.Find("Scroll View/Viewport/Content");
+		rect = menuObj.transform.Find("Scroll View").GetComponent<ScrollRect>();
+		menuCanvas = menuObj.GetComponent<Canvas>();
 
 		// Register events.
 		manager = GameObject.Find("CVRREventSystem").GetComponent<NotificationManager>();
@@ -41,17 +48,26 @@ public class NotificationMenu : MonoBehaviour {
 
 		// Get notification popup instance.
 		notificationPopup = transform.Find("Notification Popup");
+
+		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, ChangeNotification);
+		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, SelectNotification);
 	}
 
-	void Start(){
-		// Set first notification highlighted.
-		currentNotification = 0;
-		transform.GetChild(0).GetComponent<Button>().Select();
+	private void Update() {
+		float upAngle = Vector3.Dot(Camera.main.transform.forward.normalized, transform.up.normalized);
+		float rightAngle = Vector3.Dot(Camera.main.transform.forward.normalized, transform.right.normalized);
+		if(Mathf.Abs(rightAngle) > 0.7 && Mathf.Abs(upAngle) < 0.2){
+			if(!menuCanvas.enabled){
+				menuCanvas.enabled = true;
+				currentNotification = 0;
+				if(content.childCount > 0) content.GetChild(0).GetComponent<Button>().Select();
+				rect.verticalNormalizedPosition = 1;
+			}
+		}
+		else{
+			menuCanvas.enabled = false;
+		}
 	}
-
-	// private void Update() {
-
-	// }
 	
 	/// <summary>
 	/// 	Add a new notification in the menu as text.
@@ -68,7 +84,7 @@ public class NotificationMenu : MonoBehaviour {
 
 		newNot.GetComponent<BoxCollider>().size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 0.0003f);
 
-		newNot.transform.SetParent(menuObj.transform.Find("Scroll View/Viewport/Content"));
+		newNot.transform.SetParent(content);
 		newNot.transform.localPosition = Vector3.zero;
 		newNot.transform.localScale = new Vector3(1, 1, 1);
 		newNot.transform.localRotation = Quaternion.identity;
@@ -118,44 +134,59 @@ public class NotificationMenu : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 	Changes the current highlighted notification.
+	/// </summary>
+	/// <param name="hit"> The object hit by raycast. </param>
+	void ChangeNotification(RaycastHit hit){
+		if(menuCanvas.enabled && content.childCount > 1){
+			Vector3 axis = GameObject.Find("LeftController").GetComponent<ControllerFunctions>().GetAxis();
+
+			if(axis.y <= 0.2){
+				if(axis.x >= 0.3)			NextNotification();
+				else if(axis.x <= -0.3)		PreviousNotification();
+			}
+		}
+	}
+
+	/// <summary>
 	/// 	Highlights the next notification.
 	/// </summary>
 	void NextNotification(){
-		currentNotification = currentNotification + 1 >= transform.childCount ? 0 : currentNotification + 1;
+		currentNotification = currentNotification + 1 >= content.childCount ? 0 : currentNotification + 1;
 
 		EventSystem.current.SetSelectedGameObject(null);
-		transform.GetChild(currentNotification).GetComponent<Button>().Select();
+		content.GetChild(currentNotification).GetComponent<Button>().Select();
 	}
 
 	/// <summary>
 	/// 	Highlights the previous notification.
 	/// </summary>
 	void PreviousNotification(){
-		currentNotification = currentNotification - 1 < 0 ? transform.childCount - 1 : currentNotification - 1;
+		currentNotification = currentNotification - 1 < 0 ? content.childCount - 1 : currentNotification - 1;
 
 		EventSystem.current.SetSelectedGameObject(null);
-		transform.GetChild(currentNotification).GetComponent<Button>().Select();
+		content.GetChild(currentNotification).GetComponent<Button>().Select();
 	}
 
 	/// <summary>
 	/// 	Selects current notification.
 	/// </summary>
-	void SelectNotification(){
-		transform.GetChild(currentNotification).GetComponent<Button>().onClick.Invoke();
+	/// <param name="hit"> The object hit by raycast. </param>
+	void SelectNotification(RaycastHit hit){
+		if(menuCanvas.enabled){
+			content.GetChild(currentNotification).GetComponent<Button>().onClick.Invoke();
 
-		// Make another notification to be highlighted.
-		if(currentNotification != 0)	--currentNotification;
-		transform.GetChild(currentNotification).GetComponent<Button>().Select();
-	}
-
-	void OnDisable(){
-		// Deactivate previous button and activate first.
-		EventSystem.current.SetSelectedGameObject(null);
+			// Make another notification to be highlighted.
+			if(currentNotification != 0)	--currentNotification;
+			content.GetComponent<Button>().Select();
+		}
 	}
 
 	void OnDestroy(){
 		manager.onAdd.RemoveListener(AddNotification);
 		manager.onAdd.RemoveListener(PopupNotification);
+		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, ChangeNotification);
+		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, SelectNotification);
 	}
 }
 }
