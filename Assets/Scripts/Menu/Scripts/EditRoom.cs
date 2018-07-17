@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class EditRoom : MonoBehaviour {
 	public GameObject roomItem;
+	ScrollRect scrollView;
 
 	// Use this for initialization
 	void Awake () {
@@ -22,13 +23,34 @@ public class EditRoom : MonoBehaviour {
 				newRoom.transform.localPosition = Vector3.zero;
 				newRoom.transform.localRotation = Quaternion.identity;
 				
-				newRoom.transform.Find("Text").GetComponent<Text>().text = roomName;
+				newRoom.transform.Find("Text").GetComponent<Text>().text = roomName.ToUpper();
 				newRoom.GetComponent<Button>().onClick.AddListener(delegate {StartRoom(fileName); });
 			}
 		}
+
+		// Get scrollview.
+		scrollView = transform.Find("Scroll View").GetComponent<ScrollRect>();
 	}
 
+	/// <summary>
+	/// 	Enters the room in edit mode.
+	/// </summary>
+	/// <param name="fileName"> The name of the room to enter. </param>
 	void StartRoom(string fileName){
 		Debug.Log(fileName);
+	}
+
+	/// <summary>
+	/// 	Scrolls the rooms view down.
+	/// </summary>
+	public void ScrollDown(){
+		scrollView.verticalNormalizedPosition -= 0.5f;
+	}
+
+	/// <summary>
+	/// 	Scrolls the rooms view up.
+	/// </summary>
+	public void ScrollUp(){
+		scrollView.verticalNormalizedPosition += 0.5f;
 	}
 }
