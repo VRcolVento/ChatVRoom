@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 54088666406004882}
   - component: {fileID: 65730701702702346}
   m_Layer: 9
-  m_Name: tv_table_2
+  m_Name: Table Tv 2
   m_TagString: Obj_Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

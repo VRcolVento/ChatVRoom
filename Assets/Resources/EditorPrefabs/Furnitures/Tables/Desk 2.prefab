@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 54201279818197992}
   - component: {fileID: 65791651792870614}
   m_Layer: 9
-  m_Name: table_2
+  m_Name: Desk 2
   m_TagString: Obj_Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

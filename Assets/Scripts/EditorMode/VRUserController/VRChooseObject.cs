@@ -15,10 +15,7 @@ namespace DemoAV.Editor.User{
 	/// </summary>
 	public class VRChooseObject : MonoBehaviour {
 
-
-
-//		public delegate void SelectAction(GameObject obj);
-//		public delegate void DeselectAction();
+		// Events
 		public static event SelectAction menuSelect;
 		public static event DeselectAction menuDeselect;
 		public static event SelectAction menuPress;
@@ -42,17 +39,12 @@ namespace DemoAV.Editor.User{
 		/// </summary>
 		public delegate void DeselectAction();
 
-		// Events
-//		public static event SelectAction select;
-//		public static event DeselectAction deselect;
 
 		// Reference to the placing script, to activate after the user has chosen the object
 		VRPlaceObject placingScript;
-		SelectMenuItem selectingScript;
 
 		// Masks
 		int raycastMask;
-//		private int menuMask;
 
 		// Help
 		GameObject helpPanel;
@@ -64,7 +56,6 @@ namespace DemoAV.Editor.User{
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
-			selectingScript = GetComponent<SelectMenuItem>();
 			helpPanel = GameObject.Find("HelpCanvas");
 			confirmationPanel = GameObject.Find("SaveConfirmationCanvas");
 			confirmationPanel.SetActive(false);
@@ -72,7 +63,6 @@ namespace DemoAV.Editor.User{
 
 		void Start () {
 			raycastMask = LayerMask.GetMask("FurnitureLayer", "Menu Layer");
-//			menuMask = LayerMask.GetMask("Menu Layer");
 		}
 		
 		void Update () {
@@ -84,9 +74,6 @@ namespace DemoAV.Editor.User{
 				// Check if the user is aiming an already placed object
 
 				GameObject obj = hit.transform.gameObject;
-
-//				if(deselect != null) deselect(); // Call Deselect event: otherwise if objects overlap and they all stay blue
-//				if(select != null) select(obj); // Call Select event
 
 				// Hit an object
 				if(obj.layer == 9 && Controller.GetHairTriggerDown()) {
@@ -100,35 +87,22 @@ namespace DemoAV.Editor.User{
 					if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
 					if(menuSelect != null) menuSelect(obj); // Call Select event
 
-					if(Controller.GetHairTriggerDown()) {
+					if(Controller.GetHairTriggerDown())
 						if(menuPress != null) menuPress(obj);
-					}
-				
-					else {
-						if(menuDeselect != null) menuDeselect(); // Call Deselect event: otherwise if objects overlap they all stay blue
-					}
-
 				}
-
-
 			}
-//			else {
-//				if(deselect != null) deselect(); // Call Deselect event
-//			}
-
-
+			else
+				if(menuDeselect != null) menuDeselect(); // Call Deselect event
 		}
 
 		void OnEnable() {
 			// When active, add listener for menu buttons
 			VRChooseObject.menuPress += buttonPressed;
-			selectingScript.enabled = true;
 		}		
 
 		void OnDisable() {
 			// When not active, remove listener for menu buttons
 			VRChooseObject.menuPress -= buttonPressed;
-			selectingScript.enabled = false;
 		}
 
 

@@ -38,9 +38,7 @@ namespace DemoAV.Editor.MenuUtil {
 		/// </summary>
 		public void OnPointerEnter(GameObject obj) {			
 			if(obj != null && GameObject.ReferenceEquals(obj, this.gameObject)) {
-				Debug.Log(GetComponent<Image>().color);
 				GetComponent<Image>().color = new Color32(224, 243, 74, 77); // giallino	
-				Debug.Log(GetComponent<Image>().color);
 			}
 		}
 

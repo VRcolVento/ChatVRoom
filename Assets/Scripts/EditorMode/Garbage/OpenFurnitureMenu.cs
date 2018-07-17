@@ -6,13 +6,14 @@ using System.IO;
 using TMPro;
 using System;
 
+
 namespace DemoAV.Editor.MenuUtil {
 
 	/// <summary>
 	/// Open the user's menu 
 	/// </summary>
 	public class OpenFurnitureMenu : MonoBehaviour {
-
+/* 
 		public Canvas canvas;
 		private Transform hand; // The left controller
 		
@@ -174,5 +175,6 @@ namespace DemoAV.Editor.MenuUtil {
 
 			return max;
 		}
+		*/
 	}
 }
