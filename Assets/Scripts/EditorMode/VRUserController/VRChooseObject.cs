@@ -53,6 +53,9 @@ namespace DemoAV.Editor.User{
 		// For menu
 		public OpenFurnitureMenuList menu;
 
+		// To Exit
+		bool canExit;
+
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
@@ -93,6 +96,12 @@ namespace DemoAV.Editor.User{
 			}
 			else
 				if(menuDeselect != null) menuDeselect(); // Call Deselect event
+
+			// Check if the user is touching the door
+			if(Controller.GetHairTriggerDown() && canExit) {
+				Debug.Log("Esco");
+				// TODO
+			}
 		}
 
 		void OnEnable() {
@@ -121,9 +130,6 @@ namespace DemoAV.Editor.User{
 					SceneController.Dictionary.Save();
 					confirmationPanel.transform.position = menu.transform.position;
 					StartCoroutine("showSaveNotification");
-					break;
-				case "Exit":
-					Debug.Log("Esco");
 					break;
 				case "MenuObject":
 					menu.OpenSubMenu(menuBtn.name);
@@ -170,7 +176,6 @@ namespace DemoAV.Editor.User{
 			// Tell to the placing script the object to modify
 			placingScript.setObject(obj, name, path);
 			// Remove selection events for the object during the placing phase
-//			obj.GetComponent<Interactible>().RemoveSelectionEvent();
 
 			// Update status: switch working scripts
 			this.enabled = false;
@@ -184,6 +189,31 @@ namespace DemoAV.Editor.User{
 			confirmationPanel.SetActive(false);
 
 			yield return null;
+		}
+		
+		/// <summary>
+		/// OnCollisionEnter is called when this collider/rigidbody has begun
+		/// touching another rigidbody/collider.
+		/// </summary>
+		/// <param name="other">The Collision data associated with this collision.</param>
+		void OnCollisionEnter(Collision other) {
+			
+			if(other.gameObject.tag == "Exit") {
+				canExit = true;
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
+			}
+		}
+
+		/// <summary>
+		/// OnCollisionExit is called when this collider/rigidbody has
+		/// stopped touching another rigidbody/collider.
+		/// </summary>
+		/// <param name="other">The Collision data associated with this collision.</param>
+		void OnCollisionExit(Collision other) {
+			
+			if(other.gameObject.tag == "Exit"){
+				canExit = false;
+			}
 		}
 	}
 }

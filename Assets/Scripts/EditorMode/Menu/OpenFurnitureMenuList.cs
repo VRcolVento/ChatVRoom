@@ -52,10 +52,10 @@ namespace DemoAV.Editor.MenuUtil {
 			
 			// Set save/exit buttons position on the thirds of the canvas
 			Transform saveBtn = GameObject.Find("SaveCanvas/SaveBtn").transform;
-			Transform exitBtn = GameObject.Find("SaveCanvas/ExitBtn").transform;
+//			Transform exitBtn = GameObject.Find("SaveCanvas/ExitBtn").transform;
 			float btnOffset = (canvasRect.sizeDelta.x / 2) - ((1.0f / 3.0f) * canvasRect.sizeDelta.x);
 			saveBtn.localPosition = new Vector3(-btnOffset, -canvasRect.sizeDelta.y / 2 + saveBtn.gameObject.GetComponent<RectTransform>().sizeDelta.y/2, 0);
-			exitBtn.localPosition = new Vector3(btnOffset, -canvasRect.sizeDelta.y / 2 + exitBtn.gameObject.GetComponent<RectTransform>().sizeDelta.y/2, 0);
+//			exitBtn.localPosition = new Vector3(btnOffset, -canvasRect.sizeDelta.y / 2 + exitBtn.gameObject.GetComponent<RectTransform>().sizeDelta.y/2, 0);
 		}
 		
 		void Update () {
