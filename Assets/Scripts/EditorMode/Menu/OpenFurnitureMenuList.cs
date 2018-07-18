@@ -31,7 +31,7 @@ namespace DemoAV.Editor.MenuUtil {
 		private int size = 30;
 
 		void Awake() {
-			hand = GameObject.Find("Controller (left)").transform;
+			hand = GameObject.Find("Hand1").transform;
 			canvasRect = canvas.GetComponent<RectTransform>();
 			directories = Directory.GetDirectories(".\\Assets\\Resources\\EditorPrefabs\\Furnitures\\");
 

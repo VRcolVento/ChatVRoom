@@ -56,12 +56,16 @@ namespace DemoAV.Editor.User{
 		// To Exit
 		bool canExit;
 
+		// Floor
+		GameObject floor;
+
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			placingScript = GetComponent<VRPlaceObject>();		
 			helpPanel = GameObject.Find("HelpCanvas");
 			confirmationPanel = GameObject.Find("SaveConfirmationCanvas");
 			confirmationPanel.SetActive(false);
+			floor = GameObject.Find("FakeFloor");
 		}
 
 		void Start () {
@@ -107,11 +111,13 @@ namespace DemoAV.Editor.User{
 		void OnEnable() {
 			// When active, add listener for menu buttons
 			VRChooseObject.menuPress += buttonPressed;
+			floor.GetComponent<BoxCollider>().enabled = false;
 		}		
 
 		void OnDisable() {
 			// When not active, remove listener for menu buttons
 			VRChooseObject.menuPress -= buttonPressed;
+			if(floor != null) floor.GetComponent<BoxCollider>().enabled = true;
 		}
 
 
@@ -200,6 +206,10 @@ namespace DemoAV.Editor.User{
 			
 			if(other.gameObject.tag == "Exit") {
 				canExit = true;
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
 				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
 			}
 		}
