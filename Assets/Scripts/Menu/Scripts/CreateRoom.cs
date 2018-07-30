@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using DemoAV.Editor.StorageUtility;
 
 namespace DemoAV.StartMenu{
 public class CreateRoom : MonoBehaviour {
@@ -13,7 +14,7 @@ public class CreateRoom : MonoBehaviour {
 	/// 	Creates and opens a new room.
 	/// </summary>
 	public void CreateNewRoom(){
-		PrefabDictonary dictonary = GameObject.Find("Dictonary").GetComponent<PrefabDictonary>();
+		PrefabDictionary dictonary = GameObject.Find("Dictionary").GetComponent<PrefabDictionary>();
 		dictonary.name = transform.Find("Panel/Room Name").GetComponent<Text>().text;
 	}
 

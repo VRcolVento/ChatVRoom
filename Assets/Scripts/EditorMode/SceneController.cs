@@ -1,17 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoAV.Editor.StorageUtility;
 
-public class SceneController : MonoBehaviour {
+namespace DemoAV.Editor.SceneControl {
 
-	private static PrefabDictonary dictionaryInstance;
+	/// <summary>
+	/// Hook for the Dictionary to handle storage/load of the scene
+	/// </summary>
+	public class SceneController : MonoBehaviour {
+
+		private static PrefabDictionary dictionaryInstance;
 
 
-	public static PrefabDictonary Dictionary {
-		get { return dictionaryInstance; }
-	}
-	
-	void Start () {
-		dictionaryInstance = GameObject.Find("Dictonary").GetComponent<PrefabDictonary>();
+		public static PrefabDictionary Dictionary {
+			get { return dictionaryInstance; }
+		}
+		
+		void Start () {
+			dictionaryInstance = GameObject.Find("Dictionary").GetComponent<PrefabDictionary>();
+		}
 	}
 }

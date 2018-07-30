@@ -13,6 +13,13 @@ TagManager:
   - Obj_Floor
   - Obj_Wall
   - Obj_Ceiling
+  - Bin
+  - Dismiss
+  - Save
+  - Exit
+  - MenuObject
+  - MenuFurniture
+  - MenuBack
   layers:
   - Default
   - TransparentFX

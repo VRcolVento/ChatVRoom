@@ -41,7 +41,7 @@ Transform:
   m_GameObject: {fileID: 1847410437451122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -126,8 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d8038f8c40c6943aa6a34b5d45235f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedMaterial: {fileID: 2100000, guid: 572b2bbe628685243a76527e3b17ea12, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: f37b64cf4d6cd3a4ba11e983172389a6, type: 2}
 --- !u!114 &114488415578600160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,5 +148,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa729495fce8aa458a5ec45d1a520d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feasibleMat: {fileID: 2100000, guid: 45c905449c0c0084a92e426b0ee6c987, type: 2}
-  unfeasibleMat: {fileID: 2100000, guid: c31dc442681e88843a31ebb73c525da4, type: 2}
