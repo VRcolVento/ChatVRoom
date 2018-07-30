@@ -5,8 +5,7 @@ using UnityEngine;
 /*
 	Instantiate the furnitures objsects
 */
-
-namespace DemoAV.Editor.SceneControl{
+namespace DemoAV.Editor.SceneControl {
 
 	public class Creator : MonoBehaviour {
 

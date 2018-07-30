@@ -8,10 +8,9 @@ using DemoAV.Editor.ObjectUtil;
 namespace DemoAV.Editor.StorageUtility {
 
 	/// <summary>
-	/// Class to store/load the room.
-	/// </summary>    
-    [CreateAssetMenu] 
-    public class PrefabDictionary : ScriptableObject {
+	///     Class to handle object's storage
+	/// </summary>     
+    public class PrefabDictionary : MonoBehaviour {
 
         /// <summary>
         /// Class describing an object entity. It stores position and rotation of the object
@@ -74,7 +73,8 @@ namespace DemoAV.Editor.StorageUtility {
         private int currId;
         private Dictionary<int, Entity> dictionary;
         
-        private PrefabDictionary(){
+        void Awake(){
+            DontDestroyOnLoad(this);
             currId = 0;
             dictionary = new Dictionary<int, Entity>();
         }

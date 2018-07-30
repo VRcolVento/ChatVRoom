@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 23230076638611544}
   - component: {fileID: 65980841033850770}
   m_Layer: 9
-  m_Name: Pouf
+  m_Name: pouf
   m_TagString: Obj_Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
