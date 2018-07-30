@@ -39,6 +39,14 @@ public class ControllerFunctions : MonoBehaviour {
 		vibration.duration = cycle;
 		vibration.intensity = intensity;
 	}
+
+	/// <summary>
+	/// 	Returns the current axis of the trackpad in controller.
+	/// </summary>
+	/// <returns> The current axis of trackpad. </returns>
+	public Vector3 GetAxis(){
+		return controller.GetAxis();
+	}
 }
 	
 }

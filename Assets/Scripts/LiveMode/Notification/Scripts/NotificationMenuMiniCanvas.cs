@@ -29,6 +29,7 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 	/// </summary>
 	/// <param name="grabber"> The object that has grabbed the text canvas. </param>
 	public void Grab(GameObject grabber){
+		Debug.Log(grabber);
 		// Add a Fixed joint and start popup effect.
 		body.isKinematic = false;
 		fx = gameObject.AddComponent<FixedJoint>();
@@ -48,7 +49,7 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 		body.isKinematic = true;
 		isGrabbed = false;
 
-		Destroy(fx);
+		if(fx)	Destroy(fx);
 		StartCoroutine(PopUpEffect(transform.localScale, bigSize));
 	}
 
@@ -67,7 +68,7 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 		while(weight < 1){
 			weight += 0.1f;
 			transform.localScale = Vector3.Lerp(initSize, finalSize, weight);
-			textTr.localScale = Vector3.Lerp(initScale, finalScale, weight);
+			// textTr.localScale = Vector3.Lerp(initScale, finalScale, weight);
 			yield return new WaitForSeconds(0.05f);
 		}
 
