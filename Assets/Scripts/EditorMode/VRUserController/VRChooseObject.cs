@@ -204,13 +204,10 @@ namespace DemoAV.Editor.User{
 		/// <param name="other">The Collision data associated with this collision.</param>
 		void OnCollisionEnter(Collision other) {
 			
+			Debug.Log(other.gameObject.tag + "  -  " + other.gameObject.name);
 			if(other.gameObject.tag == "Exit") {
 				canExit = true;
-				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
-				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
-				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
-				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
-				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(3900);
+				StartCoroutine("Vibrate");
 			}
 		}
 
@@ -223,7 +220,18 @@ namespace DemoAV.Editor.User{
 			
 			if(other.gameObject.tag == "Exit"){
 				canExit = false;
+				StopCoroutine("Vibrate");
 			}
+		}
+
+		IEnumerator Vibrate() {
+
+			while(true) {
+				SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(500);
+				yield return new WaitForEndOfFrame();
+			}
+
+			yield return null;
 		}
 	}
 }
