@@ -9,7 +9,7 @@ using System;
 namespace DemoAV.Editor.MenuUtil {
 
 	/// <summary>
-	/// Open the user's menu 
+	/// Open the user's furniture menu 
 	/// </summary>
 	public class OpenFurnitureMenuList : MonoBehaviour {
 
@@ -53,7 +53,7 @@ namespace DemoAV.Editor.MenuUtil {
 			// Set save/exit buttons position on the thirds of the canvas
 			Transform saveBtn = GameObject.Find("SaveCanvas/SaveBtn").transform;
 //			Transform exitBtn = GameObject.Find("SaveCanvas/ExitBtn").transform;
-			float btnOffset = (canvasRect.sizeDelta.x / 2) - ((1.0f / 3.0f) * canvasRect.sizeDelta.x);
+			float btnOffset = (canvasRect.sizeDelta.x / 2) - ((1.0f / 2.0f) * canvasRect.sizeDelta.x);
 			saveBtn.localPosition = new Vector3(-btnOffset, -canvasRect.sizeDelta.y / 2 + saveBtn.gameObject.GetComponent<RectTransform>().sizeDelta.y/2, 0);
 //			exitBtn.localPosition = new Vector3(btnOffset, -canvasRect.sizeDelta.y / 2 + exitBtn.gameObject.GetComponent<RectTransform>().sizeDelta.y/2, 0);
 		}

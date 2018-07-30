@@ -84,7 +84,7 @@ namespace DemoAV.Editor.User{
 			// TODO Unify raycasts?
 			if(Physics.Raycast(ray, out hit, 1000f, menuMask) && hit.transform.gameObject.tag == "Bin") {
 
-				objToPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+				objToPlace.transform.localScale = Vector3.Scale(objToPlace.transform.localScale, new Vector3(0.2f, 0.2f, 0.2f));
 				objToPlace.transform.position = hit.point;
 
 				binPanel.SetActive(true);
