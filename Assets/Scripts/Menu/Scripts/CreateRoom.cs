@@ -17,6 +17,8 @@ public class CreateRoom : MonoBehaviour {
 		GameDictionary dictionary = GameObject.Find("Dictionary").GetComponent<GameDictionary>();
 		dictionary.CreateRoom(transform.Find("Panel/Room Name").GetComponent<Text>().text);
 
+		// Giulio's
+		// PrefabDictionary dictonary = GameObject.Find("Dictionary").GetComponent<PrefabDictionary>();
 		// dictonary.Name = transform.Find("Panel/Room Name").GetComponent<Text>().text;
 	}
 
