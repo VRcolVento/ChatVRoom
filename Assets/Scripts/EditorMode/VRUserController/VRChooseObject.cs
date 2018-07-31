@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DemoAV.Editor.ObjectUtil;
 using UnityEngine.UI;
 using TMPro;
@@ -105,6 +106,7 @@ namespace DemoAV.Editor.User{
 			if(Controller.GetHairTriggerDown() && canExit) {
 				Debug.Log("Esco");
 				// TODO
+				SceneManager.LoadScene("menuScene");
 			}
 		}
 

@@ -12,13 +12,14 @@ namespace DemoAV.Editor.SceneControl {
 
 		private static PrefabDictionary dictionaryInstance;
 
-
 		public static PrefabDictionary Dictionary {
 			get { return dictionaryInstance; }
 		}
 		
-		void Start () {
+		void Awake () {
+			Debug.Log( GameObject.Find("Dictionary").GetComponent<PrefabDictionary>());
 			dictionaryInstance = GameObject.Find("Dictionary").GetComponent<PrefabDictionary>();
+			dictionaryInstance.Load();
 		}
 	}
 }

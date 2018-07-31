@@ -30,7 +30,6 @@ namespace DemoAV.Editor.ObjectUtil {
 
 //					if(obj.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))
 							this.transform.position += Vector3.Scale(Vector3.one * Time.deltaTime, obj.transform.up);
-							Debug.Log(obj.name);
 				}
 			}	
 		}
@@ -39,8 +38,6 @@ namespace DemoAV.Editor.ObjectUtil {
 		void OnCollisionEnter(Collision collision){
 
 			if(collision.gameObject.layer == LayerMask.NameToLayer("RoomLayer") && collision.gameObject.tag != "Floor"){
-
-				Debug.Log(collision.gameObject.name);
 				
 				wallCollisionList.Add(collision.gameObject);
 //				if(collision.gameObject.GetComponent<Renderer>().bounds.Intersects(this.GetComponent<Renderer>().bounds))

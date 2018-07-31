@@ -35,7 +35,7 @@ namespace DemoAV.Editor.StorageUtility {
 		/// <para name="position">The object's position</para>
 		/// <para name="rotation">The object's rotation</para>
 		/// </summary>
-		public void AddEntity (string path, string prefabName, Vector3 position, Quaternion rotation) {
+		public void AddEntity (string path, string prefabName, Vector3 position, Quaternion rotation) {			
 			id = SceneController.Dictionary.AddEntity(path, prefabName, position, rotation);
 		}
 

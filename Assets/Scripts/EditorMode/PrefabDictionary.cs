@@ -54,10 +54,11 @@ namespace DemoAV.Editor.StorageUtility {
                     return new Quaternion(this._rotation[0], this._rotation[1], this._rotation[2], this._rotation[3]);
                 }
                 set{
-                    this._rotation[0] = value.w;
-                    this._rotation[1] = value.x;
-                    this._rotation[2] = value.y;
-                    this._rotation[3] = value.z;
+                    this._rotation[0] = value.x;
+                    this._rotation[1] = value.y;
+                    this._rotation[2] = value.z;
+                    this._rotation[3] = value.w;
+
                 }
             }
 
@@ -74,7 +75,7 @@ namespace DemoAV.Editor.StorageUtility {
         private Dictionary<int, Entity> dictionary;
         
         void Awake(){
-            DontDestroyOnLoad(this);
+//            DontDestroyOnLoad(this);
             currId = 0;
             dictionary = new Dictionary<int, Entity>();
         }
@@ -150,7 +151,7 @@ namespace DemoAV.Editor.StorageUtility {
             binary.Serialize(file, entities);
             file.Close();
 
-            Debug.Log("Saved!!");
+            Debug.Log("/Room_" + _Name + ".dat");
         }
 
 		/// <summary>
@@ -164,7 +165,10 @@ namespace DemoAV.Editor.StorageUtility {
                 Entity[] entities = (Entity[])binary.Deserialize(file);
                 file.Close();
 
+                Debug.Log(entities.Length);
+
                 foreach(Entity en in entities){
+
                     GameObject currObj = Object.Instantiate(Resources.Load("EditorPrefabs/Furnitures/" + en.Path + "/" + en.prefabName), en.position, en.rotation) as GameObject;
                     currObj.GetComponent<DictionaryEntity>().AddEntity(en.Path, en.prefabName, en.position, en.rotation);
                     freezeObject(currObj);

@@ -14,8 +14,10 @@ public class CreateRoom : MonoBehaviour {
 	/// 	Creates and opens a new room.
 	/// </summary>
 	public void CreateNewRoom(){
-		PrefabDictionary dictonary = GameObject.Find("Dictionary").GetComponent<PrefabDictionary>();
-		dictonary.name = transform.Find("Panel/Room Name").GetComponent<Text>().text;
+		GameDictionary dictionary = GameObject.Find("Dictionary").GetComponent<GameDictionary>();
+		dictionary.CreateRoom(transform.Find("Panel/Room Name").GetComponent<Text>().text);
+
+		// dictonary.Name = transform.Find("Panel/Room Name").GetComponent<Text>().text;
 	}
 
 	private void OnDisable() {

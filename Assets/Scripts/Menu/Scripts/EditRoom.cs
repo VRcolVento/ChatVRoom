@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EditRoom : MonoBehaviour {
 	public GameObject roomItem;
@@ -11,6 +12,7 @@ public class EditRoom : MonoBehaviour {
 		// Process the list of files found in the directory.
 		Transform content = transform.Find("Scroll View/Viewport/Content");
         string [] fileEntries = Directory.GetFiles(Application.persistentDataPath);
+
         foreach(string file in fileEntries){
 			string fileName = file.Substring(file.LastIndexOf("\\") + 1);
 
@@ -36,8 +38,11 @@ public class EditRoom : MonoBehaviour {
 	/// 	Enters the room in edit mode.
 	/// </summary>
 	/// <param name="fileName"> The name of the room to enter. </param>
-	void StartRoom(string fileName){
-		Debug.Log(fileName);
+	void StartRoom(string fileName) {
+		string roomName = fileName.Remove(fileName.LastIndexOf(".")).Remove(0, 5);
+		GameObject.Find("GlobalDictionary").GetComponent<GameDictionary>().CurrentRoom = roomName;
+		
+		SceneManager.LoadScene("editorScene");
 	}
 
 	/// <summary>
