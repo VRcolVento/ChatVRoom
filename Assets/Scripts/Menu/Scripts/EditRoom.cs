@@ -38,10 +38,7 @@ public class EditRoom : MonoBehaviour {
 	/// 	Enters the room in edit mode.
 	/// </summary>
 	/// <param name="fileName"> The name of the room to enter. </param>
-	void StartRoom(string fileName) {
-		string roomName = fileName.Remove(fileName.LastIndexOf(".")).Remove(0, 5);
-		GameObject.Find("GlobalDictionary").GetComponent<GameDictionary>().CurrentRoom = roomName;
-		
+	void StartRoom(string fileName) {		
 		SceneManager.LoadScene("editorScene");
 	}
 

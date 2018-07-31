@@ -421,7 +421,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010608846784}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 39455fb505320424a8f302690b0f0cbd, type: 3}
@@ -520,8 +520,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0.99607843, g: 0.67058825, b: 0.22352941, a: 1}
-  m_Intensity: 6
-  m_Range: 15
+  m_Intensity: 2
+  m_Range: 2
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
