@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using DemoAV.Editor.StorageUtility;
+
 public class EditRoom : MonoBehaviour {
 	public GameObject roomItem;
 	ScrollRect scrollView;
@@ -26,7 +28,7 @@ public class EditRoom : MonoBehaviour {
 				newRoom.transform.localRotation = Quaternion.identity;
 				
 				newRoom.transform.Find("Text").GetComponent<Text>().text = roomName.ToUpper();
-				newRoom.GetComponent<Button>().onClick.AddListener(delegate {StartRoom(fileName); });
+				newRoom.GetComponent<Button>().onClick.AddListener(delegate {StartRoom(roomName); });
 			}
 		}
 
@@ -37,8 +39,9 @@ public class EditRoom : MonoBehaviour {
 	/// <summary>
 	/// 	Enters the room in edit mode.
 	/// </summary>
-	/// <param name="fileName"> The name of the room to enter. </param>
-	void StartRoom(string fileName) {		
+	/// <param name="roomName"> The name of the room to enter. </param>
+	void StartRoom(string roomName) {		
+		GameObject.Find("GlobalDictionary").GetComponent<PrefabDictionary>().Name = roomName;
 		SceneManager.LoadScene("editorScene");
 	}
 

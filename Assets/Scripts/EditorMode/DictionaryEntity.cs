@@ -23,7 +23,6 @@ namespace DemoAV.Editor.StorageUtility {
 		/// <para name="rotation">The object's rotation</para>
 		/// </summary>
 		public void AddEntity(int id, Vector3 position, Quaternion rotation) {
-
 			UpdatePosition(position);
 			UpdateRotation(rotation);
 		}

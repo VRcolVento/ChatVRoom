@@ -69,24 +69,25 @@ namespace DemoAV.Editor.StorageUtility {
         }
         ///
 
-        private string _Name = "SignoraStanza";
+        // Name of the room.
+        private string _Name = null;
         // Incremental ID
         private int currId;
         private Dictionary<int, Entity> dictionary;
         
         void Awake(){
-//            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
             currId = 0;
             dictionary = new Dictionary<int, Entity>();
         }
 
         public string Name{
             get{ return _Name; }
-            set{ if(_Name == null) this._Name = value; }
+            set{ if(_Name == null) this._Name = value.ToLower(); }
         }
 
 		/// <summary>
-		/// Add an entity to the dictionary. Overload in case that entity already exists
+		///     Adds an entity to the dictionary. Overload in case that entity already exists
 		/// <para name="id">The object's id</para>
 		/// <para name="path">The object's (sub)path</para>
 		/// <para name="name">The object's name</para>
@@ -98,7 +99,7 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Add an entity to the dictionary.
+		///     Adds an entity to the dictionary.
 		/// <para name="path">The object's (sub)path</para>
 		/// <para name="name">The object's name</para>
 		/// <para name="position">The object's position</para>
@@ -110,7 +111,7 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Remove an object from the dictionary
+		///     Removes an object from the dictionary
 		/// <para name="id">The object's id</para>
 		/// </summary>
         public void RemoveEntity(int id) {
@@ -118,7 +119,7 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Update object position
+		///     Updates object position
 		/// <para name="id">The object's id</para>
 		/// <para name="position">The new object's position</para>
 		/// </summary>
@@ -127,7 +128,7 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Update object rotation
+		///     Updates object rotation
 		/// <para name="id">The object's id</para>
 		/// <para name="rotation">The new object's rotation</para>
 		/// </summary>
@@ -136,7 +137,7 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Save the scene in the dictionary
+		///     Saves the scene in the dictionary
 		/// </summary>
         public void Save(){
             BinaryFormatter binary  = new BinaryFormatter();
@@ -155,27 +156,42 @@ namespace DemoAV.Editor.StorageUtility {
         }
 
 		/// <summary>
-		/// Load the scene from the dictionary
+		///     Loads the scene from the dictionary if it exists.
 		/// </summary>
         public void Load(){
-            if(File.Exists(Application.persistentDataPath + "/Room_" + _Name + ".dat")){
+            string roomFile = Application.persistentDataPath + "/Room_" + _Name + ".dat";
+
+            // Check if the room exists.
+            if(File.Exists(roomFile)){
                 BinaryFormatter binary = new BinaryFormatter();
-                FileStream file = File.Open(Application.persistentDataPath + "/Room_" + _Name + ".dat", FileMode.Open);
+                FileStream file = File.Open(roomFile, FileMode.Open);
 
                 Entity[] entities = (Entity[])binary.Deserialize(file);
                 file.Close();
 
                 Debug.Log(entities.Length);
 
+                // Add all the furnitures into the scene and into the dictonary.
                 foreach(Entity en in entities){
-
                     GameObject currObj = Object.Instantiate(Resources.Load("EditorPrefabs/Furnitures/" + en.Path + "/" + en.prefabName), en.position, en.rotation) as GameObject;
                     currObj.GetComponent<DictionaryEntity>().AddEntity(en.Path, en.prefabName, en.position, en.rotation);
                     freezeObject(currObj);
 //                    currObj.GetComponent<MeshRenderer>().material = currObj.GetComponent<Interactible>().DefaultMaterial;
                 }
             }
+            else{   // If file of the scene doesn't exist, create it.
+                Save();
+            }
             Debug.Log("Loaded!!");        
+        }
+
+        /// <summary>
+        ///     Deletes all the entities in the dictonary.
+        /// </summary>
+        public void Clear(){
+            dictionary.Clear();
+            currId = 0;
+            _Name = null;
         }
 
 

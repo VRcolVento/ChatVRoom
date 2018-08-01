@@ -5,30 +5,37 @@ using UnityEngine.EventSystems;
 namespace DemoAV.StartMenu.Keyboard{
 public class InputName : MonoBehaviour {
 
-	string roomName;
-	Text roomNameText;
+	string _roomName;
+	Text _roomNameText;
 	// How many frames have to pass between ticks.
 	public byte tickSpeed;
 	byte currFrame;
+	bool hasUnderscore = false;
+
+	//
+	public string roomName{
+		get{ return _roomName; }
+	}
 
 	// Use this for initialization
 	void Start () {
-		roomNameText = GetComponent<Text>();
-		roomName = "";
+		_roomNameText = GetComponent<Text>();
+		_roomName = "";
 		currFrame = 0;
+		_roomNameText.text = _roomName;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Add final underscore.
 		if(++currFrame >= tickSpeed){
-			char lastChar = roomName.Length > 0 ? roomName[roomName.Length - 1] : '\0';
+			char lastChar = _roomName.Length > 0 ? _roomName[_roomName.Length - 1] : '\0';
+			_roomNameText.text = _roomName;
 
-			if(lastChar == '_')
-				roomName = roomName.Remove(roomName.Length - 1);
-			else
-				roomName += "_";
+			if (!hasUnderscore)
+				_roomNameText.text += "_";
 
-			roomNameText.text = roomName;
+			hasUnderscore ^= true;
 			currFrame = 0;
 		}
 	}
@@ -38,28 +45,22 @@ public class InputName : MonoBehaviour {
 	/// </summary>
 	/// <param name="ch"> The caracter to add. </param>
 	public void AddCharacter(char ch){
-		char lastChar = roomName.Length > 0 ? roomName[roomName.Length - 1] : '\0';
-		bool hasUnderscore = lastChar == '_';
+		_roomName += ch;
 
-		if (hasUnderscore)	roomName = roomName.Remove(roomName.Length - 1);
-		roomName += ch;
-		if (hasUnderscore)	roomName += '_';
-
-		roomNameText.text = roomName;
+		// Update room name.
+		_roomNameText.text = _roomName;
+		if (hasUnderscore)	_roomNameText.text += "_";
 	}
 
 	/// <summary>
 	/// 	Remove last character from the room name.
 	/// </summary>
 	public void RemoveLastCharacter(){
-		char lastChar = roomName.Length > 0 ? roomName[roomName.Length - 1] : '\0';
-		bool hasUnderscore = lastChar == '_';
+		_roomName = _roomName.Remove(_roomName.Length - 1);
 
-		if (hasUnderscore)			roomName = roomName.Remove(roomName.Length - 1);
-		if (roomName.Length > 0)	roomName = roomName.Remove(roomName.Length - 1);
-		if (hasUnderscore)			roomName += '_';
-
-		roomNameText.text = roomName;
+		// Update room name.
+		_roomNameText.text = _roomName;
+		if (hasUnderscore)	_roomNameText.text += "_";
 	}
 
 	/// <summary>
