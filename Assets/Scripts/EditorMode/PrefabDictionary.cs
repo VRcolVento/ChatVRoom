@@ -72,12 +72,11 @@ namespace DemoAV.Editor.StorageUtility {
         // Name of the room.
         private string _Name = null;
         // Incremental ID
-        private int currId;
+        private int currId = 0;
         private Dictionary<int, Entity> dictionary;
         
         void Awake(){
             DontDestroyOnLoad(this);
-            currId = 0;
             dictionary = new Dictionary<int, Entity>();
         }
 

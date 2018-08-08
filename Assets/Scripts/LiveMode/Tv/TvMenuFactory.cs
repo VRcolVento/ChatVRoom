@@ -26,19 +26,11 @@ public class TvMenuFactory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// liner = GameObject.Find("SignorTelecomando").GetComponent<LineRenderer>();
-		// menuMask = LayerMask.GetMask(new string[]{"MenuLayer"});
-		GameObject rightController = null;
-		foreach(Transform tr in GameObject.Find("[CameraRig]").transform)
-			if(tr.gameObject.name == "RightController")
-				rightController = tr.gameObject;
-				
-		rightController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
+		remoteController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
 			if(hit.transform.gameObject.layer == 12) {
 				activeMenu.SetSelected(hit.transform.gameObject.name);
 				activeMenu.Active(hit.transform.gameObject.name);
 			}
-				
 		});  
 	}
 	
