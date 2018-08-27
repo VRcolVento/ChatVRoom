@@ -52,9 +52,10 @@ sysinfo.txt
 # VS Code
 /.vscode
 
+/Asset/Plugins/
 /Assets/Plugins/GitHub/
 /Assets/Plugins/SteamVR/
-"/Assets/Plugins/TextMesh Pro/"
+/Assets/Plugins/TextMesh\ Pro/
 /Assets/Plugins/GitHub.meta
 /ProjectSettings/ProjectVersion.txt
 /Assets/Scripts/LiveMode/Tv/Tmp
