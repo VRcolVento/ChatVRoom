@@ -17,6 +17,7 @@ namespace DemoAV.Editor.SceneControl {
 		}
 		
 		void Awake () {
+            
 			Debug.Log( GameObject.Find("GlobalDictionary").GetComponent<PrefabDictionary>());
 			dictionaryInstance = GameObject.Find("GlobalDictionary").GetComponent<PrefabDictionary>();
 			dictionaryInstance.Load();
