@@ -16,8 +16,8 @@ namespace DemoAV.Live.SmarTv{
         PlayFunc play;
         
 
-        public TvLocalStreaming(TvMenuFactory menuFact, PlayFunc playFunc){
-            path = "C:/Users/giuli/Videos/";
+        public TvLocalStreaming(TvMenuFactory menuFact, PlayFunc playFunc, string videoPath){
+            path = videoPath;
             this.menuFact = menuFact;
             streamingTex = Resources.Load("Images/SmartTv/LocalStreaming") as Texture2D;
             play = playFunc;
@@ -73,7 +73,6 @@ namespace DemoAV.Live.SmarTv{
         /// </summary>
         /// <param name="name"> The name of the file to stream. </param>
         void StartStreaming(string name){
-            Debug.Log(path + name);
             // Start the video streaming.
             play(path + name);
         }

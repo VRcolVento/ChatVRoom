@@ -64,7 +64,6 @@ public class PanelMenu : Menu {
         currPanel.transform.localRotation = Quaternion.identity;
         currPanel.transform.localScale = panelInfo.scale;
         currPanel.name = item.name;
-        currPanel.layer = Menu.menuLayer;
 
         // Add callback.
         SetCallback(item.name, callback);

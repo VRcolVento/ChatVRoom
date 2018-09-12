@@ -9,6 +9,8 @@ public class ControllerFunctions : MonoBehaviour {
 		public ushort duration, intensity;
 	};
 	Vibration vibration;
+	// Collision
+	GameObject collidingObject = null;
 
 	// Get controller object.
 	private SteamVR_TrackedObject trackedObj;
@@ -46,6 +48,32 @@ public class ControllerFunctions : MonoBehaviour {
 	/// <returns> The current axis of trackpad. </returns>
 	public Vector3 GetAxis(){
 		return controller.GetAxis();
+	}
+
+	/// <summary>
+	/// 	Returns the object that is currently colliding with the controller.
+	/// 	Null is returned if there is no collision.
+	/// </summary>
+	/// <returns> The object with which the controller is eventually colliding. </returns>
+	public GameObject GetCollidingObject(){
+		return collidingObject;
+	}
+
+	/// <summary>
+	/// 	OnTriggerEnter is called when the Collider other enters the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerEnter(Collider other){
+		collidingObject = other.gameObject;
+	}
+
+	/// <summary>
+	/// 	OnTriggerExit is called when the Collider other has stopped touching the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerExit(Collider other){
+		if(collidingObject && collidingObject.transform == other.transform)
+			collidingObject = null;
 	}
 }
 	

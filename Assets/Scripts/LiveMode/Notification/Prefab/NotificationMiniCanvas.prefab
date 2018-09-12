@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 65408272758883836}
   m_Layer: 5
   m_Name: NotificationMiniCanvas
-  m_TagString: Untagged
+  m_TagString: FloatingNotification
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

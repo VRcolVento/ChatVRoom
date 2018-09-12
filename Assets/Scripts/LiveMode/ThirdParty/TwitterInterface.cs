@@ -8,6 +8,7 @@ using Twity.DataModels.Responses;
 
 namespace DemoAV.Live.ThirdParty{
 using TwitterCallback = Twity.TwitterCallback;
+using TwitterHomeResponse = StatusesHomeTimelineResponse;
 
 public class TwitterInterface {
 
@@ -18,20 +19,20 @@ public class TwitterInterface {
 		Twity.Oauth.accessTokenSecret= TwitterKeys.AccessTokenSecret;
 	}
 		
-	/// <summary>
-	/// 	Retrieves the last tweets.
-	/// </summary>
-	/// <param name="num"> The number of tweets to retrieve. </param>
-	public static void GetTwitters(int num){
-		Dictionary<string, string> parameters = new Dictionary<string, string>();
-		parameters ["count"] = num.ToString();
-		IEnumerator enumerator = Twity.Client.Get ("statuses/home_timeline", parameters, Callback);
+	// /// <summary>
+	// /// 	Retrieves the last tweets.
+	// /// </summary>
+	// /// <param name="num"> The number of tweets to retrieve. </param>
+	// public static void GetTwitters(int num){
+	// 	Dictionary<string, string> parameters = new Dictionary<string, string>();
+	// 	parameters ["count"] = num.ToString();
+	// 	IEnumerator enumerator = Twity.Client.Get ("statuses/home_timeline", parameters, Callback);
 
-		while(enumerator.MoveNext()){
-			while(((IEnumerator)enumerator.Current).MoveNext()){
-			}
-		}
-	}
+	// 	while(enumerator.MoveNext()){
+	// 		while(((IEnumerator)enumerator.Current).MoveNext()){
+	// 		}
+	// 	} 
+	// }
 
 	public static void GetTwitters(MonoBehaviour script, int num, TwitterCallback callback){
 		Dictionary<string, string> parameters = new Dictionary<string, string>();

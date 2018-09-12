@@ -95,20 +95,6 @@ public class NotificationManager : MonoBehaviour {
 	void OnDestroy(){
 		onAdd.RemoveAllListeners();
 		onRemove.RemoveAllListeners();
-	}
-
-
-
-	void Start(){
-		StartCoroutine(AddNotifications());
-	}
-
-	IEnumerator AddNotifications(){
-		yield return new WaitForSeconds(2);
-		for(int i = 0; i < 20; ++i){
-			AddNotification(new notification("Notification " + i, Color.black, "Some random text", Color.black));
-			// yield return new WaitForSeconds(1);
-		}
-	}
+	}	
 }
 }

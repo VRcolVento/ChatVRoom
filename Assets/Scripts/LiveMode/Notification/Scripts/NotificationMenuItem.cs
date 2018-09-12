@@ -14,9 +14,6 @@ public class NotificationMenuItem : MonoBehaviour {
 	public string descriptionText;
 	public Color descriptionColor = new Color(0, 0, 0, 255);
 
-	public void Start(){
-	}
-
 	/// <summary>
 	/// 	Removes the item from the menu and put it in another canvas.
 	/// </summary>
@@ -29,13 +26,17 @@ public class NotificationMenuItem : MonoBehaviour {
 
 		// Create text.
 		Text title = transform.Find("Text").GetComponent<Text>();
-		CreateText("Notification title", title.text, title.color, title.fontSize);
+		Text titleText = CreateText("Notification title", title.text, title.color, title.fontSize).GetComponent<Text>();
+		titleText.alignment = TextAnchor.UpperCenter;
+		titleText.fontStyle = FontStyle.Bold;
 
 		// Remove collider.
 		Destroy(GetComponent<Collider>());
 
 		// Add notification description.
 		descriptionObj = CreateText("Notification description", descriptionText, Color.black, 26);
+		descriptionObj.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 430);
+		descriptionObj.GetComponent<Text>().fontSize = 20;
 		descriptionObj.SetActive(false);
 
 		// Automatically grab it.

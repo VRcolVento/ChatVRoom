@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -8,20 +10,41 @@ using DemoAV.SmartMenu;
 
 namespace DemoAV.Live.SmarTv{
 public class SmartTv : MonoBehaviour {
+	// Settings.
+	[Serializable]
+	struct Settings{
+		public string videoFolder, musicFolder; 
+	};
+	Settings settings;
 
-	const int speedIncreaseTime = 2, maxSpeed = 32;
-	public GameObject panel;
+	// Remote controller.
+	public GameObject remoteController;
+
+	// List of apps.
 	List<ITvApp> apps;
+
+	// Shortcut to objects.
+	public GameObject panel;
 	TvMenuFactory menuFactory;
 	GameObject display;
+
+	// Video player variables.
 	VideoPlayer player;
 	AudioSource audioSource;
+	const int speedIncreaseTime = 2, maxSpeed = 32;
 	bool backward, forward, closeVideo;
 	float speed, speedTime;
 	short updates;
 
 
-	void OnEnable(){
+	void Awake(){
+		if(Directory.Exists(Application.persistentDataPath + "/tvSettings.json")){
+			settings = new Settings();
+			settings.videoFolder = settings.musicFolder = "";
+		}
+		else{
+			settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.persistentDataPath + "/tvSettings.json"));
+		}
 	}
 
 	// Use this for initialization
@@ -43,7 +66,7 @@ public class SmartTv : MonoBehaviour {
 
 		// Cretes panel menu.
 		menuFactory = GetComponent<TvMenuFactory>();
-		apps = new List<ITvApp>{ new TvLocalStreaming(menuFactory, PlayVideo), 
+		apps = new List<ITvApp>{ new TvLocalStreaming(menuFactory, PlayVideo, settings.videoFolder), 
 								 new TvTwitter(display, menuFactory) };
 
 		Menu currMenu = menuFactory.CreateMenu(TvMenuFactory.Type.PANEL_MENU, "main");
@@ -120,21 +143,22 @@ public class SmartTv : MonoBehaviour {
 	/// </summary>
 	/// <param name="url"> The url of the video to play. </param>
 	void PlayVideo(string url){
-		player.url = url;
+		VRKeyHandler handler = remoteController.GetComponent<VRKeyHandler>();
 
 		// Change the menu callback with video one.
-		KeyboardHandler.RemoveCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.Escape, menuFactory.GoBack);
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.Escape, CloseVideo);
+		// KeyboardHandler.RemoveCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.Escape, menuFactory.GoBack);
+		// KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.Escape, CloseVideo);
 
 		// Pause video.
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.Space, PauseVideo);
+		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, PauseVideo);
 		// Forward.
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.RightArrow, StartForward);
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_UP, KeyCode.RightArrow, EndForward);
+		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, StartForward);
+		handler.AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.AXIS0, EndForward);
 		// Backward.
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_DOWN, KeyCode.LeftArrow, StartBackward);
-		KeyboardHandler.AddCallback(KeyboardHandler.Map.KEY_UP, KeyCode.LeftArrow, EndBackward);
+		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, StartBackward);
+		handler.AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.AXIS0, EndBackward);
 
+		player.url = url;
 		StartCoroutine(StartVideo());
 	}
 
@@ -169,42 +193,64 @@ public class SmartTv : MonoBehaviour {
 		player.Play();
 	}
 
-	void PauseVideo(){
-		if(player.isPlaying) 	player.Pause();
-		else					player.Play();
+	void PauseVideo(RaycastHit hit){
+		// If the remote controller is pointing the tv.
+		if(hit.transform.gameObject == gameObject){
+			if(player.isPlaying) 	player.Pause();
+			else					player.Play();
+		}
 	}
 
-	void StartForward(){
-		speed = 2;
-		speedTime = 0;
-		audioSource.volume = 0;
-		forward = true;
+	void StartForward(RaycastHit hit){
+		Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
+
+		// Right touchpad.
+		if(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8){
+			speed = 2;
+			speedTime = 0;
+			audioSource.volume = 0;
+			forward = true;
+		}
 	}
 
-	void EndForward(){
-		player.playbackSpeed = 1;
-		audioSource.volume = 1;
-		forward = false;
+	void EndForward(RaycastHit hit){
+		Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
+
+		// Right touchpad.
+		if(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8){
+			player.playbackSpeed = 1;
+			audioSource.volume = 1;
+			forward = false;
+		}
 	}
 
-	void StartBackward(){
-		player.Pause();
-		speed = 2;
-		speedTime = 0;
-		updates = 0;
-		backward = true;
+	void StartBackward(RaycastHit hit){
+		Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
+
+		// Left touchpad.
+		if(axis.x <= -0.4 && axis.y < 0.8 && axis.y > -0.8){
+			player.Pause();
+			speed = 2;
+			speedTime = 0;
+			updates = 0;
+			backward = true;
+		}
 	}
 
-	void EndBackward(){
-		player.Play();
-		backward = false;
+	void EndBackward(RaycastHit hit){
+		Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
+
+		// Left touchpad.
+		if(axis.x <= -0.4 && axis.y < 0.8 && axis.y > -0.8){
+			player.Play();
+			backward = false;
+		}
 	}
 	
 
 	void CloseVideo(){
 		closeVideo = true;
 	}
-
 }
 }
 

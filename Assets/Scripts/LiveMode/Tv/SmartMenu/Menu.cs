@@ -19,7 +19,7 @@ public abstract class Menu {
 	public delegate void ItemCallback(string name);
 
 	// Attributes.
-	protected const int menuLayer = 10;
+	protected const int menuLayer = 12;
 	protected GameObject father,  	// The father object. It is a "concrete object" with a mesh.
 						 root;		// The empty object that is used as root for the menu.
 	private Dictionary<string, ItemCallback> callbacks;		// The dictonary that contains the callbacks.
