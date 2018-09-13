@@ -29,6 +29,8 @@ public class NotificationMenu : MonoBehaviour {
 	NotificationManager manager;
 	// Current selected notification.
 	int currentNotification;
+	// Notification bin.
+	public NotificationBin bin;
 	// Shortcut to son.
 	Transform content;
 	ScrollRect rect;
@@ -155,7 +157,7 @@ public class NotificationMenu : MonoBehaviour {
 	void ChangeNotification(RaycastHit hit){
 		if(menuCanvas.enabled && content.childCount > 1){
 			Vector3 axis = GameObject.Find("LeftController").GetComponent<ControllerFunctions>().GetAxis();
-			print(axis);
+
 			if(axis.y <= 0.3){
 				if(axis.x >= 0.3)			NextNotification();
 				else if(axis.x <= -0.3)		PreviousNotification();
@@ -218,6 +220,7 @@ public class NotificationMenu : MonoBehaviour {
 
 		if(collidingObj && collidingObj.tag == "FloatingNotification"){
 			grabbedCanvas = collidingObj.GetComponent<NotificationMenuMiniCanvas>();
+			bin.Show(new Vector3(grabController.transform.position.x, 0.5f, grabController.transform.position.z));
 			grabbedCanvas.Grab(grabController.gameObject);
 		}
 	}
@@ -228,6 +231,7 @@ public class NotificationMenu : MonoBehaviour {
 	/// <param name="hit"> The object hit by raycast. </param>
 	void ReleaseNotificationCanvas(RaycastHit hit){
 		if(grabbedCanvas){
+			bin.Hide();
 			grabbedCanvas.Release();
 			grabbedCanvas = null;
 		}

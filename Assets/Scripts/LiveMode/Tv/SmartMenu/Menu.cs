@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DemoAV.SmartMenu{
+namespace DemoAV.Live.SmarTv.SmartMenu{
 public abstract class Menu {
 	// Declaration of struct and delegate.
 	public struct MenuItem{
@@ -19,11 +19,12 @@ public abstract class Menu {
 	public delegate void ItemCallback(string name);
 
 	// Attributes.
-	protected const int menuLayer = 12;
+	public const int menuLayer = 11;
 	protected GameObject father,  	// The father object. It is a "concrete object" with a mesh.
 						 root;		// The empty object that is used as root for the menu.
 	private Dictionary<string, ItemCallback> callbacks;		// The dictonary that contains the callbacks.
 	private int _activeTab = 0;		// The index of the active tab.
+    protected GameObject _selectedItem;        // Current selected item.
 
 	// Base constructor.
 	protected Menu(GameObject father, string name){
@@ -34,6 +35,7 @@ public abstract class Menu {
 		if(menuRootTransform == null){
 			GameObject menuRoot = new GameObject();
 			menuRoot.name = "MenuRoot";
+			menuRoot.layer = Menu.menuLayer;
 			menuRoot.transform.SetParent(father.transform);
 			menuRootTransform = menuRoot.transform;
 			menuRootTransform.localScale = new Vector3(1, 1, 1);
@@ -66,6 +68,7 @@ public abstract class Menu {
 		if(tab == null){
 			tab = (new GameObject()).transform;
 			tab.gameObject.name = "tab_" + index;
+			tab.gameObject.layer = Menu.menuLayer;
 			tab.gameObject.transform.SetParent(root.transform);
             tab.transform.localPosition = Vector3.zero;
             tab.transform.localRotation = Quaternion.identity;
@@ -97,6 +100,10 @@ public abstract class Menu {
 				}
 			}
 		}
+	}
+
+	public GameObject selectedItem{
+		get{ return _selectedItem; }
 	}
 
 	// Methods.

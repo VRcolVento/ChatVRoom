@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DemoAV.SmartMenu{
+namespace DemoAV.Live.SmarTv.SmartMenu{
 public class PanelMenu : Menu {
     struct PanelMenuInfo{
 		public int itemsPerRow, itemsPerTab, count;
@@ -11,7 +11,6 @@ public class PanelMenu : Menu {
 	};
 	PanelMenuInfo panelInfo;        // Some infos about the panel structure.
     GameObject panel;               // The panel to use as prefab.
-    GameObject selectedItem;        // Current selected item.
 
     public PanelMenu(GameObject father, GameObject panel, string name, int itemsPerRow, int itemsPerCol) : base(father, name) {
         // Init panel object.
@@ -35,9 +34,9 @@ public class PanelMenu : Menu {
         Transform itemTrs = root.transform.Find(item);
         GameObject itemObj = itemTrs == null ? null : itemTrs.gameObject;
 
-        if(selectedItem != itemObj){
+        if(_selectedItem != itemObj){
             // If there is a selected item.
-            if(selectedItem){
+            if(_selectedItem){
                 itemObj.GetComponent<Material>().color = Color.white;
             }
 
@@ -46,7 +45,7 @@ public class PanelMenu : Menu {
 
             }
 
-            selectedItem = itemObj;
+            _selectedItem = itemObj;
         }
     }
 

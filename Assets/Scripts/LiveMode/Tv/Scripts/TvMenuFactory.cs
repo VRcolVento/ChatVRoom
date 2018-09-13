@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using DemoAV.SmartMenu;
+using DemoAV.Live.SmarTv.SmartMenu;
 using DemoAV.Common;
 
 public class TvMenuFactory : MonoBehaviour {
@@ -24,34 +24,30 @@ public class TvMenuFactory : MonoBehaviour {
 	public GameObject text;
 
 
-	// Use this for initialization
+	/// <summary>
+	/// 	Start is called on the frame when a script is enabled just before
+	/// 	any of the Update methods is called the first time.
+	/// </summary>
 	void Start () {
 		remoteController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
-			if(hit.transform.gameObject.layer == 12) {
+			if(hit.transform.gameObject.layer == Menu.menuLayer) {
 				activeMenu.SetSelected(hit.transform.gameObject.name);
 				activeMenu.Active(hit.transform.gameObject.name);
 			}
 		});  
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// 	Update is called every frame, if the MonoBehaviour is enabled.
+	/// </summary>
 	void Update () {
-		if(liner) {
-			Ray ray = new Ray(remoteController.transform.position, Vector3.forward);
-			RaycastHit hit;
+		// Select the current hit item.
+		GameObject hit = remoteController.GetComponent<InteractionLaser>().lastHitObject;
 
-			if(Physics.Raycast(ray, out hit)){
-				liner.SetPosition(1, hit.point);
-
-				GameObject hitted = hit.transform.gameObject;
-				if(hitted.layer == 10){
-					activeMenu.SetSelected(hitted.name);
-
-					if(Input.GetMouseButtonDown(1))
-						activeMenu.Active(hitted.name);
-				}
-			}
-		}
+		if (hit && hit.layer == Menu.menuLayer)
+			activeMenu.SetSelected(hit.name);
+		else if (activeMenu.selectedItem != null)
+			activeMenu.SetSelected(null);
 	}
 
 	/// <summary>
@@ -145,7 +141,7 @@ public class TvMenuFactory : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// 	Change the current tab of the active menu.
+	/// 	Change the current tab of the active menu if any.
 	/// </summary>
 	/// <param name="direction"> 0 > : go backward by the number.
 	/// 						 0 < : go backward by the module of the number.
@@ -153,9 +149,11 @@ public class TvMenuFactory : MonoBehaviour {
 	/// </param>
 	/// <param name="index"> The desidered tab. </param>
 	public void ChangeTab(int direction, int index = 0){
-		if(direction == 0 )
-			activeMenu.activeTab = index;
-		else
-			activeMenu.activeTab += direction;
+		if(activeMenu != null){
+			if(direction == 0 )
+				activeMenu.activeTab = index;
+			else
+				activeMenu.activeTab += direction;
+		}
 	}
 }

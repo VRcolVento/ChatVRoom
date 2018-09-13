@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-using DemoAV.SmartMenu;
 using DemoAV.Common;
 using DemoAV.Live.ThirdParty;
+using DemoAV.Live.SmarTv.SmartMenu;
 
 using Twity.DataModels.Responses;
 using TMPro;

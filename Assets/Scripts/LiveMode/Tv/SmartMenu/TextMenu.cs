@@ -5,7 +5,7 @@ using UnityEngine;
 
 using TMPro;
 
-namespace DemoAV.SmartMenu{
+namespace DemoAV.Live.SmarTv.SmartMenu{
 public class TextMenu : Menu {
     struct TextMenuInfo{
 		public float width, height;
@@ -15,7 +15,6 @@ public class TextMenu : Menu {
 	};
 	TextMenuInfo menuInfo;        // Some infos about the panel structure.
     GameObject textBox;
-    GameObject selectedItem;        // Current selected item.
 
     public TextMenu(GameObject father, GameObject textBox, string name, int itemsPerTab) : base(father, name) {
         this.textBox = textBox;
@@ -28,21 +27,21 @@ public class TextMenu : Menu {
     }
 
     public override void SetSelected(string item){
-        Transform itemTrs = root.transform.Find(item);
-        GameObject itemObj = itemTrs == null ? null : itemTrs.gameObject;
+        Transform newItem = GetTab(activeTab).transform.Find(item);
+        GameObject itemObj = newItem == null ? null : newItem.gameObject;
 
-        if(selectedItem != itemObj){
+        if(_selectedItem != itemObj){
             // If there is a selected item.
-            if(selectedItem){
-                itemObj.GetComponent<Material>().color = Color.white;
+            if(_selectedItem){
+                _selectedItem.GetComponent<TextMeshPro>().color = Color.white;
             }
 
             // If there is a new selected item.
             if(itemObj){
-
+                itemObj.GetComponent<TextMeshPro>().color = Color.blue;
             }
 
-            selectedItem = itemObj;
+            _selectedItem = itemObj;
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 using TMPro;
 
-namespace DemoAV.SmartMenu{
+namespace DemoAV.Live.SmarTv.SmartMenu{
 public class SocialMenu : Menu {
     struct SocialMenuInfo{
 		public int itemsPerCol, count;
@@ -75,7 +75,7 @@ public class SocialMenu : Menu {
 
         // Status
         GameObject status = GameObject.Instantiate(textobj);
-        PositionItem(status.transform, tab.gameObject, new Vector3(0, pos.y - (panelInfo.imageScale.y / 2.0f + panelInfo.statusDim.y / 2.0f), 0), Quaternion.identity, new Vector3(1, 1, 1));
+        PositionItem(status.transform, tab.gameObject, new Vector3(0, pos.y - (panelInfo.imageScale.y / 2.0f + panelInfo.statusDim.y / 2.0f), -0.02f), Quaternion.identity, new Vector3(1, 1, 1));
         status.GetComponent<RectTransform>().sizeDelta = panelInfo.statusDim;
         status.GetComponent<BoxCollider>().size = new Vector3(panelInfo.statusDim.x, panelInfo.statusDim.y, 0);
         status.GetComponent<TextMeshPro>().text = (string)item.fields[1];
@@ -88,10 +88,10 @@ public class SocialMenu : Menu {
     }
 
     private void PositionItem(Transform obj, GameObject father, Vector3 pos, Quaternion rot, Vector3 scale){
-            obj.SetParent(father.transform);
-            obj.localPosition = pos;
-            obj.localRotation = rot;
-            obj.localScale = scale;
+        obj.SetParent(father.transform);
+        obj.localPosition = pos;
+        obj.localRotation = rot;
+        obj.localScale = scale;
     }
 }
 }

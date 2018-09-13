@@ -2,9 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-using DemoAV.Common;
-
-namespace DemoAV.Live.Controller{
+namespace DemoAV.Common{
 
 public class InteractionLaser : MonoBehaviour {
 
@@ -19,7 +17,14 @@ public class InteractionLaser : MonoBehaviour {
 	GameObject lastHit;
 	Material laserMaterial;
 
-	// Use this for initialization
+	public GameObject lastHitObject{
+		get{ return lastHit; }
+	}
+
+	/// <summary>
+	/// 	Start is called on the frame when a script is enabled just before
+	/// 	any of the Update methods is called the first time.
+	/// </summary>
 	void Start () {
 		// Create laser as thick cube and hide it.
 		holder = new GameObject();
@@ -45,9 +50,11 @@ public class InteractionLaser : MonoBehaviour {
 		GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, PressButton);
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// 	Update is called every frame, if the MonoBehaviour is enabled.
+	/// </summary>
 	void Update () {
-		Ray raycast = new Ray(transform.position, transform.forward);
+		Ray raycast = new Ray(transform.position + transform.forward * 0.2f, transform.forward);
         RaycastHit hit;
 		bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity, layerMask);
 
@@ -62,13 +69,16 @@ public class InteractionLaser : MonoBehaviour {
 		else{
 			laser.SetActive(false);
 			if(lastHit != null){
-				print("OK");
 				EventSystem.current.SetSelectedGameObject(null);
 				lastHit = null;
 			}
 		}
 	}
 
+	/// <summary>
+	/// 	Handles the interaction with the current pointed element.
+	/// </summary>
+	/// <param name="hit"> The element hit by raycast. </param>
 	void HandleInteraction(RaycastHit hit){
 		GameObject hitObject = hit.transform.gameObject;
 
@@ -94,11 +104,18 @@ public class InteractionLaser : MonoBehaviour {
 		if (lastHit != hitObject)	lastHit = hitObject;
 	}
 
+	/// <summary>
+	/// 	Acivate the button hit by raycast.
+	/// </summary>
+	/// <param name="hit"> The button hit by raycast. </param>
 	void PressButton(RaycastHit hit){
 		if(hit.transform.gameObject.layer == 13 && EventSystem.current.currentSelectedGameObject)
 			EventSystem.current.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
 	}
 
+	/// <summary>
+	/// 	This function is called when the behaviour becomes disabled or inactive.
+	/// </summary>
 	void OnDisable(){
 		GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, PressButton);
 	}

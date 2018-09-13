@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-using DemoAV.SmartMenu;
+using DemoAV.Live.SmarTv.SmartMenu;
 
 namespace DemoAV.Live.SmarTv{
     class TvLocalStreaming : ITvApp{

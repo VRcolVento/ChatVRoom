@@ -20,6 +20,11 @@ public class KeyboardHandler : MonoBehaviour {
 		new Dictionary<KeyCode, HashSet<KeyCallback>>(), 
 		new Dictionary<KeyCode, HashSet<KeyCallback>>()
 	};	
+	static Dictionary<KeyCode, HashSet<KeyCallback>>[] toDelete = new Dictionary<KeyCode, HashSet<KeyCallback>>[3]{
+		new Dictionary<KeyCode, HashSet<KeyCallback>>(), 
+		new Dictionary<KeyCode, HashSet<KeyCallback>>(), 
+		new Dictionary<KeyCode, HashSet<KeyCallback>>()
+	};	
 
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
@@ -51,6 +56,9 @@ public class KeyboardHandler : MonoBehaviour {
 				foreach(KeyCallback callback in keyPair.Value)
 					callback();
 		}
+
+		// Deferred removal.
+		DeferredRemoval();
 	}
 
 	/// <summary>
@@ -72,6 +80,63 @@ public class KeyboardHandler : MonoBehaviour {
 
 		// Add callback.
 		hs.Add(callback);
+	}
+
+	/// <summary>
+	/// 	Removes a given callback from the set of callback of a given key event.
+	/// </summary>
+	/// <param name="type"> The type of the event. </param>
+	/// <param name="key"> The key focused by the event. </param>
+	/// <param name="callback"> The callback to remove. </param>
+	static public void RemoveCallback(Map type, KeyCode key, KeyCallback callback){
+		HashSet<KeyCallback> hs;
+
+		Dictionary<KeyCode, HashSet<KeyCallback>> currDic = keyMap[(int)type];
+
+		// If set does not exist, delete it.
+		if(currDic.TryGetValue(key, out hs)) {
+			hs.Remove(callback);
+
+			if(hs.Count == 0)
+				currDic.Remove(key);
+		}
+	}
+
+	/// <summary>
+	/// 	Removes a given callback from the set of callback of a given key event within another 
+	/// 	key callback. This method must be called only if the remove of a callback happens in
+	/// 	another function that is already binds to a key event. 
+	/// 	To call the default remove method will otherwise generates an error at runtime.
+	/// </summary>
+	/// <param name="type"> The type of the event. </param>
+	/// <param name="key"> The key focused by the event. </param>
+	/// <param name="callback"> The callback to remove. </param>
+	static public void DeferredRemoveCallback(Map type, KeyCode key, KeyCallback callback){
+		HashSet<KeyCallback> hs;
+
+		Dictionary<KeyCode, HashSet<KeyCallback>> currDic = toDelete[(int)type];
+
+		// If set does not exist, create it.
+		if(!currDic.TryGetValue(key, out hs)) {
+			hs = new HashSet<KeyCallback>();
+			currDic.Add(key, hs);
+		}
+
+		// Add callback.
+		hs.Add(callback);
+	}
+
+	/// <summary>
+	/// 	The deferred removal of callback.
+	/// </summary>
+	static void DeferredRemoval(){
+		for(byte i = 0; i < toDelete.Length; ++i){
+			foreach(KeyValuePair<KeyCode, HashSet<KeyCallback>> entry in toDelete[i]) {
+				foreach(KeyCallback callback in entry.Value){
+					RemoveCallback((Map)i, entry.Key, callback);
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -101,26 +166,6 @@ public class KeyboardHandler : MonoBehaviour {
 		HashSet<KeyCallback> hs = new HashSet<KeyCallback>();
 		hs.Add(callback);
 		currDic[key] = hs;
-	}
-
-	/// <summary>
-	/// 	Remove a given callback from the set of callback of a given key event.
-	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="key">The key focused by the event.</param>
-	/// <param name="callback">The callback to remove.</param>
-	static public void RemoveCallback(Map type, KeyCode key, KeyCallback callback){
-		HashSet<KeyCallback> hs;
-
-		Dictionary<KeyCode, HashSet<KeyCallback>> currDic = keyMap[(int)type];
-
-		// If set does not exist, delete it.
-		if(currDic.TryGetValue(key, out hs)) {
-			hs.Remove(callback);
-
-			if(hs.Count == 0)
-				currDic.Remove(key);
-		}
 	}
 
 	/// <summary>
