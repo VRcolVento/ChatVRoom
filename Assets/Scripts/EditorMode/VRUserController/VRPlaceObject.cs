@@ -19,6 +19,9 @@ namespace DemoAV.Editor.User{
 			get { return SteamVR_Controller.Input((int)trackedObj.index); }
 		}
 
+		// Player
+		public Transform player;
+
 		// Reference to the choosing script, to activate after the user has placed the object
 		VRChooseObject chooseScript;
 
@@ -41,7 +44,7 @@ namespace DemoAV.Editor.User{
 		GameObject binPanel;
 
 		// Help
-		GameObject helpPanel, helpText;
+		public GameObject helpPanel;
 
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -50,8 +53,6 @@ namespace DemoAV.Editor.User{
 			bin.SetActive(false);
 			binPanel = GameObject.Find("BinCanvas");
 			binPanel.SetActive(false);
-			helpPanel = GameObject.Find("HelpPanel");
-			helpText = GameObject.Find("HelpPanel/Text");
 			roomMask = LayerMask.GetMask("RoomLayer");
 			menuMask = LayerMask.GetMask("Menu Layer");
 		}
@@ -134,6 +135,8 @@ namespace DemoAV.Editor.User{
 																objToPlace.transform.position.z);
 				}
 
+				helpPanel.transform.position = (objToPlace.transform.position + new Vector3(0f, 1.5f, 0f)+ player.position) / 2;
+
 
 				// Place the object
 				if(Controller.GetHairTriggerDown()) {
@@ -183,7 +186,7 @@ namespace DemoAV.Editor.User{
 			modifyObjScript = objToPlace.GetComponent<ModifyObject>();
 			modifyObjScript.enabled = true;
 			initScale = objToPlace.transform.localScale;
-			helpText.GetComponent<TextMeshPro>().text = "Right trigger: Place the object\nSwipe to rotate right or left";
+			helpPanel.SetActive(true);
 			bin.SetActive(true);
 		}
 
@@ -198,7 +201,7 @@ namespace DemoAV.Editor.User{
 			chooseScript.enabled = true;
 			modifyObjScript.enabled = false;
 			this.enabled = false;
-			helpText.GetComponent<TextMeshPro>().text = "Left trigger: Open menu to choose an object\n";
+			helpPanel.SetActive(false);
 			bin.SetActive(false);
 		}
 	}
