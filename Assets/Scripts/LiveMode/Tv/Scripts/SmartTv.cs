@@ -277,6 +277,7 @@ public class SmartTv : MonoBehaviour {
 		if (hit.transform.gameObject == display){
 			Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
 
+			print(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8);
 			// Right touchpad.
 			if(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8){
 				player.playbackSpeed = 1;

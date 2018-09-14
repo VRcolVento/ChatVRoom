@@ -27,7 +27,7 @@ public class TextMenu : Menu {
     }
 
     public override void SetSelected(string item){
-        Transform newItem = GetTab(activeTab).transform.Find(item);
+        Transform newItem = item == null ? null : GetTab(activeTab).transform.Find(item);
         GameObject itemObj = newItem == null ? null : newItem.gameObject;
 
         if(_selectedItem != itemObj){

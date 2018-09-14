@@ -22,7 +22,6 @@ public class NotificationBin : MonoBehaviour {
 	/// </summary>
 	/// <param name="hit"> The object hit by raycast. </param>
 	void DestroyNotification(RaycastHit hit){
-		Debug.Log(notification);
 		if (notification){
 			Destroy(notification);
 		}
