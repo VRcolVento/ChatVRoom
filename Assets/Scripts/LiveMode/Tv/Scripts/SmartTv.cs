@@ -91,6 +91,7 @@ public class SmartTv : MonoBehaviour {
 		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.GRIP, PreviousMenu);
 		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, PreviousTab);
 		handler.AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, NextTab);
+		// handler.AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.AXIS0, ActivateTeleport);
 	}
 	
 	/// <summary>
@@ -142,6 +143,7 @@ public class SmartTv : MonoBehaviour {
 	void PreviousTab(RaycastHit hit){
 		if(hit.transform.gameObject == display || hit.transform.gameObject.layer == Menu.menuLayer){
 			Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
+			// teleport.SetActive(false);
 
 			// Left touchpad.
 			if(axis.x <= -0.4 && axis.y < 0.8 && axis.y > -0.8)
@@ -156,11 +158,21 @@ public class SmartTv : MonoBehaviour {
 	void NextTab(RaycastHit hit){
 		if(hit.transform.gameObject == display || hit.transform.gameObject.layer == Menu.menuLayer){
 			Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
-
+			// teleport.SetActive(false);
+		
 			// Right touchpad.
 			if(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8)
 				menuFactory.ChangeTab(+1);
 		}
+	}
+
+	/// <summary>
+	/// 	
+	/// </summary>
+	/// <param name="hit"> The object hit by raycast. </param>
+	void ActivateTeleport(RaycastHit hit){
+		if(!player.isActiveAndEnabled &&  (hit.transform.gameObject == display || hit.transform.gameObject.layer == Menu.menuLayer))
+			teleport.SetActive(true);
 	}
 
 	/// <summary>

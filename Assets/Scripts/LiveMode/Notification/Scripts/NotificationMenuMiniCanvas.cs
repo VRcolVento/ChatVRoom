@@ -10,7 +10,6 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 	Rigidbody body;
 	FixedJoint fx;
 	bool isGrabbed = true;
-	GameObject toucher = null;
 
 	/// <summary>
 	/// 	Awake is called when the script instance is being loaded.

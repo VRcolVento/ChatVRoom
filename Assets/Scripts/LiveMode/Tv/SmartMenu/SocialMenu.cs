@@ -78,7 +78,7 @@ public class SocialMenu : Menu {
         PositionItem(status.transform, tab.gameObject, new Vector3(0, pos.y - (panelInfo.imageScale.y / 2.0f + panelInfo.statusDim.y / 2.0f), -0.02f), Quaternion.identity, new Vector3(1, 1, 1));
         status.GetComponent<RectTransform>().sizeDelta = panelInfo.statusDim;
         status.GetComponent<BoxCollider>().size = new Vector3(panelInfo.statusDim.x, panelInfo.statusDim.y, 0);
-        status.GetComponent<TextMeshPro>().text = (string)item.fields[1];
+        status.GetComponent<TextMeshPro>().text = WrapString((string)item.fields[1]);
         status.GetComponent<TextMeshPro>().fontSize = 0.35f; 
 
         // Add callback.
@@ -87,11 +87,41 @@ public class SocialMenu : Menu {
         return true;
     }
 
+    /// <summary>
+    ///     Shortcut to set a new father for an object and puts it in a new position.
+    /// </summary>
+    /// <param name="obj"> The object. </param>
+    /// <param name="father"> The father. </param>
+    /// <param name="pos"> The position wrt the father. </param>
+    /// <param name="rot"> The rotation wrt the father. </param>
+    /// <param name="scale"> The scale wrt the father. </param>
     private void PositionItem(Transform obj, GameObject father, Vector3 pos, Quaternion rot, Vector3 scale){
         obj.SetParent(father.transform);
         obj.localPosition = pos;
         obj.localRotation = rot;
         obj.localScale = scale;
+    }
+
+    /// <summary>
+    ///     Adds newline to the string.
+    /// </summary>
+    /// <param name="str"> The string to wrap. </param>
+    /// <returns> The string with newline. </returns>
+    string WrapString(string str){
+        if(!str.Contains("\n")){
+            int step = 50;
+            int pos = 0, newPos;
+            string newstr = "";
+
+            while( pos + step < str.Length - 1 && (newPos = str.IndexOf(" ", pos + step)) >= 0){            
+                newstr += str.Substring(pos, newPos - pos + 1) + '\n';
+                pos = newPos + 1;
+            }
+            newstr += str.Substring(pos, str.Length - pos);
+
+            return newstr;
+        }
+        return str;
     }
 }
 }
