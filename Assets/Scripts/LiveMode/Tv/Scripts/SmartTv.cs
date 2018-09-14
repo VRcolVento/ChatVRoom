@@ -36,6 +36,8 @@ public class SmartTv : MonoBehaviour {
 	bool backward, forward, closeVideo;
 	float speed, speedTime;
 	short updates;
+	// Teleport script.
+	public GameObject teleport;
 
 	/// <summary>
 	/// 	Awake is called when the script instance is being loaded.
@@ -181,7 +183,7 @@ public class SmartTv : MonoBehaviour {
 		handler.DeferredRemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.GRIP, PreviousMenu);
 		handler.DeferredAddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.GRIP, EndVideo);
 
-		player.url = "https://www.twitch.tv/nerdoardo";
+		player.url = url;
 		StartCoroutine(StartVideo());
 	}
 
@@ -244,6 +246,7 @@ public class SmartTv : MonoBehaviour {
 
 			// Right touchpad.
 			if(axis.x >= 0.4 && axis.y < 0.8 && axis.y > -0.8){
+				teleport.SetActive(false);
 				speed = 2;
 				speedTime = 0;
 				audioSource.volume = 0;
@@ -257,7 +260,9 @@ public class SmartTv : MonoBehaviour {
 	/// </summary>
 	/// <param name="hit"> The object hit by raycast. </param>
 	void EndForward(RaycastHit hit){
-		if(hit.transform.gameObject == display){
+		if (forward)	teleport.SetActive(true);
+
+		if (hit.transform.gameObject == display){
 			Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
 
 			// Right touchpad.
@@ -279,6 +284,7 @@ public class SmartTv : MonoBehaviour {
 
 			// Left touchpad.
 			if(axis.x <= -0.4 && axis.y < 0.8 && axis.y > -0.8){
+				teleport.SetActive(false);
 				player.Pause();
 				speed = 2;
 				speedTime = 0;
@@ -293,7 +299,9 @@ public class SmartTv : MonoBehaviour {
 	/// </summary>
 	/// <param name="hit"> The object hit by raycast. </param>
 	void EndBackward(RaycastHit hit){
-		if(hit.transform.gameObject == display){
+		if (backward)	teleport.SetActive(true);	
+
+		if (hit.transform.gameObject == display){
 			Vector2 axis = remoteController.GetComponent<ControllerFunctions>().GetAxis();
 
 			// Left touchpad.

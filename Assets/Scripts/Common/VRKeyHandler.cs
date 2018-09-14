@@ -52,7 +52,7 @@ public class VRKeyHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Ray raycast = new Ray(transform.position + transform.forward * 2, transform.forward);
+		Ray raycast = new Ray(transform.position + transform.forward * 0.1f, transform.forward);
         RaycastHit hit;
 		bool bHit = Physics.Raycast(raycast, out hit);
 

@@ -133,7 +133,7 @@ public class NotificationMenu : MonoBehaviour {
 			StartCoroutine(HidePopupNotification());
 
 		// Send haptic feedback.
-		GameObject.Find("LeftController").GetComponent<ControllerFunctions>().Vibrate(90, 4000);
+		GetComponent<ControllerFunctions>().Vibrate(90, 4000);
 	}
 
 	/// <summary>
@@ -243,8 +243,8 @@ public class NotificationMenu : MonoBehaviour {
 	void OnDestroy(){
 		manager.onAdd.RemoveListener(AddNotification);
 		manager.onAdd.RemoveListener(PopupNotification);
-		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, ChangeNotification);
-		GameObject.Find("LeftController").GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, SelectNotification);
+		GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.AXIS0, ChangeNotification);
+		GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, SelectNotification);
 	}
 
 

@@ -9,7 +9,7 @@ public class AlphaNumericSymbol : MonoBehaviour {
 	Button button;
 	Color normalColor, highlightedColor;
 	ColorBlock colors;
-	InputName input;
+	public InputName input;
 
 	// Use this for initialization
 	void Start () {
@@ -19,10 +19,10 @@ public class AlphaNumericSymbol : MonoBehaviour {
 		// after a frame.
 		Invoke("SetCollider", 0.2f);
 
-		input = GameObject.Find("Canvas/Create Room Tab/Panel/Room Name").GetComponent<InputName>();
 		colors = button.colors;
 		normalColor = button.colors.normalColor;
 		highlightedColor = button.colors.highlightedColor;
+		GetComponent<Button>().onClick.AddListener(() => {input.AddCharacter(GetSymbol());});
 	}
 	
 	/// <summary>
@@ -31,6 +31,7 @@ public class AlphaNumericSymbol : MonoBehaviour {
 	void SetCollider(){
 		BoxCollider collider = gameObject.AddComponent<BoxCollider>();
 		collider.size = GetComponent<RectTransform>().sizeDelta;
+		collider.isTrigger = true;
 	}
 
 	/// <summary>
