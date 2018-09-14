@@ -104,8 +104,6 @@ namespace DemoAV.Editor.User{
 
 			// Check if the user is touching the door
 			if(Controller.GetHairTriggerDown() && canExit) {
-				Debug.Log("Esco");
-				// TODO
 				SceneManager.LoadScene("menuScene");
 			}
 		}
@@ -206,7 +204,6 @@ namespace DemoAV.Editor.User{
 		/// <param name="other">The Collision data associated with this collision.</param>
 		void OnCollisionEnter(Collision other) {
 			
-			Debug.Log(other.gameObject.tag + "  -  " + other.gameObject.name);
 			if(other.gameObject.tag == "Exit") {
 				canExit = true;
 				StartCoroutine("Vibrate");
