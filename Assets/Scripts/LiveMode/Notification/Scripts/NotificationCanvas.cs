@@ -14,7 +14,9 @@ public class NotificationCanvas : MonoBehaviour {
 	public GameObject notificationObj;
 	NotificationManager manager;
 
-	// Use this for initialization
+	/// <summary>
+	/// 	This function is called when the object becomes enabled and active.
+	/// </summary>
 	void OnEnable () {
 		manager = GameObject.Find("CVRREventSystem").GetComponent<NotificationManager>();
 		manager.onAdd.AddListener(AddNotification);
