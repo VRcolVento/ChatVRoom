@@ -4,13 +4,19 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DemoAV.Live.Stereo.System;
+
 namespace DemoAV.Live.Stereo{
 
+/// <summary>
+/// 	The class that manage all main stereo functionalities.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class Stereo : MonoBehaviour {
 	AudioSource source;
 	// Stereo components.
 	public StereoSlider slider;
+	public SystemManager system;
 	// Duration variable.
 	int lastTime = 0;
 
@@ -20,8 +26,6 @@ public class Stereo : MonoBehaviour {
 	/// </summary>
 	void Start() {
 		source = GetComponent<AudioSource>();
-		// PlayNewSong("D:/ROBA FIGA, NON PER FRANCESCO/Music/test.ogg");
-		// PlayNewSong("C:/Users/giuli/Music/test.ogg");
 	}
 
 	void Update() {
@@ -96,6 +100,14 @@ public class Stereo : MonoBehaviour {
 	/// <param name="time"> The new time for the song. </param>
 	public void ChangeCurrentTime(float time){
 		source.time = time;
+	}
+
+	/// <summary>
+	/// 	Closes the stereo interface.
+	/// </summary>
+	public void Close(){
+		system.gameObject.SetActive(false);
+		transform.Find("Stereo Interface").gameObject.SetActive(false);
 	}
 }
 }

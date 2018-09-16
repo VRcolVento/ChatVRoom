@@ -28,6 +28,28 @@ public class SystemManager : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 	Switch between opened and closed state.
+	/// </summary>
+	public void Switch(){
+		if (gameObject.activeSelf)	Close();
+		else						Open();
+	}
+
+	/// <summary>
+	/// 	Opens the directory interface.
+	/// </summary>
+	public void Open(){
+		gameObject.SetActive(true);
+	}
+
+	/// <summary>
+	/// 	Closes the directory interface.
+	/// </summary>
+	public void Close(){
+		gameObject.SetActive(false);
+	}
+
+	/// <summary>
 	/// 	Changes the current directory.
 	/// </summary>
 	/// <param name="directory"> The new directory. </param>
