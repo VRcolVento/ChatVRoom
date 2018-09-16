@@ -6,6 +6,10 @@ using UnityEngine;
 using TMPro;
 
 namespace DemoAV.Live.SmarTv.SmartMenu{
+
+/// <summary>
+///     A menu with a list of string.
+/// </summary>
 public class TextMenu : Menu {
     struct TextMenuInfo{
 		public float width, height;

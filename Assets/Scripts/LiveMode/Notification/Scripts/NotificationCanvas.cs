@@ -7,8 +7,10 @@ using TMPro;
 using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
+
 /// <summary>
 /// 	The canvas for the on screen notification.
+/// 	NOT USED IN VR.
 /// </summary>
 public class NotificationCanvas : MonoBehaviour {
 	public GameObject notificationObj;

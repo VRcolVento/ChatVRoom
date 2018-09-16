@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 
 namespace DemoAV.Common{
 
+/// <summary>
+/// 	Class that spawn a laser from the controller with which is 
+/// 	possible to interact with UI or other UI-like object.
+/// </summary>
 public class InteractionLaser : MonoBehaviour {
 
 	static LayerMask layerMask;

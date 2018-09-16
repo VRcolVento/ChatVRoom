@@ -8,6 +8,7 @@ using TMPro;
 using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
+	
 /// <summary>
 /// 	The class that manages the little notification menu of the controller.
 /// </summary>

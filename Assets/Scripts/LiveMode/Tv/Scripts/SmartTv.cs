@@ -9,6 +9,11 @@ using DemoAV.Common;
 using DemoAV.Live.SmarTv.SmartMenu;
 
 namespace DemoAV.Live.SmarTv{
+
+/// <summary>
+/// 	The class that manages the behaviour of the TV. All the necessary
+/// 	function to see a video are here.
+/// </summary>
 public class SmartTv : MonoBehaviour {
 	// Settings.
 	[Serializable]

@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DemoAV.Live.SmarTv.SmartMenu{
+
+/// <summary>
+/// 	Base class of all type of menu.
+/// 	This menu substitutes the Unity UI interface due to a initial
+/// 	mistake (I thought was not possible to interact with UI using VR controller).
+/// </summary>
 public abstract class Menu {
 	// Declaration of struct and delegate.
+	/// <summary>
+	/// 	The struct that represent a basic item of any menu.
+	/// </summary>
 	public struct MenuItem{
 		public string name;
 		public object []fields;

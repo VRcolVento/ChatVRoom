@@ -6,6 +6,9 @@ using DemoAV.Live.ThirdParty;
 
 namespace DemoAV.Live.Notification{
 	
+/// <summary>
+/// 	The class that manages the twitter notification.
+/// </summary>
 public class TwitterNotification : MonoBehaviour {
 	public NotificationManager notificationManager;
 	// Last tweet.

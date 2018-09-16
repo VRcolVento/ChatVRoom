@@ -6,6 +6,9 @@ using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
 
+/// <summary>
+/// 	Class for the deletion of the floating notification.
+/// </summary>
 public class NotificationBin : MonoBehaviour {
 	public VRKeyHandler controller;
 	GameObject notification = null;

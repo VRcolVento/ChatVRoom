@@ -6,6 +6,13 @@ using UnityEngine;
 using DemoAV.Live.SmarTv.SmartMenu;
 using DemoAV.Common;
 
+namespace DemoAV.Live.SmarTv{
+
+/// <summary>
+/// 	Class that realizes the factory pattern for the tv menu. 
+/// 	It also allows to interact with the current active menu without
+/// 	exposing it.
+/// </summary>
 public class TvMenuFactory : MonoBehaviour {
 
 	static LayerMask menuMask = 1 << 9;
@@ -156,4 +163,5 @@ public class TvMenuFactory : MonoBehaviour {
 				activeMenu.activeTab += direction;
 		}
 	}
+}
 }

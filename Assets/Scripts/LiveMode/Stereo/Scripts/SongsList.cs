@@ -32,8 +32,9 @@ public class SongsList : MonoBehaviour {
 	public void ChangeCurrentDir(string newDir){
 		if (Directory.Exists(newDir)) {
 			// Deletes all children.
-			foreach (Transform child in transform)
-				Destroy(child);
+			foreach (Transform child in content)
+				if (child.gameObject.name != "Navigator")
+					Destroy(child.gameObject);
 
 			// Search for supported files.
 			IEnumerable<string> files = GetSupportedFiles(newDir);

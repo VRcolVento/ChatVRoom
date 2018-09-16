@@ -2,6 +2,11 @@
 
 using TMPro;
 
+namespace DemoAV.Live.SmarTv{
+
+/// <summary>
+/// 	This class just makes the Loading text add and remove dots.
+/// </summary>
 public class LoadingText : MonoBehaviour {
 	static byte FRAME_DELAY = 50;
 	TextMeshPro text;
@@ -31,4 +36,6 @@ public class LoadingText : MonoBehaviour {
 			frameCount = 0;
 		}
 	}
+}
+
 }

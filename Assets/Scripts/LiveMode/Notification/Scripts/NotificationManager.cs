@@ -7,7 +7,7 @@ namespace DemoAV.Live.Notification{
 
 /// <summary>
 /// 	The event-system manager for notifications.
-/// 	It uses Unity event system for handling add notification and delete notification event.
+/// 	It uses Unity event system to handle "add notification" and "delete notification" events.
 /// </summary>
 public class NotificationManager : MonoBehaviour {
 	/// <summary>

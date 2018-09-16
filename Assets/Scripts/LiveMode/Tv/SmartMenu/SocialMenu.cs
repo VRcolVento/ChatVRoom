@@ -6,6 +6,10 @@ using UnityEngine;
 using TMPro;
 
 namespace DemoAV.Live.SmarTv.SmartMenu{
+
+/// <summary>
+///     A menu to show the twitter social network.
+/// </summary>
 public class SocialMenu : Menu {
     struct SocialMenuInfo{
 		public int itemsPerCol, count;

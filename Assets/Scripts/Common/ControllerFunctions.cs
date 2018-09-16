@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DemoAV.Common {
+
+/// <summary>
+/// 	Class that exposes some basic functionality of the controller
+/// 	without directly access the SteamVR object.
+/// </summary>
 public class ControllerFunctions : MonoBehaviour {
 	// Vibration.
 	struct Vibration{
