@@ -49,8 +49,8 @@ namespace DemoAV.Editor.User{
 		void Awake() {
 			trackedObj = GetComponent<SteamVR_TrackedObject>();
 			chooseScript = GetComponent<VRChooseObject>();
-			bin = GameObject.Find("CanvasBinHook");
-			bin.SetActive(false);
+			bin = GameObject.Find("Bin");
+			// bin.SetActive(false);
 			binPanel = GameObject.Find("BinCanvas");
 			binPanel.SetActive(false);
 			roomMask = LayerMask.GetMask("RoomLayer");
@@ -187,7 +187,7 @@ namespace DemoAV.Editor.User{
 			modifyObjScript.enabled = true;
 			initScale = objToPlace.transform.localScale;
 			helpPanel.SetActive(true);
-			bin.SetActive(true);
+			// bin.SetActive(true);
 		}
 
 
@@ -202,7 +202,7 @@ namespace DemoAV.Editor.User{
 			modifyObjScript.enabled = false;
 			this.enabled = false;
 			helpPanel.SetActive(false);
-			bin.SetActive(false);
+//			bin.SetActive(false);
 		}
 	}
 }
