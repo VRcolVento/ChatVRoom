@@ -37,7 +37,7 @@ public class TvMenuFactory : MonoBehaviour {
 	/// </summary>
 	void Start () {
 		remoteController.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, (RaycastHit hit) => {
-			if(hit.transform.gameObject.layer == Menu.menuLayer) {
+			if(hit.transform != null &&  hit.transform.gameObject != null && hit.transform.gameObject.layer == Menu.menuLayer) {
 				activeMenu.SetSelected(hit.transform.gameObject.name);
 				activeMenu.Active(hit.transform.gameObject.name);
 			}

@@ -54,6 +54,7 @@ public class SystemManager : MonoBehaviour {
 	/// </summary>
 	/// <param name="directory"> The new directory. </param>
 	public void ChangeDirectory(string directory) {
+		print(history.Count);
 		// Go backward.
 		if (directory == "" && history.Count > 0){
 			currentDir = history.Pop();

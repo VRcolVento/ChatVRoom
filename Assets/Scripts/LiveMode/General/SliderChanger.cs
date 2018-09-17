@@ -6,8 +6,7 @@ using DemoAV.Common;
 
 public class SliderChanger : MonoBehaviour {
 
-	public Transform controller;
-
+	Transform controller;
 	public Slider slider;
 	private float sliderValue;
 	private Vector3 position;
@@ -15,39 +14,12 @@ public class SliderChanger : MonoBehaviour {
 	private bool pressed;
 	private bool collided;
 
-	
-	// Update is called once per frame
-	void Update () {
-
-
-		// if(Controller.GetHairTriggerDown() && collided) {
-		// 	sliderValue = slider.value;
-		// 	direction = transform.forward;
-		// 	pressed = true;
-		// }
-
-		MoveSlider();
-
-		// if(Controller.GetHairTriggerUp()){
-		// 	pressed = false;
-		// }
-	}
 
 	void GrabSlider(RaycastHit hit) {
-
 		if(collided) {
 			sliderValue = slider.value;
-			position = controller.position;
+			position = controller.localPosition;
 			pressed = true;			
-		}
-	}
-
-	void MoveSlider() {
-
-		if(pressed) {
-			// Cambiare le direzioni, dipende da dove è orientato la tua UI nel mondo
-			float v = (controller.position.x - position.x) * slider.maxValue;
-			updateValue(v);
 		}
 	}
 
@@ -55,19 +27,39 @@ public class SliderChanger : MonoBehaviour {
 		pressed = false;
 	} 
 
+	/// <summary>
+	/// 	OnTriggerExit is called when the Collider other has stopped touching the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
 	void OnTriggerEnter(Collider other) {
-
 		if(other.transform.tag == "Controller") { // Cambiare metodo di identificazione slider
 			collided = true;
+			controller = other.transform;
 			other.gameObject.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, GrabSlider);
 			other.gameObject.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.TRIGGER, SgrabSlider);
 		}
 	}
 
+	/// <summary>
+	/// 	OnTriggerStay is called once per frame for every Collider other
+	/// 	that is touching the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerStay(Collider other) {
+		if(pressed) {
+			// Cambiare le direzioni, dipende da dove è orientato la tua UI nel mondo
+			float v = (controller.localPosition.x - position.x) * slider.maxValue;
+			updateValue(v);
+		}
+	}
+
+	/// <summary>
+	/// 	OnTriggerExit is called when the Collider other has stopped touching the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
 	void OnTriggerExit(Collider other) {
-		
 		if(other.transform.tag == "Controller") {
-			collided = false;
+			collided = pressed = false;
 			other.gameObject.GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, GrabSlider);
 			other.gameObject.GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_UP, VRKeyHandler.Key.TRIGGER, SgrabSlider);
 		}

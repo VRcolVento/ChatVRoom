@@ -14,6 +14,7 @@ public class VRScrollView : MonoBehaviour {
 	public Transform contentToSwipe;
 	public bool swipeHorizontal, swipeVertical;
 	byte currentHorizontalTab = 0, currentVerticalTab = 0;
+	bool isChangingTab = false;
 	// The difference to activate sweep.
 	public float margin = 0.05f;
 
@@ -23,7 +24,7 @@ public class VRScrollView : MonoBehaviour {
 	/// <param name="index"> The index of the new tab. </param>
 	/// <param name="horizontalSwipe"> True if the tab should be changed horizontally, false otherwise. </param>
 	public void GoToTab(short index, bool horizontalSwipe){
-		if (index >= 0 && index < contentToSwipe.childCount){
+		if (!isChangingTab && index >= 0 && index < contentToSwipe.childCount){
 
 			// Horizontal swipe.
 			if (horizontalSwipe && swipeHorizontal){
@@ -48,6 +49,8 @@ public class VRScrollView : MonoBehaviour {
 	/// <param name="newPos"> The position in which the transition must end. </param>
 	/// <returns></returns>
 	IEnumerator Transition(Vector3 newPos){
+		isChangingTab = true;
+
 		float weight = 0;
 		Vector3 start = contentToSwipe.localPosition;
 
@@ -58,6 +61,7 @@ public class VRScrollView : MonoBehaviour {
 		}
 
 		contentToSwipe.localPosition = newPos;
+		isChangingTab = false;
 	}
 
 	/// <summary>
@@ -79,7 +83,6 @@ public class VRScrollView : MonoBehaviour {
 		if (other.gameObject.tag == "Controller"){
 			Vector3 difference = other.transform.position - lastPosition;
 			Vector2 size = contentToSwipe.GetChild(0).GetComponent<RectTransform>().sizeDelta;
-			print("diff: " + Mathf.Abs(difference.x) + " > " + margin);
 			if (swipeHorizontal && Mathf.Abs(difference.x) > margin){
 				GoToTab((short)(difference.x < 0 ? currentHorizontalTab + 1 : currentHorizontalTab - 1), true);
 				lastPosition = other.transform.position;

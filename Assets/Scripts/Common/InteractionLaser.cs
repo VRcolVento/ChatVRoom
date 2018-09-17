@@ -113,7 +113,7 @@ public class InteractionLaser : MonoBehaviour {
 	/// </summary>
 	/// <param name="hit"> The button hit by raycast. </param>
 	void PressButton(RaycastHit hit){
-		if(hit.transform.gameObject.layer == 13 && EventSystem.current.currentSelectedGameObject)
+		if(hit.transform != null && hit.transform.gameObject.layer == 13 && EventSystem.current.currentSelectedGameObject)
 			EventSystem.current.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
 	}
 

@@ -53,5 +53,13 @@ public class SystemDirectory : MonoBehaviour {
 
 		// Add callback.
 	}
+
+	/// <summary>
+	/// 	This function is called when the MonoBehaviour will be destroyed.
+	/// </summary>
+	void OnDestroy() {
+		if (currentController)
+			currentController.GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.GRIP, CreateFloatingDirectory);
+	}
 }
 }

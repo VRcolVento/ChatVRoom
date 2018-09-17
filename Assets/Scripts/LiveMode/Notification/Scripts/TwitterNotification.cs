@@ -31,12 +31,14 @@ public class TwitterNotification : MonoBehaviour {
 	void AddTwitterNotifications(bool success, string response){
 		if (success) {
 			StatusesHomeTimelineResponse responseObj = JsonUtility.FromJson<StatusesHomeTimelineResponse> (response);
-
 			// Print the tweets and their author.
 			for(short i = (short)(responseObj.items.Length - 1); i > 0; --i)
 				notificationManager.AddNotification(new NotificationManager.notification("New tweet from " + responseObj.items[i].user.name, Color.black, responseObj.items[i].text, Color.black));
 		
 			lastTweet = responseObj.items[0].text;
+		}
+		else{
+			print(response);
 		}
 	}
 
