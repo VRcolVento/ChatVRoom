@@ -30,7 +30,6 @@ ExportedObj/
 
 # Manifest and other files
 UnityPackageManager/manifest.json
-Packages/manifest.json
 ProjectSettings/PresetManager.asset
 debug.log
 

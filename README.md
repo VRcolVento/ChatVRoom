@@ -38,8 +38,12 @@ This Twitter API C# wrapper for Unity.
 ## Play with your room
 
 ### Watch the TV or listen your music
+![Watch](/FotoPromozionaliEminflex/Img4.png)
+![Listen](/FotoPromozionaliEminflex/Img6.png)
 
 ### Access to your twitter homepage
+![Twitter](/FotoPromozionaliEminflex/Img5.png)
+
 
 ----------------------------------
 
