@@ -22,7 +22,9 @@ GameObject:
   - component: {fileID: 223252461082867400}
   - component: {fileID: 114594333416156776}
   - component: {fileID: 114309809451950550}
-  - component: {fileID: 114642464626371538}
+  - component: {fileID: 114033762259556650}
+  - component: {fileID: 54353538678718562}
+  - component: {fileID: 65561440602677984}
   m_Layer: 0
   m_Name: Floating Directory
   m_TagString: Untagged
@@ -47,6 +49,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!54 &54353538678718562
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170429196151002}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65561440602677984
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170429196151002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 180, y: 233, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114004650023053606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,6 +103,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114033762259556650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170429196151002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5edcb3d8cd24a4fb2b4e1a8e2a878c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songsList: {fileID: 0}
+  directoryPath: 
 --- !u!114 &114309809451950550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,18 +153,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114642464626371538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1170429196151002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab78387bc54e18344abddd795cce73e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  folder: {fileID: 1574520608895104, guid: 08fa31a028215ed4580db35184cda388, type: 2}
 --- !u!222 &222233026718004618
 CanvasRenderer:
   m_ObjectHideFlags: 1

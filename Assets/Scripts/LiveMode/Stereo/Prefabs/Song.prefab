@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224261481370374836}
   - component: {fileID: 222821764552174066}
   - component: {fileID: 114110877653016822}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224695635458636350}
   - component: {fileID: 222782741689714978}
   - component: {fileID: 114355820963806708}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,13 +56,27 @@ GameObject:
   - component: {fileID: 222954514651124004}
   - component: {fileID: 114959606165897662}
   - component: {fileID: 114983817297092970}
-  m_Layer: 0
+  - component: {fileID: 65860308841831128}
+  - component: {fileID: 114317443074320120}
+  m_Layer: 14
   m_Name: Song
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &65860308841831128
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1518393823239398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1119, y: 80, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114110877653016822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,6 +104,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114317443074320120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1518393823239398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57807e91a93c23f479f64bb7a0993c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114355820963806708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,5 +291,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 595, y: -80}
-  m_SizeDelta: {x: 1190, y: 60}
+  m_SizeDelta: {x: 1190, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ public class SongsList : MonoBehaviour {
 	// External references.
 	public Stereo stereo;
 	public GameObject songButton;
+	public GameObject songPanel;
 	// Shortcut to child.
 	Transform content;
 
@@ -21,8 +23,8 @@ public class SongsList : MonoBehaviour {
 	/// 	any of the Update methods is called the first time.
 	/// </summary>
 	void Start() {
-		content = transform.Find("Scroll View/Viewport/Content");
-		ChangeCurrentDir("C:/Users/giuli/Music/");
+		content = transform.Find("Scroll View/Viewport/Content/List");
+		ChangeCurrentDir("D:/ROBA FIGA, NON PER FRANCESCO/Music/Caparezza/Le Dimensioni del Mio Caos/");
 	}
 
 	/// <summary>
@@ -39,8 +41,18 @@ public class SongsList : MonoBehaviour {
 			// Search for supported files.
 			IEnumerable<string> files = GetSupportedFiles(newDir);
 
-			foreach (string file in files)
-				AddSong(file);
+			int filesPerTab = (int)Math.Floor(songPanel.GetComponent<RectTransform>().sizeDelta.y / songButton.GetComponent<RectTransform>().sizeDelta.y);
+			int i = 0, numOfTab = 0;
+			Transform currentTab = null;
+			print(filesPerTab);
+			foreach (string file in files){
+				if (i++ / filesPerTab >= numOfTab){
+					currentTab = AddTab();
+					numOfTab++;
+				}
+
+				AddSong(file, currentTab);
+			}
 		}
 	}
 
@@ -55,14 +67,29 @@ public class SongsList : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 	Adds a new tab to the song list.
+	/// </summary>
+	/// <returns> The transform of the created tab. </returns>
+	Transform AddTab(){
+		Transform newTab = Instantiate(songPanel).transform;
+		newTab.SetParent(content);
+		newTab.transform.localPosition = Vector3.zero;
+		newTab.transform.localRotation = Quaternion.identity;
+		newTab.transform.localScale = new Vector3(1, 1, 1);
+
+		return newTab;
+	}
+
+	/// <summary>
 	/// 	Adds a new song to the list of songs.
 	/// </summary>
 	/// <param name="songName"> The name of the new song. </param>
-	void AddSong(string songPath){
+	/// <param name="father"> The panel to which attach the song. </param>
+	void AddSong(string songPath, Transform father){
 		GameObject newSong = Instantiate(songButton);
 		string songName = Path.GetFileNameWithoutExtension(songPath);
 		
-		newSong.transform.SetParent(content);
+		newSong.transform.SetParent(father);
 		newSong.transform.localPosition = Vector3.zero;
 		newSong.transform.localRotation = Quaternion.identity;
 		newSong.transform.localScale = new Vector3(1, 1, 1);

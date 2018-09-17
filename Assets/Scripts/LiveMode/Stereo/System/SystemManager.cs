@@ -24,7 +24,7 @@ public class SystemManager : MonoBehaviour {
 	void Start() {
 		content = transform.Find("Scroll View/Viewport/Content");
 		parentFolder = content.Find("Parent Folder").gameObject;
-		ChangeDirectory("C:/Users/giuli/Music/");
+		ChangeDirectory("D:/ROBA FIGA, NON PER FRANCESCO/Music");
 	}
 
 	/// <summary>
@@ -95,6 +95,7 @@ public class SystemManager : MonoBehaviour {
 		newDir.transform.localPosition = Vector3.zero;
 		newDir.transform.localRotation = Quaternion.identity;
 		newDir.transform.localScale = new Vector3(1, 1, 1);
+		newDir.GetComponent<SystemDirectory>().directoryPath = dir;
 
 		newDir.name = dirName;
 		newDir.transform.Find("Name").GetComponent<Text>().text = dirName;

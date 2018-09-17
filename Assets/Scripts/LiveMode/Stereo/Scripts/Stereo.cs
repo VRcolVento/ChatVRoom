@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DemoAV.Common;
 using DemoAV.Live.Stereo.System;
 
 namespace DemoAV.Live.Stereo{
@@ -60,7 +61,7 @@ public class Stereo : MonoBehaviour {
 
 		AudioClip clip = www.GetAudioClip(false);
 		while(!clip.isReadyToPlay)
-			yield return www;
+			yield return null;
 
 		print("done loading");
 		clip.name = Path.GetFileName(url);
@@ -103,11 +104,37 @@ public class Stereo : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 	Opens the stereo interface.
+	/// </summary>
+	/// <param name="hit"> The object hit by raycast. </param>
+	public void Open(RaycastHit hit){
+		transform.Find("Stereo Interface").gameObject.SetActive(true);
+	}
+
+	/// <summary>
 	/// 	Closes the stereo interface.
 	/// </summary>
 	public void Close(){
 		system.gameObject.SetActive(false);
 		transform.Find("Stereo Interface").gameObject.SetActive(false);
+	}
+
+	/// <summary>
+	/// 	OnTriggerEnter is called when the Collider other enters the trigger.
+	/// </summary>
+	/// <param name="other"> The other Collider involved in this collision. </param>
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.tag == "Controller")
+			other.gameObject.GetComponent<VRKeyHandler>().AddCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, Open);
+	}
+
+	/// <summary>
+	/// 	OnTriggerExit is called when the Collider other has stopped touching the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerExit(Collider other) {
+		if (other.gameObject.tag == "Controller")
+			other.gameObject.GetComponent<VRKeyHandler>().RemoveCallback(VRKeyHandler.Map.KEY_DOWN, VRKeyHandler.Key.TRIGGER, Open);
 	}
 }
 }

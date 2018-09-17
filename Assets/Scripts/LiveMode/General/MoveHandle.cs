@@ -27,9 +27,7 @@ public class MoveHandle : MonoBehaviour {
 	}
 
 	void Update () {
-		
 		if(Controller.GetHairTriggerDown() && collided) {
-		
 			sliderValue = mySlider.value;
 			direction = transform.forward;
 			pressed = true;
@@ -47,12 +45,10 @@ public class MoveHandle : MonoBehaviour {
 	}
 
 	public void updateValue(float v) {
-
 		mySlider.value = Mathf.Clamp(sliderValue - v, mySlider.minValue, mySlider.maxValue);
 	}
 
 	void OnTriggerEnter(Collider other) {
-
 		if(other.transform.name == "Handle") // Cambiare metodo di identificazione slider
 			collided = true;
 	}
