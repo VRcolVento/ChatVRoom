@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace  DemoAV.Common {
+
+/// <summary>
+/// 	NOT USED IN VR.
+/// </summary>
 public class KeyboardHandler : MonoBehaviour {
 	public delegate void KeyCallback();
 	public enum Map{

@@ -6,6 +6,11 @@ using UnityEngine.UI;
 using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
+
+/// <summary>
+/// 	The class that represents a notification as item of the controller's
+/// 	menu.
+/// </summary>
 public class NotificationMenuItem : MonoBehaviour {
 	public GameObject canvasPrefab;
 	GameObject canvas;

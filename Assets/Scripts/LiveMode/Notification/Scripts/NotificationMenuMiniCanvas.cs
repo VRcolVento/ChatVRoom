@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 using DemoAV.Common;
 
+namespace DemoAV.Live.Notification{
+
+/// <summary>
+/// 	The class that represents the floating notification, i.e. a
+/// 	notification after it is popped up from the controller's menu.
+/// </summary>
 public class NotificationMenuMiniCanvas : MonoBehaviour {
 	static Vector3 bigSize = new Vector3(0.004f, 0.001f, 1), smallSize;
 	Rigidbody body;
@@ -71,4 +77,6 @@ public class NotificationMenuMiniCanvas : MonoBehaviour {
 
 		transform.Find("Layout/Notification description").gameObject.SetActive(finalSize == bigSize);
 	}
+}
+
 }

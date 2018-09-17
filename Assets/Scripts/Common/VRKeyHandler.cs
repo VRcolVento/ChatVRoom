@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace  DemoAV.Common {
-/// It handles the controller input event.
+
+/// <summary>
+/// 	Class that handles the player input.
+/// </summary>
 public class VRKeyHandler : MonoBehaviour {
 	// Steam controller references.
 	private SteamVR_TrackedObject trackedObj;

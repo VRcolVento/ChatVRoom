@@ -6,6 +6,9 @@ using DemoAV.Common;
 
 namespace DemoAV.Live.Notification{
 
+/// <summary>
+/// 	Class for the deletion of the floating notification.
+/// </summary>
 public class NotificationBin : MonoBehaviour {
 	public VRKeyHandler controller;
 	GameObject notification = null;
@@ -22,7 +25,6 @@ public class NotificationBin : MonoBehaviour {
 	/// </summary>
 	/// <param name="hit"> The object hit by raycast. </param>
 	void DestroyNotification(RaycastHit hit){
-		Debug.Log(notification);
 		if (notification){
 			Destroy(notification);
 		}

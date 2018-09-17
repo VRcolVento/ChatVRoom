@@ -21,6 +21,8 @@ TagManager:
   - MenuFurniture
   - MenuBack
   - FloatingNotification
+  - Stereo
+  - Controller
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,1 @@
+A bin, based on a Japanese bin found in Akihabara.

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DemoAV.Live.SmarTv.SmartMenu{
+
+/// <summary>
+///     A menu composed by panel (like the first one shown by the tv).
+/// </summary>
 public class PanelMenu : Menu {
     struct PanelMenuInfo{
 		public int itemsPerRow, itemsPerTab, count;
