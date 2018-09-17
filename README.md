@@ -1,12 +1,16 @@
-# Demo
-Demo generico
+# Chat VR Room
 
-PS
-Giulio Auriemma mi aiuta :camel:
+Create, decorate and play with your new chatroom! 
 
-[Twity](https://github.com/toofusan/Twity)
+Project of the course of Virtual Reality, 2017/2018, master degree at University of Pisa.
+
+Project done with Unity engine, by [0Alic](https://github.com/0Alic) and [GiulioAur](https://github.com/giulioaur).
+
+Inspiration from the ChatRoom of Ready Player One.
 
 ## Asset
+
+We use these assets downloaded from the Unity Store:
 
 [Door](https://assetstore.unity.com/packages/3d/props/interior/tim-s-horror-assets-the-bloody-door-70847)
 
@@ -14,6 +18,29 @@ Giulio Auriemma mi aiuta :camel:
 
 [Explosion](https://assetstore.unity.com/packages/tools/physics/explosion-system-76511)
 
-## Editor Mode
+This Twitter API C# wrapper for Unity.
 
-Player > SteamVRObjects > Hand1 & Hand2 have the major scripts for the user
+[Twity](https://github.com/toofusan/Twity)
+
+## Main Menu
+
+### Create a new room
+![Create](/FotoPromozionaliEminflex/Img1.png)
+
+## Edit your room
+
+### Select your favourite fornutire from your VR menu
+![Choose](/FotoPromozionaliEminflex/Img2.png)
+
+### Decorate your personal space
+![Decorate](/FotoPromozionaliEminflex/Img3.png)
+
+## Play with your room
+
+### Watch the TV or listen your music
+
+### Access to your twitter homepage
+
+----------------------------------
+
+Ps: no Chat nor multiplayer implemented :|
