@@ -109,6 +109,8 @@ public class Stereo : MonoBehaviour {
 	/// <param name="hit"> The object hit by raycast. </param>
 	public void Open(RaycastHit hit){
 		transform.Find("Stereo Interface").gameObject.SetActive(true);
+
+		if (transform.Find("Instructions"))		Destroy(transform.Find("Instructions").gameObject);
 	}
 
 	/// <summary>
